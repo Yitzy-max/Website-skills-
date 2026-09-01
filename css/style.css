@@ -1,7 +1,7 @@
 /* =========================================================================
    Il Giardinello Di Bacoli — editorial, image-forward landing page
    Design system: warm whites, soft beige, one restrained clay accent.
-   Type: Cormorant Garamond (display serif) + Inter (everything else).
+   Type: Cormorant Garamond (display serif) + Hanken Grotesk (everything else).
    ========================================================================= */
 
 :root {
@@ -35,7 +35,7 @@
   --fs-kicker:  0.72rem;
 
   --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
-  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body:    "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   /* kept tighter than a typical editorial page on purpose — this page reads
      as one continuous visit, not a long scroll between widely-spaced blocks */
