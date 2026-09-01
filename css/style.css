@@ -1,7 +1,7 @@
 /* =========================================================================
    Il Giardinello Di Bacoli — editorial, image-forward landing page
    Design system: warm whites, soft beige, one restrained clay accent.
-   Type: Fraunces (display serif) + Inter (everything else).
+   Type: Cormorant Garamond (display serif) + Inter (everything else).
    ========================================================================= */
 
 :root {
@@ -20,15 +20,19 @@
   --accent-ink:   #7C3B1F;
   --accent-soft:  rgba(168, 83, 46, 0.09);
 
-  /* type scale — clamps for a print-magazine feel across viewport sizes */
-  --fs-hero:    clamp(3.2rem, 11vw, 9rem);
-  --fs-display: clamp(2.1rem, 5.2vw, 4rem);
-  --fs-h2:      clamp(1.7rem, 3.4vw, 2.6rem);
+  /* type scale — clamps for a print-magazine feel across viewport sizes.
+     Sized up ~8-10% over a typical serif scale: Cormorant Garamond's
+     delicate Garamond-lineage forms run smaller at equal rem than a
+     chunkier display face, so headings need the extra size to hold
+     the same presence. */
+  --fs-hero:    clamp(3.4rem, 12vw, 9.75rem);
+  --fs-display: clamp(2.3rem, 5.6vw, 4.3rem);
+  --fs-h2:      clamp(1.85rem, 3.7vw, 2.85rem);
   --fs-lg:      clamp(1.05rem, 1.6vw, 1.3rem);
   --fs-body:    1rem;
   --fs-kicker:  0.72rem;
 
-  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --section-pad-y: clamp(5.5rem, 11vw, 9.5rem);
@@ -217,11 +221,12 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .nav-list li:last-child { border-bottom: 1px solid var(--line); }
 .nav-index { font-size: 0.7rem; color: var(--ink-faint); letter-spacing: 0.08em; }
 .nav-list a {
+  display: inline-block;
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.6vw, 2rem);
-  transition: color 0.35s var(--ease-out), padding-left 0.35s var(--ease-out);
+  transition: color 0.35s var(--ease-out), transform 0.35s var(--ease-out);
 }
-.nav-list li:hover a { color: var(--accent); padding-left: 0.4rem; }
+.nav-list li:hover a { color: var(--accent); transform: translateX(0.4rem); }
 .nav-panel-meta { font-size: 0.9rem; color: var(--ink-soft); border-left: 1px solid var(--line); padding-left: 2.5rem; }
 .nav-meta-label { font-size: var(--fs-kicker); letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
 .nav-panel-meta p { margin-bottom: 0.9rem; }
@@ -291,7 +296,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(1.5rem, 3.6vw, 2.6rem);
+  font-size: clamp(1.65rem, 3.9vw, 2.85rem);
   line-height: 1.35;
   color: var(--ink);
 }
@@ -378,8 +383,8 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 }
 .testimonial-card p {
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 400;
+  font-size: 1.5rem;
+  font-weight: 500;
   line-height: 1.4;
 }
 .testimonial-card cite {
