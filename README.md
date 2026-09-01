@@ -6,6 +6,32 @@ below), plus two MCP servers for pulling in ready-made UI components — so ever
 Claude Code session opened in this repo automatically has UI/UX pattern databases,
 design-critique commands, and component registries available while coding.
 
+## The site
+
+A static, image-forward landing page for **[Il Giardinello Di Bacoli](https://www.ilgiardinello.com/)**,
+a family-run Neapolitan ristorante in Toms River, NJ — built as the first real page
+in this repo, using the skills and MCP tooling above.
+
+- `index.html` / `css/style.css` / `js/main.js` — no framework, no build step; open
+  `index.html` directly or serve the repo root.
+- **Motion**: [Lenis](https://github.com/darkroomengineering/lenis) momentum scroll +
+  GSAP `ScrollTrigger` for reveals, parallax, and a pinned-feeling hero; Three.js for
+  a custom-shader hero image crossfade and a hover-ripple distortion on gallery
+  thumbnails. Every WebGL/GSAP feature is loaded via a resilient bootstrap — if a CDN
+  is ever unreachable for a visitor, the page falls back to fully static (all content
+  visible, no animation) instead of breaking.
+- **Content is real**, pulled from the restaurant's own site, Google Business listing,
+  and public review platforms: address, phone, hours, owner story (Gennaro & Danielle
+  Costigliola), real menu items/prices, and excerpted review quotes. The site's own
+  navigation order (Home / Menus / At a Glance / Gallery / Off-Premise Catering /
+  Directions / Contact Us) is mirrored in the header dropdown.
+- **Photography is placeholder** — direct web access to fetch the restaurant's actual
+  photos wasn't available in the build environment, and using someone else's
+  copyrighted photography without rights wouldn't be right regardless. Every image
+  slot has a soft procedural gradient placeholder and upgrades automatically the
+  moment a real photo is dropped in — see [`images/README.md`](images/README.md) for
+  the exact filenames expected.
+
 ## Skills
 
 ### [`skills/ui-ux-pro-max-skill/`](skills/ui-ux-pro-max-skill)

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Il Giardinello Di Bacoli — Neapolitan Ristorante, Toms River NJ</title>
+<meta name="description" content="Il Giardinello Di Bacoli — a family-run Neapolitan ristorante in Toms River, New Jersey. Hand-rolled pastas, slow sauces, and thirty years of table from Bacoli, Italy." />
+
+<!-- Editorial type: a soft, optically-sized display serif for headlines, a quiet grotesque for everything else -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#hero" class="wordmark">
+      <span class="wordmark-mark">Il Giardinello</span>
+      <span class="wordmark-sub">Di&nbsp;Bacoli</span>
+    </a>
+
+    <button class="nav-trigger" id="navTrigger" aria-expanded="false" aria-controls="navPanel">
+      <span class="nav-trigger-label">Menu</span>
+      <span class="nav-trigger-icon" aria-hidden="true"><span></span><span></span></span>
+    </button>
+
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="https://order.online/store/il-giardinello-di-bacoli-toms-river-34806655" target="_blank" rel="noopener">Order&nbsp;Online</a>
+      <a class="btn btn-solid" href="tel:+17322869111">Reserve</a>
+    </div>
+  </div>
+
+  <!-- Dropdown mirrors the restaurant's own site order: Home / Menus / At a Glance / Gallery / Off-Premise Catering / Directions / Contact Us -->
+  <div class="nav-panel" id="navPanel" aria-hidden="true">
+    <nav class="nav-panel-inner" aria-label="Primary">
+      <ol class="nav-list">
+        <li><span class="nav-index">01</span><a href="#hero">Home</a></li>
+        <li><span class="nav-index">02</span><a href="https://www.ilgiardinello.com/menus/" target="_blank" rel="noopener">Menus</a></li>
+        <li><span class="nav-index">03</span><a href="#about">At a Glance</a></li>
+        <li><span class="nav-index">04</span><a href="#gallery">Gallery</a></li>
+        <li><span class="nav-index">05</span><a href="#reserve">Off-Premise Catering</a></li>
+        <li><span class="nav-index">06</span><a href="#reserve">Directions</a></li>
+        <li><span class="nav-index">07</span><a href="#reserve">Contact Us</a></li>
+      </ol>
+      <div class="nav-panel-meta">
+        <p class="nav-meta-label">Visit</p>
+        <p>1232 Route&nbsp;166<br />Stella Towne Center<br />Toms River, NJ 08753</p>
+        <p><a href="tel:+17322869111">(732) 286-9111</a></p>
+        <p class="nav-meta-hours">Tue–Fri, Sun&nbsp;5–8:30pm<br />Saturday&nbsp;5–9pm · Closed&nbsp;Monday</p>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-veil"></div>
+    <div class="hero-content">
+      <p class="kicker kicker-light" data-reveal>Toms River · New Jersey</p>
+      <h1 class="hero-title" data-reveal>
+        <span class="hero-title-line">Il</span>
+        <span class="hero-title-line">Giardinello</span>
+      </h1>
+      <p class="hero-sub" data-reveal>Neapolitan cooking, three decades in the&nbsp;making.</p>
+    </div>
+    <div class="hero-scroll-cue" aria-hidden="true"><span class="cue-line"></span>Scroll</div>
+  </section>
+
+  <!-- ============ STATEMENT ============ -->
+  <section class="statement">
+    <p class="statement-line" data-reveal-mask>
+      Every plate begins the way it did in Bacoli — with time, with family, and with nothing rushed.
+    </p>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery" id="gallery">
+    <div class="section-head">
+      <p class="kicker" data-reveal>The Table</p>
+      <h2 class="section-title" data-reveal>A kitchen that doesn't hurry</h2>
+      <p class="section-copy" data-reveal>Hand-rolled pastas, slow-built sauces, and Neapolitan seafood — plated the way Gennaro learned them, before he ever left Bacoli.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <figure class="gallery-item span-a" data-reveal-clip>
+        <div class="media-frame" data-placeholder="warm">
+          <img class="media-img" src="images/gallery-rigatoni-vodka.jpg" alt="Stuffed rigatoni alla vodka" loading="lazy" onerror="this.remove()" />
+        </div>
+        <figcaption>Stuffed Rigatoni alla Vodka</figcaption>
+      </figure>
+
+      <figure class="gallery-item span-b" data-reveal-clip>
+        <div class="media-frame" data-placeholder="deep">
+          <img class="media-img" src="images/gallery-dining-room.jpg" alt="The Il Giardinello dining room, set for the evening" loading="lazy" onerror="this.remove()" />
+        </div>
+        <figcaption>The dining room, set for evening</figcaption>
+      </figure>
+
+      <figure class="gallery-item span-c" data-reveal-clip>
+        <div class="media-frame" data-placeholder="clay">
+          <img class="media-img" src="images/gallery-calamari.jpg" alt="Calamari fritti with marinara" loading="lazy" onerror="this.remove()" />
+        </div>
+        <figcaption>Calamari Fritti</figcaption>
+      </figure>
+
+      <figure class="gallery-item span-d" data-reveal-clip>
+        <div class="media-frame" data-placeholder="deep">
+          <img class="media-img" src="images/gallery-veal-saltimbocca.jpg" alt="Veal saltimbocca with prosciutto and sage" loading="lazy" onerror="this.remove()" />
+        </div>
+        <figcaption>Veal Saltimbocca</figcaption>
+      </figure>
+
+      <figure class="gallery-item span-e" data-reveal-clip>
+        <div class="media-frame" data-placeholder="warm">
+          <img class="media-img" src="images/gallery-vongole.jpg" alt="Linguine alle vongole with fresh clams" loading="lazy" onerror="this.remove()" />
+        </div>
+        <figcaption>Linguine alle Vongole</figcaption>
+      </figure>
+
+      <figure class="gallery-item span-f" data-reveal-clip>
+        <div class="media-frame" data-placeholder="clay">
+          <img class="media-img" src="images/gallery-kitchen.jpg" alt="Gennaro at work in the kitchen" loading="lazy" onerror="this.remove()" />
+        </div>
+        <figcaption>Gennaro, most evenings</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="about-media" data-parallax>
+      <div class="media-frame media-frame-tall" data-reveal-clip data-placeholder="deep">
+        <img class="media-img" src="images/about-portrait.jpg" alt="Gennaro and Danielle Costigliola" loading="lazy" onerror="this.remove()" />
+      </div>
+    </div>
+    <div class="about-copy">
+      <p class="kicker" data-reveal>Our Story</p>
+      <h2 class="section-title" data-reveal>From Bacoli to the Jersey Shore</h2>
+      <p data-reveal>
+        Gennaro Costigliola was sixteen when he left Bacoli — a small town on the Bay of Naples —
+        carrying thirty years of family cooking ahead of him before he even knew it. The recipes came
+        with him: pasta rolled by hand, sauces that are never rushed, seafood cooked the way it's
+        cooked along that coast.
+      </p>
+      <p data-reveal>
+        Today, alongside his wife Danielle, he brings that same Neapolitan table to Toms River.
+        Stop by most evenings and you'll find him doing what he's always done — walking the room,
+        checking on every table, making sure the night feels the way it did back home.
+      </p>
+      <a class="text-link" href="#reserve" data-reveal>Meet us at the table <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-head center">
+      <p class="kicker" data-reveal>In Their Words</p>
+      <h2 class="section-title" data-reveal>Loved, one table at a time</h2>
+      <p class="rating-line" data-reveal>4.5★ average across roughly 1,900 diners on the Jersey Shore</p>
+    </div>
+
+    <div class="testimonial-viewport">
+      <div class="testimonial-track" id="testimonialTrack">
+        <blockquote class="testimonial-card">
+          <p>“I found the best Italian restaurant.”</p>
+          <cite>Google Review</cite>
+        </blockquote>
+        <blockquote class="testimonial-card">
+          <p>“Food was fantastic and the service was extremely attentive.”</p>
+          <cite>Bernard C. — Google Review</cite>
+        </blockquote>
+        <blockquote class="testimonial-card">
+          <p>“The best Italian food, and service, in or around Toms River.”</p>
+          <cite>Google Review</cite>
+        </blockquote>
+        <blockquote class="testimonial-card">
+          <p>“Genaro comes to every table — it still feels like a family kitchen.”</p>
+          <cite>Google Review</cite>
+        </blockquote>
+        <blockquote class="testimonial-card">
+          <p>“Generous portions, and every sauce tastes like it took all day.”</p>
+          <cite>Google Review</cite>
+        </blockquote>
+        <!-- duplicated for seamless marquee loop -->
+        <blockquote class="testimonial-card" aria-hidden="true">
+          <p>“I found the best Italian restaurant.”</p>
+          <cite>Google Review</cite>
+        </blockquote>
+        <blockquote class="testimonial-card" aria-hidden="true">
+          <p>“Food was fantastic and the service was extremely attentive.”</p>
+          <cite>Bernard C. — Google Review</cite>
+        </blockquote>
+        <blockquote class="testimonial-card" aria-hidden="true">
+          <p>“The best Italian food, and service, in or around Toms River.”</p>
+          <cite>Google Review</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENU TEASER ============ -->
+  <section class="menu-teaser" id="menu">
+    <div class="section-head">
+      <p class="kicker" data-reveal>From the Kitchen</p>
+      <h2 class="section-title" data-reveal>A few of the table's favorites</h2>
+    </div>
+    <ul class="menu-list">
+      <li data-reveal><span class="dish">Stuffed Rigatoni alla Vodka</span><span class="dish-note">A guest favorite, made fresh to order</span></li>
+      <li data-reveal><span class="dish">Veal Saltimbocca</span><span class="dish-note">Prosciutto, sage, marsala — $20.95</span></li>
+      <li data-reveal><span class="dish">Linguine alle Vongole</span><span class="dish-note">Fresh clams, white wine, garlic — $15.95</span></li>
+      <li data-reveal><span class="dish">Chicken Scarpariello</span><span class="dish-note">Sweet & hot peppers, rosemary potatoes — $29.95</span></li>
+      <li data-reveal><span class="dish">Calamari Fritti</span><span class="dish-note">Lightly fried, marinara</span></li>
+    </ul>
+    <a class="btn btn-outline" href="https://www.ilgiardinello.com/menus/" target="_blank" rel="noopener" data-reveal>View Full Menu</a>
+  </section>
+
+  <!-- ============ CTA / RESERVE ============ -->
+  <section class="cta" id="reserve">
+    <div class="cta-inner">
+      <p class="kicker kicker-light" data-reveal>Join Us</p>
+      <h2 class="cta-title" data-reveal>The table is set.</h2>
+      <p class="cta-copy" data-reveal>Reservations are taken by phone — BYOB, and always worth the call.</p>
+      <div class="cta-actions" data-reveal>
+        <a class="btn btn-solid btn-lg" href="tel:+17322869111">Call (732) 286-9111</a>
+        <a class="btn btn-ghost-light btn-lg" href="https://order.online/store/il-giardinello-di-bacoli-toms-river-34806655" target="_blank" rel="noopener">Order Online</a>
+      </div>
+      <div class="cta-details" data-reveal>
+        <div>
+          <span class="label">Address</span>
+          <p>1232 Route 166<br />Stella Towne Center<br />Toms River, NJ 08753</p>
+        </div>
+        <div>
+          <span class="label">Hours</span>
+          <p>Tue–Fri, Sun · 5:00–8:30pm<br />Saturday · 5:00–9:00pm<br />Closed Monday</p>
+        </div>
+        <div>
+          <span class="label">Also</span>
+          <p>Off-Premise Catering<br />Private &amp; Semi-Private Dining</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="#hero" class="wordmark wordmark-footer">Il Giardinello <span class="wordmark-sub">Di&nbsp;Bacoli</span></a>
+    <p class="footer-address">1232 Route 166, Toms River, NJ 08753 &nbsp;·&nbsp; <a href="tel:+17322869111">(732) 286-9111</a></p>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="https://www.ilgiardinello.com/menus/" target="_blank" rel="noopener">Menus</a>
+      <a href="#about">At a Glance</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reserve">Catering</a>
+      <a href="#reserve">Directions</a>
+      <a href="#reserve">Contact</a>
+    </nav>
+    <p class="footer-fine">© <span id="year"></span> Il Giardinello Di Bacoli. Site content sourced from the restaurant's own listings; photography placeholders — replace with the restaurant's photography before launch.</p>
+  </div>
+</footer>
+
+<!-- Lenis — smooth momentum scrolling, paired with GSAP ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<!-- Three.js (ESM) is imported inside js/main.js -->
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
