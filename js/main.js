@@ -181,9 +181,9 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
    Shared texture helper: real photo first, procedural gradient fallback
    ------------------------------------------------------------------------- */
 const PLACEHOLDER_VARIANTS = {
-  warm: ["#F3E6D4", "#E3B692", "#A8532E"],
+  warm: ["#F3E6D4", "#D6B98A", "#8A6A45"],
   deep: ["#E9DCC5", "#8C7A63", "#2A2521"],
-  clay: ["#F0D9C4", "#C2794F", "#7C3B1F"],
+  clay: ["#F0D9C4", "#B99565", "#6B4E30"],
 };
 
 function proceduralTexture(variant = "warm", seed = 0) {
