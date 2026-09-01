@@ -42,3 +42,9 @@ server, which gives an AI-assisted IDE (or Claude) direct access to all Magic UI
 components for accurate, low-error code generation.
 
 - Source: https://magicui.design/docs/mcp
+
+### [`resources/react-bits-mcp.md`](resources/react-bits-mcp.md)
+**React Bits MCP (via shadcn)** — setup notes for pulling [React Bits](https://reactbits.dev/)
+components directly into a project through shadcn's registry/MCP tooling.
+
+- Source: https://reactbits.dev/
