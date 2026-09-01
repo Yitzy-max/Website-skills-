@@ -21,20 +21,36 @@ open space near the bottom third so the headline stays legible.
 
 Recommended: 2400×1400px or larger, landscape, compressed to ~300–500KB (JPG, quality ~80).
 
-## Gallery ("The Table" section)
-Editorial, varied crops — not a uniform grid. Mix close-up plating with room/atmosphere.
+## Gallery carousel ("The Table" section)
+A horizontal, draggable strip — up to ~12–15 small cards work well. Mix close-up
+plating with a couple of room/kitchen shots. Portrait crop (roughly 4:5) reads best.
 
 | Filename | Used for |
 |---|---|
-| `gallery-rigatoni-vodka.jpg` | Stuffed Rigatoni alla Vodka (large tile) |
-| `gallery-dining-room.jpg` | Dining room, set for evening |
-| `gallery-calamari.jpg` | Calamari Fritti |
-| `gallery-veal-saltimbocca.jpg` | Veal Saltimbocca |
-| `gallery-vongole.jpg` | Linguine alle Vongole |
-| `gallery-kitchen.jpg` | Kitchen / Gennaro at work (wide banner tile) |
+| `gallery-01-rigatoni-vodka.jpg` | Stuffed Rigatoni alla Vodka |
+| `gallery-02-calamari.jpg` | Calamari Fritti |
+| `gallery-03-veal-saltimbocca.jpg` | Veal Saltimbocca |
+| `gallery-04-dining-room.jpg` | The dining room |
+| `gallery-05-vongole.jpg` | Linguine alle Vongole |
+| `gallery-06-scarpariello.jpg` | Chicken Scarpariello |
+| `gallery-07-baked-clams.jpg` | Baked Clams Oreganato |
+| `gallery-08-veal-parm.jpg` | Veal Parmigiana |
+| `gallery-09-mussels.jpg` | Mussels Marinara |
+| `gallery-10-gnocchi.jpg` | Gnocchi Siciliano |
+| `gallery-11-chicken-francaise.jpg` | Chicken Francaise |
+| `gallery-12-kitchen.jpg` | Kitchen / Gennaro at work |
 
-Recommended: at least 1400px on the short side — these get a hover ripple effect, so
+Want more than 12? Duplicate a `<figure class="gallery-item">` block in the
+"GALLERY" section of `index.html`, give the `<img>` a new filename, and add that
+filename to this table — the carousel and drag/arrow scrolling need no other changes.
+
+Recommended: at least 1200px on the short side — these get a hover ripple effect, so
 sharp detail helps.
+
+## Parties & Catering section
+| Filename | Suggested shot |
+|---|---|
+| `parties-celebration.jpg` | A set table for a party/celebration — cake, a full table, a toast, etc. |
 
 ## About section
 | Filename | Suggested shot |

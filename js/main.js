@@ -178,12 +178,53 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
 })();
 
 /* -------------------------------------------------------------------------
+   Gallery carousel — mouse drag-to-scroll + arrow buttons. Plain DOM/CSS
+   (native scroll-snap), no GSAP dependency, so it works even if the GSAP
+   CDN failed to load.
+   ------------------------------------------------------------------------- */
+(function galleryCarousel() {
+  const root = document.getElementById("galleryCarousel");
+  const track = root && root.querySelector(".carousel-track");
+  if (!track) return;
+
+  const prevBtn = root.querySelector(".carousel-arrow-prev");
+  const nextBtn = root.querySelector(".carousel-arrow-next");
+  const step = () => Math.min(track.clientWidth * 0.7, 480);
+
+  prevBtn && prevBtn.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+  nextBtn && nextBtn.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+
+  let dragging = false, startX = 0, startScroll = 0, moved = false;
+
+  track.addEventListener("mousedown", (e) => {
+    dragging = true; moved = false;
+    startX = e.clientX;
+    startScroll = track.scrollLeft;
+    track.classList.add("is-dragging");
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    track.scrollLeft = startScroll - dx;
+  });
+  window.addEventListener("mouseup", () => {
+    dragging = false;
+    track.classList.remove("is-dragging");
+  });
+  // a drag shouldn't also fire the click-through on the dragged image
+  track.addEventListener("click", (e) => { if (moved) e.preventDefault(); }, true);
+})();
+
+/* -------------------------------------------------------------------------
    Shared texture helper: real photo first, procedural gradient fallback
    ------------------------------------------------------------------------- */
 const PLACEHOLDER_VARIANTS = {
-  warm: ["#F3E6D4", "#D6B98A", "#8A6A45"],
-  deep: ["#E9DCC5", "#8C7A63", "#2A2521"],
-  clay: ["#F0D9C4", "#B99565", "#6B4E30"],
+  warm:  ["#F3E6D4", "#D6B98A", "#8A6A45"],
+  deep:  ["#E9DCC5", "#8C7A63", "#2A2521"],
+  clay:  ["#F0D9C4", "#B99565", "#6B4E30"],
+  toast: ["#F5E3C0", "#DFA85C", "#9C6B2E"],
+  wine:  ["#EFDCC8", "#B97D5E", "#6E3C2C"],
 };
 
 function proceduralTexture(variant = "warm", seed = 0) {

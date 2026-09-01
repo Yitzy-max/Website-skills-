@@ -156,6 +156,8 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 }
 .media-frame[data-placeholder="clay"]::before { background: radial-gradient(120% 90% at 20% 15%, rgba(138,106,69,0.22), transparent 60%); }
 .media-frame[data-placeholder="deep"]::before { background: radial-gradient(120% 90% at 80% 20%, rgba(42,37,33,0.16), transparent 60%); }
+.media-frame[data-placeholder="toast"]::before { background: radial-gradient(120% 90% at 25% 20%, rgba(156,107,46,0.26), transparent 60%); }
+.media-frame[data-placeholder="wine"]::before { background: radial-gradient(120% 90% at 75% 25%, rgba(110,60,44,0.24), transparent 60%); }
 .media-img {
   position: relative; z-index: 1;
   width: 100%; height: 100%; object-fit: cover;
@@ -325,40 +327,97 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 }
 
 /* =========================================================================
-   GALLERY — editorial, uneven grid
+   GALLERY — a small, draggable horizontal carousel rather than a tall grid,
+   so browsing more food photos doesn't add page length. Native scroll-snap
+   for touch; js/main.js adds mouse-drag-to-scroll and the arrow buttons.
    ========================================================================= */
 .gallery { padding: 0 0 var(--section-pad-y); }
-.gallery .section-head { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+.gallery .section-head { margin-bottom: clamp(2rem, 5vw, 3rem); }
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: clamp(0.75rem, 1.6vw, 1.5rem);
-  padding: 0 var(--gutter);
-  max-width: 1600px; margin: 0 auto;
+.carousel { position: relative; }
+.carousel-track {
+  display: flex;
+  gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding: 0 var(--gutter) 0.75rem;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
 }
-.gallery-item { position: relative; }
+.carousel-track:active { cursor: grabbing; }
+.carousel-track.is-dragging { scroll-snap-type: none; }
+
+.gallery-item {
+  position: relative;
+  flex: none;
+  width: clamp(150px, 20vw, 220px);
+  scroll-snap-align: start;
+}
 .gallery-item .media-frame { aspect-ratio: 4 / 5; cursor: pointer; }
 .gallery-item figcaption {
-  margin-top: 0.85rem;
-  font-size: 0.8rem;
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
   letter-spacing: 0.03em;
   color: var(--ink-soft);
 }
 
-.span-a { grid-column: span 7; }
-.span-a .media-frame { aspect-ratio: 16 / 11; }
-.span-b { grid-column: span 5; }
-.span-c { grid-column: span 4; }
-.span-d { grid-column: span 4; }
-.span-e { grid-column: span 4; }
-.span-f { grid-column: span 12; }
-.span-f .media-frame { aspect-ratio: 21 / 9; }
+.carousel-arrow {
+  display: none;
+  position: absolute; top: 40%; transform: translateY(-50%);
+  width: 42px; height: 42px; border-radius: 999px;
+  align-items: center; justify-content: center;
+  background: var(--paper); border: 1px solid var(--line);
+  font-size: 1.3rem; color: var(--ink);
+  transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.carousel-arrow:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.carousel-arrow-prev { left: calc(var(--gutter) - 21px); }
+.carousel-arrow-next { right: calc(var(--gutter) - 21px); }
+
+@media (hover: hover) and (min-width: 860px) {
+  .carousel-arrow { display: flex; }
+}
+
+/* =========================================================================
+   PARTIES & CATERING — a compact banner, not a full section: one image,
+   one short paragraph, one CTA
+   ========================================================================= */
+.parties {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 4rem);
+  padding: 0 var(--gutter) var(--section-pad-y);
+  max-width: 1600px; margin: 0 auto;
+}
+.parties-media { height: clamp(220px, 32vh, 340px); }
+.parties-media.media-frame { border-radius: 4px; }
+.parties-copy p { color: var(--ink-soft); font-weight: 300; font-size: var(--fs-lg); margin-top: 1.25rem; max-width: 52ch; }
+.parties-copy .btn-outline { display: inline-flex; }
 
 @media (max-width: 860px) {
-  .span-a, .span-b, .span-c, .span-d, .span-e, .span-f { grid-column: span 12; }
-  .span-a .media-frame, .span-f .media-frame { aspect-ratio: 4/5; }
+  .parties { grid-template-columns: 1fr; text-align: center; }
+  .parties-copy p { margin-left: auto; margin-right: auto; }
 }
+
+/* =========================================================================
+   AWARD STRIP — a slim, quiet band; not a full padded section
+   ========================================================================= */
+.award-strip {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.5rem var(--gutter);
+  text-align: center;
+}
+.award-strip p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+.award-strip strong { color: var(--ink); font-weight: 500; }
+.award-icon { color: var(--accent); margin-right: 0.4rem; }
 
 /* =========================================================================
    ABOUT — pinned image / copy split
