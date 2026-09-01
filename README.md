@@ -1,6 +1,10 @@
 # Website Skills
 
-A collection of downloaded Claude skills for website/frontend design work.
+The codebase for a website, built with Claude Code. Three design skills are wired up
+as **always-on plugins** for this project (see [Auto-activation](#auto-activation)
+below), plus two MCP servers for pulling in ready-made UI components — so every
+Claude Code session opened in this repo automatically has UI/UX pattern databases,
+design-critique commands, and component registries available while coding.
 
 ## Skills
 
@@ -48,3 +52,36 @@ components for accurate, low-error code generation.
 components directly into a project through shadcn's registry/MCP tooling.
 
 - Source: https://reactbits.dev/
+
+## Auto-activation
+
+The three skills above are registered as real Claude Code **plugins** (not just files
+sitting in a folder) via a local marketplace, so they load automatically in every
+Claude Code session opened in this repo — no manual install step:
+
+- [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) — declares the
+  local marketplace `website-skills`, pointing at the three vendored plugin sources.
+- [`.claude/settings.json`](.claude/settings.json) — registers that marketplace
+  (`extraKnownMarketplaces`) and enables all three plugins by default
+  (`enabledPlugins`), checked into git so it applies for every contributor. This also
+  makes `impeccable`'s agents and hooks work correctly (its hooks reference
+  `${CLAUDE_PLUGIN_ROOT}`, which only resolves for a properly installed plugin, not a
+  bare copied file).
+
+Verify anytime with `claude plugin list` (should show all three as `enabled`,
+`Scope: project`) or `claude plugin details <name>@website-skills` for a full
+component breakdown (skills/agents/hooks).
+
+### MCP servers
+
+[`.mcp.json`](.mcp.json) registers two MCP servers, auto-approved for this project via
+`enableAllProjectMcpServers` in `.claude/settings.json`:
+
+- **`shadcn`** — `npx shadcn@latest mcp`, used together with
+  [`components.json`](components.json)'s `@react-bits` registry entry to pull
+  [React Bits](https://reactbits.dev/) components on request.
+- **`magicuidesign-mcp`** — `npx @magicuidesign/mcp@latest`, for pulling
+  [Magic UI](https://magicui.design/) components on request.
+
+`package.json` here just pins the `shadcn` CLI as a dev dependency so the `shadcn` MCP
+server starts quickly; it isn't the site's own framework/dependency list.
