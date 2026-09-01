@@ -33,3 +33,12 @@ typography, animation, and visual detail. Auto-invoked for frontend work.
 
 - Source: https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design
 - Also listed at: https://claude.com/plugins/frontend-design
+
+## Resources
+
+### [`resources/magic-ui-mcp.md`](resources/magic-ui-mcp.md)
+**Magic UI MCP Server** — setup notes for Magic UI's [Model Context Protocol](https://modelcontextprotocol.com/)
+server, which gives an AI-assisted IDE (or Claude) direct access to all Magic UI
+components for accurate, low-error code generation.
+
+- Source: https://magicui.design/docs/mcp
