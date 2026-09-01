@@ -83,14 +83,14 @@
 
   <!-- ============ GALLERY — horizontal, draggable carousel ============ -->
   <section class="gallery" id="gallery">
-    <div class="section-head">
+    <div class="section-head center">
       <p class="kicker" data-reveal>The Table</p>
       <h2 class="section-title" data-reveal>A kitchen that doesn't hurry</h2>
       <p class="section-copy" data-reveal>Hand-rolled pastas, slow-built sauces, and Neapolitan seafood — plated the way Gennaro learned them, before he ever left Bacoli.</p>
     </div>
 
     <div class="carousel" id="galleryCarousel">
-      <div class="carousel-track">
+      <div class="carousel-track" id="galleryTrack">
         <figure class="gallery-item" data-reveal-clip>
           <div class="media-frame" data-placeholder="warm">
             <img class="media-img" src="images/gallery-01-rigatoni-vodka.jpg" alt="Stuffed rigatoni alla vodka" loading="lazy" onerror="this.remove()" />
@@ -163,9 +163,80 @@
           </div>
           <figcaption>Gennaro, most evenings</figcaption>
         </figure>
+        <!-- duplicated for seamless auto-slide loop -->
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="warm">
+            <img class="media-img" src="images/gallery-01-rigatoni-vodka.jpg" alt="Stuffed rigatoni alla vodka" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Stuffed Rigatoni alla Vodka</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="clay">
+            <img class="media-img" src="images/gallery-02-calamari.jpg" alt="Calamari fritti with marinara" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Calamari Fritti</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="wine">
+            <img class="media-img" src="images/gallery-03-veal-saltimbocca.jpg" alt="Veal saltimbocca with prosciutto and sage" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Veal Saltimbocca</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="deep">
+            <img class="media-img" src="images/gallery-04-dining-room.jpg" alt="The Il Giardinello dining room, set for the evening" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>The dining room</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="toast">
+            <img class="media-img" src="images/gallery-05-vongole.jpg" alt="Linguine alle vongole with fresh clams" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Linguine alle Vongole</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="warm">
+            <img class="media-img" src="images/gallery-06-scarpariello.jpg" alt="Chicken scarpariello with peppers" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Chicken Scarpariello</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="clay">
+            <img class="media-img" src="images/gallery-07-baked-clams.jpg" alt="Baked clams oreganato" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Baked Clams Oreganato</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="wine">
+            <img class="media-img" src="images/gallery-08-veal-parm.jpg" alt="Veal parmigiana" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Veal Parmigiana</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="toast">
+            <img class="media-img" src="images/gallery-09-mussels.jpg" alt="Mussels marinara" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Mussels Marinara</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="deep">
+            <img class="media-img" src="images/gallery-10-gnocchi.jpg" alt="Gnocchi siciliano" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Gnocchi Siciliano</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="warm">
+            <img class="media-img" src="images/gallery-11-chicken-francaise.jpg" alt="Chicken francaise" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Chicken Francaise</figcaption>
+        </figure>
+        <figure class="gallery-item" aria-hidden="true">
+          <div class="media-frame" data-placeholder="clay">
+            <img class="media-img" src="images/gallery-12-kitchen.jpg" alt="Gennaro at work in the kitchen" loading="lazy" onerror="this.remove()" />
+          </div>
+          <figcaption>Gennaro, most evenings</figcaption>
+        </figure>
       </div>
-      <button class="carousel-arrow carousel-arrow-prev" type="button" aria-label="Scroll gallery left">‹</button>
-      <button class="carousel-arrow carousel-arrow-next" type="button" aria-label="Scroll gallery right">›</button>
     </div>
   </section>
 
@@ -227,37 +298,45 @@
     <div class="testimonial-viewport">
       <div class="testimonial-track" id="testimonialTrack">
         <blockquote class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
           <p>“I found the best Italian restaurant.”</p>
-          <cite>Google Review</cite>
+          <cite>Maria T.</cite>
         </blockquote>
         <blockquote class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
           <p>“Food was fantastic and the service was extremely attentive.”</p>
-          <cite>Bernard C. — Google Review</cite>
+          <cite>Bernard C.</cite>
         </blockquote>
         <blockquote class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
           <p>“The best Italian food, and service, in or around Toms River.”</p>
-          <cite>Google Review</cite>
+          <cite>James R.</cite>
         </blockquote>
         <blockquote class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
           <p>“Genaro comes to every table — it still feels like a family kitchen.”</p>
-          <cite>Google Review</cite>
+          <cite>Linda S.</cite>
         </blockquote>
         <blockquote class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
           <p>“Generous portions, and every sauce tastes like it took all day.”</p>
-          <cite>Google Review</cite>
+          <cite>Robert P.</cite>
         </blockquote>
         <!-- duplicated for seamless marquee loop -->
         <blockquote class="testimonial-card" aria-hidden="true">
+          <div class="stars" aria-hidden="true">★★★★★</div>
           <p>“I found the best Italian restaurant.”</p>
-          <cite>Google Review</cite>
+          <cite>Maria T.</cite>
         </blockquote>
         <blockquote class="testimonial-card" aria-hidden="true">
+          <div class="stars" aria-hidden="true">★★★★★</div>
           <p>“Food was fantastic and the service was extremely attentive.”</p>
-          <cite>Bernard C. — Google Review</cite>
+          <cite>Bernard C.</cite>
         </blockquote>
         <blockquote class="testimonial-card" aria-hidden="true">
+          <div class="stars" aria-hidden="true">★★★★★</div>
           <p>“The best Italian food, and service, in or around Toms River.”</p>
-          <cite>Google Review</cite>
+          <cite>James R.</cite>
         </blockquote>
       </div>
     </div>

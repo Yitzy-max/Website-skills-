@@ -160,61 +160,22 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
 })();
 
 /* -------------------------------------------------------------------------
-   Testimonial marquee — continuous, pauses on hover/focus
+   Marquee helper — continuous auto-slide, pauses gently on hover so a card
+   or photo can actually be read/looked at. The track's content must already
+   be duplicated in the HTML (aria-hidden on the copy) for a seamless loop;
+   this just animates it from 0 to -50% and repeats.
    ------------------------------------------------------------------------- */
-(function marquee() {
-  const track = document.getElementById("testimonialTrack");
+function initMarquee(track, duration) {
   if (!track || reducedMotion || !gsapReady) return;
-
-  const tween = gsap.to(track, {
-    xPercent: -50,
-    duration: 34,
-    ease: "none",
-    repeat: -1,
-  });
-
+  const tween = gsap.to(track, { xPercent: -50, duration, ease: "none", repeat: -1 });
   track.addEventListener("mouseenter", () => tween.timeScale(0.15));
   track.addEventListener("mouseleave", () => tween.timeScale(1));
-})();
+}
 
-/* -------------------------------------------------------------------------
-   Gallery carousel — mouse drag-to-scroll + arrow buttons. Plain DOM/CSS
-   (native scroll-snap), no GSAP dependency, so it works even if the GSAP
-   CDN failed to load.
-   ------------------------------------------------------------------------- */
-(function galleryCarousel() {
-  const root = document.getElementById("galleryCarousel");
-  const track = root && root.querySelector(".carousel-track");
-  if (!track) return;
-
-  const prevBtn = root.querySelector(".carousel-arrow-prev");
-  const nextBtn = root.querySelector(".carousel-arrow-next");
-  const step = () => Math.min(track.clientWidth * 0.7, 480);
-
-  prevBtn && prevBtn.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
-  nextBtn && nextBtn.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
-
-  let dragging = false, startX = 0, startScroll = 0, moved = false;
-
-  track.addEventListener("mousedown", (e) => {
-    dragging = true; moved = false;
-    startX = e.clientX;
-    startScroll = track.scrollLeft;
-    track.classList.add("is-dragging");
-  });
-  window.addEventListener("mousemove", (e) => {
-    if (!dragging) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 4) moved = true;
-    track.scrollLeft = startScroll - dx;
-  });
-  window.addEventListener("mouseup", () => {
-    dragging = false;
-    track.classList.remove("is-dragging");
-  });
-  // a drag shouldn't also fire the click-through on the dragged image
-  track.addEventListener("click", (e) => { if (moved) e.preventDefault(); }, true);
-})();
+initMarquee(document.getElementById("testimonialTrack"), 34);
+// slower and longer — this strip has more than double the cards, and a
+// leisurely pace suits "a kitchen that doesn't hurry"
+initMarquee(document.getElementById("galleryTrack"), 60);
 
 /* -------------------------------------------------------------------------
    Shared texture helper: real photo first, procedural gradient fallback
