@@ -8,29 +8,35 @@ design-critique commands, and component registries available while coding.
 
 ## The site
 
-A static, image-forward landing page for **[Il Giardinello Di Bacoli](https://www.ilgiardinello.com/)**,
-a family-run Neapolitan ristorante in Toms River, NJ — built as the first real page
-in this repo, using the skills and MCP tooling above.
+A static, cinematic, image-forward landing page for **Caffeine Heaven**, a dim,
+unhurried neighborhood coffee shop — built as the first real page in this repo, using
+the skills and MCP tooling above.
 
 - `index.html` / `css/style.css` / `js/main.js` — no framework, no build step; open
   `index.html` directly or serve the repo root.
+- **Design**: a full dark theme (warm near-black throughout, not just the hero) with
+  one restrained copper/amber accent and gold used only as a rare glint — Fraunces
+  for display type, Manrope for everything else. The hero plays on the brand's own
+  pun: soft CSS "godray" light drifting through the dark, echoing steam catching
+  light in a dim room.
 - **Motion**: [Lenis](https://github.com/darkroomengineering/lenis) momentum scroll +
-  GSAP `ScrollTrigger` for reveals, parallax, and a pinned-feeling hero; Three.js for
-  a custom-shader hero image crossfade and a hover-ripple distortion on gallery
-  thumbnails. Every WebGL/GSAP feature is loaded via a resilient bootstrap — if a CDN
-  is ever unreachable for a visitor, the page falls back to fully static (all content
-  visible, no animation) instead of breaking.
-- **Content is real**, pulled from the restaurant's own site, Google Business listing,
-  and public review platforms: address, phone, hours, owner story (Gennaro & Danielle
-  Costigliola), real menu items/prices, and excerpted review quotes. The site's own
-  navigation order (Home / Menus / At a Glance / Gallery / Off-Premise Catering /
-  Directions / Contact Us) is mirrored in the header dropdown.
-- **Photography is placeholder** — direct web access to fetch the restaurant's actual
-  photos wasn't available in the build environment, and using someone else's
-  copyrighted photography without rights wouldn't be right regardless. Every image
-  slot has a soft procedural gradient placeholder and upgrades automatically the
+  GSAP `ScrollTrigger` for reveals, parallax, and a scroll-scrubbed hero exit; Three.js
+  for a custom-shader hero image crossfade and a hover-ripple distortion on the
+  atmosphere gallery. Every WebGL/GSAP feature is loaded via a resilient bootstrap —
+  if a CDN is ever unreachable for a visitor, the page falls back to fully static (all
+  content visible, no animation) instead of breaking.
+- **Content** is built from the brand brief: a chill, aesthetic, quiet café that's
+  equally good for deep work (wifi, outlets, quiet corners), families (a kids'
+  corner), and readers/dates (a patio, a quiet street) — laid out as three alternating
+  editorial rows rather than a generic three-card grid. Menu items, hours, and address
+  are marked as drafts/placeholders (see the `TODO` comments in `index.html`) —
+  confirm the real details before launch. Testimonials are placeholder copy written
+  in the brand voice, not real reviews — swap them in before launch.
+- **Photography is placeholder** — every image slot has a soft procedural gradient
+  placeholder tuned to the brand's dark palette, and upgrades automatically the
   moment a real photo is dropped in — see [`images/README.md`](images/README.md) for
-  the exact filenames expected.
+  the exact filenames expected. The hero video slot works the same way — see
+  [`videos/README.md`](videos/README.md) for the concept and generation notes.
 
 ## Skills
 

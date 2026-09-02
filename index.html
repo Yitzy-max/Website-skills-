@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Il Giardinello Di Bacoli — Neapolitan Ristorante, Toms River NJ</title>
-<meta name="description" content="Il Giardinello Di Bacoli — a family-run Neapolitan ristorante in Toms River, New Jersey. Hand-rolled pastas, slow sauces, and thirty years of table from Bacoli, Italy." />
+<title>Caffeine Heaven — A Quiet Corner of Heaven</title>
+<meta name="description" content="Caffeine Heaven — a dim, unhurried coffee shop built for staying. Work, read, bring the kids, or just breathe, over genuinely good coffee and fresh pastries." />
 
-<!-- Editorial type: a delicate Garamond-lineage display serif for headlines, a quiet grotesque for everything else -->
+<!-- Editorial type: a warm, soft-serif display face (coffee/bakery-brand energy)
+     paired with a clean modern grotesque for everything else. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -21,8 +22,8 @@
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
     <a href="#hero" class="wordmark">
-      <span class="wordmark-mark">Il Giardinello</span>
-      <span class="wordmark-sub">Di&nbsp;Bacoli</span>
+      <span class="wordmark-mark">Caffeine</span>
+      <span class="wordmark-sub">Heaven</span>
     </a>
 
     <button class="nav-trigger" id="navTrigger" aria-expanded="false" aria-controls="navPanel">
@@ -31,23 +32,22 @@
     </button>
   </div>
 
-  <!-- Dropdown mirrors the restaurant's own site order: Home / Menus / At a Glance / Gallery / Off-Premise Catering / Directions / Contact Us -->
   <div class="nav-panel" id="navPanel" aria-hidden="true">
     <nav class="nav-panel-inner" aria-label="Primary">
       <ol class="nav-list">
         <li><span class="nav-index">01</span><a href="#hero">Home</a></li>
-        <li><span class="nav-index">02</span><a href="https://www.ilgiardinello.com/menus/" target="_blank" rel="noopener">Menus</a></li>
-        <li><span class="nav-index">03</span><a href="#about">At a Glance</a></li>
-        <li><span class="nav-index">04</span><a href="#gallery">Gallery</a></li>
-        <li><span class="nav-index">05</span><a href="#parties">Off-Premise Catering</a></li>
-        <li><span class="nav-index">06</span><a href="#reserve">Directions</a></li>
-        <li><span class="nav-index">07</span><a href="#reserve">Contact Us</a></li>
+        <li><span class="nav-index">02</span><a href="#why">Why Stay</a></li>
+        <li><span class="nav-index">03</span><a href="#atmosphere">Atmosphere</a></li>
+        <li><span class="nav-index">04</span><a href="#menu">Menu</a></li>
+        <li><span class="nav-index">05</span><a href="#visit">Visit</a></li>
       </ol>
       <div class="nav-panel-meta">
-        <p class="nav-meta-label">Visit</p>
-        <p>1232 Route&nbsp;166<br />Stella Towne Center<br />Toms River, NJ 08753</p>
-        <p><a href="tel:+17322869111">(732) 286-9111</a></p>
-        <p class="nav-meta-hours">Tue–Fri, Sun&nbsp;5–8:30pm<br />Saturday&nbsp;5–9pm · Closed&nbsp;Monday</p>
+        <p class="nav-meta-label">Find Us</p>
+        <!-- TODO: replace with the exact street address once confirmed -->
+        <p>Tucked into a quiet corner of the neighborhood.</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions →</a></p>
+        <!-- TODO: confirm real hours before launch -->
+        <p class="nav-meta-hours">Mon–Fri&nbsp;6:30am–7pm<br />Sat–Sun&nbsp;7am–6pm</p>
       </div>
     </nav>
   </div>
@@ -61,330 +61,236 @@
     <!-- Real hero video (see videos/README.md). Falls back to the WebGL
          canvas above if the file isn't there yet or fails to load. -->
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true" onerror="this.style.display='none'">
-      <source src="videos/hero-table.mp4" type="video/mp4" />
+      <source src="videos/hero-steam.mp4" type="video/mp4" />
     </video>
+    <div class="hero-godrays" aria-hidden="true"></div>
     <div class="hero-veil"></div>
     <div class="hero-content">
-      <p class="kicker kicker-light" data-reveal>Toms River · New Jersey</p>
+      <p class="kicker" data-reveal>Coffee · Quiet · Room to Breathe</p>
       <h1 class="hero-title" data-reveal>
-        <span class="hero-title-line">Il</span>
-        <span class="hero-title-line">Giardinello</span>
+        <span class="hero-title-line">Caffeine</span>
+        <span class="hero-title-line">Heaven</span>
       </h1>
-      <p class="hero-sub" data-reveal>Neapolitan cooking, three decades in the&nbsp;making.</p>
+      <p class="hero-sub" data-reveal>A dim, unhurried coffee shop built for staying — to work, to read, to bring the kids, or just be.</p>
       <div class="hero-actions" data-reveal>
-        <a class="btn btn-solid" href="tel:+17322869111">Reserve</a>
-        <a class="btn btn-ghost-light" href="https://order.online/store/il-giardinello-di-bacoli-toms-river-34806655" target="_blank" rel="noopener">Order&nbsp;Online</a>
+        <a class="btn btn-solid" href="#menu">See the Menu</a>
+        <a class="btn btn-ghost-light" href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions</a>
       </div>
     </div>
     <div class="hero-scroll-cue" aria-hidden="true"><span class="cue-line"></span>Scroll</div>
   </section>
 
-  <!-- ============ STATEMENT ============ -->
+  <!-- ============ STATEMENT (bridge line out of the hero) ============ -->
   <section class="statement">
     <p class="statement-line" data-reveal-mask>
-      Every plate begins the way it did in Bacoli — with time, with family, and with nothing rushed.
+      This isn't somewhere you pass through on the way to somewhere else. It's the somewhere else.
     </p>
   </section>
 
-  <!-- ============ GALLERY — horizontal, draggable carousel ============ -->
-  <section class="gallery" id="gallery">
+  <!-- ============ WHY STAY — three alternating editorial rows ============ -->
+  <section class="benefits" id="why">
     <div class="section-head center">
-      <p class="kicker" data-reveal>The Table</p>
-      <h2 class="section-title" data-reveal>A kitchen that doesn't hurry</h2>
-      <p class="section-copy" data-reveal>Hand-rolled pastas, slow-built sauces, and Neapolitan seafood — plated the way Gennaro learned them, before he ever left Bacoli.</p>
+      <p class="kicker" data-reveal>Three Reasons to Stay</p>
+      <h2 class="section-title" data-reveal>Built for lingering, not just for lattes</h2>
+      <p class="section-copy" data-reveal>Fast wifi and quiet corners for the ones working. A play corner for the kids. A patio out front for everyone else. Caffeine Heaven was designed around staying, not rushing.</p>
     </div>
 
-    <div class="carousel" id="galleryCarousel">
-      <div class="carousel-track" id="galleryTrack">
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="warm">
-            <img class="media-img" src="images/gallery-01-rigatoni-vodka.jpg" alt="Stuffed rigatoni alla vodka" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Stuffed Rigatoni alla Vodka</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="clay">
-            <img class="media-img" src="images/gallery-02-calamari.jpg" alt="Calamari fritti with marinara" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Calamari Fritti</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="wine">
-            <img class="media-img" src="images/gallery-03-veal-saltimbocca.jpg" alt="Veal saltimbocca with prosciutto and sage" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Veal Saltimbocca</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="deep">
-            <img class="media-img" src="images/gallery-04-dining-room.jpg" alt="The Il Giardinello dining room, set for the evening" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>The dining room</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="toast">
-            <img class="media-img" src="images/gallery-05-vongole.jpg" alt="Linguine alle vongole with fresh clams" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Linguine alle Vongole</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="warm">
-            <img class="media-img" src="images/gallery-06-scarpariello.jpg" alt="Chicken scarpariello with peppers" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Chicken Scarpariello</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="clay">
-            <img class="media-img" src="images/gallery-07-baked-clams.jpg" alt="Baked clams oreganato" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Baked Clams Oreganato</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="wine">
-            <img class="media-img" src="images/gallery-08-veal-parm.jpg" alt="Veal parmigiana" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Veal Parmigiana</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="toast">
-            <img class="media-img" src="images/gallery-09-mussels.jpg" alt="Mussels marinara" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Mussels Marinara</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="deep">
-            <img class="media-img" src="images/gallery-10-gnocchi.jpg" alt="Gnocchi siciliano" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Gnocchi Siciliano</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="warm">
-            <img class="media-img" src="images/gallery-11-chicken-francaise.jpg" alt="Chicken francaise" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Chicken Francaise</figcaption>
-        </figure>
-        <figure class="gallery-item" data-reveal-clip>
-          <div class="media-frame" data-placeholder="clay">
-            <img class="media-img" src="images/gallery-12-kitchen.jpg" alt="Gennaro at work in the kitchen" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Gennaro, most evenings</figcaption>
-        </figure>
-        <!-- duplicated for seamless auto-slide loop -->
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="warm">
-            <img class="media-img" src="images/gallery-01-rigatoni-vodka.jpg" alt="Stuffed rigatoni alla vodka" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Stuffed Rigatoni alla Vodka</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="clay">
-            <img class="media-img" src="images/gallery-02-calamari.jpg" alt="Calamari fritti with marinara" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Calamari Fritti</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="wine">
-            <img class="media-img" src="images/gallery-03-veal-saltimbocca.jpg" alt="Veal saltimbocca with prosciutto and sage" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Veal Saltimbocca</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="deep">
-            <img class="media-img" src="images/gallery-04-dining-room.jpg" alt="The Il Giardinello dining room, set for the evening" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>The dining room</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="toast">
-            <img class="media-img" src="images/gallery-05-vongole.jpg" alt="Linguine alle vongole with fresh clams" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Linguine alle Vongole</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="warm">
-            <img class="media-img" src="images/gallery-06-scarpariello.jpg" alt="Chicken scarpariello with peppers" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Chicken Scarpariello</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="clay">
-            <img class="media-img" src="images/gallery-07-baked-clams.jpg" alt="Baked clams oreganato" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Baked Clams Oreganato</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="wine">
-            <img class="media-img" src="images/gallery-08-veal-parm.jpg" alt="Veal parmigiana" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Veal Parmigiana</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="toast">
-            <img class="media-img" src="images/gallery-09-mussels.jpg" alt="Mussels marinara" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Mussels Marinara</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="deep">
-            <img class="media-img" src="images/gallery-10-gnocchi.jpg" alt="Gnocchi siciliano" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Gnocchi Siciliano</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="warm">
-            <img class="media-img" src="images/gallery-11-chicken-francaise.jpg" alt="Chicken francaise" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Chicken Francaise</figcaption>
-        </figure>
-        <figure class="gallery-item" aria-hidden="true">
-          <div class="media-frame" data-placeholder="clay">
-            <img class="media-img" src="images/gallery-12-kitchen.jpg" alt="Gennaro at work in the kitchen" loading="lazy" onerror="this.remove()" />
-          </div>
-          <figcaption>Gennaro, most evenings</figcaption>
-        </figure>
+    <div class="benefit-row">
+      <div class="benefit-media media-frame" data-reveal-clip data-placeholder="roast">
+        <img class="media-img" src="images/benefit-work.jpg" alt="A quiet worktable at Caffeine Heaven, laptop and coffee" loading="lazy" onerror="this.remove()" />
+      </div>
+      <div class="benefit-copy">
+        <p class="kicker" data-reveal>For the Deep-Focus Crowd</p>
+        <h3 class="benefit-title" data-reveal>Order a second cup. Stay as long as you like.</h3>
+        <p data-reveal>Fast wifi, plenty of outlets, and tables built for laptops and long to-do lists. Quiet corners for calls, communal tables for company, and coffee that keeps up with a whole afternoon of work.</p>
+      </div>
+    </div>
+
+    <div class="benefit-row benefit-row--reverse">
+      <div class="benefit-media media-frame" data-reveal-clip data-placeholder="cream">
+        <img class="media-img" src="images/benefit-family.jpg" alt="A cozy kids' corner with toys at Caffeine Heaven" loading="lazy" onerror="this.remove()" />
+      </div>
+      <div class="benefit-copy">
+        <p class="kicker" data-reveal>Kids Welcome</p>
+        <h3 class="benefit-title" data-reveal>A corner for them. A quiet minute for you.</h3>
+        <p data-reveal>A dedicated play corner keeps little ones busy while you finish an errand list — or just finish your coffee while it's still hot. Come for the chaos, leave with ten minutes of peace.</p>
+      </div>
+    </div>
+
+    <div class="benefit-row">
+      <div class="benefit-media media-frame" data-reveal-clip data-placeholder="dusk">
+        <img class="media-img" src="images/benefit-patio.jpg" alt="Outdoor patio seating at Caffeine Heaven at dusk" loading="lazy" onerror="this.remove()" />
+      </div>
+      <div class="benefit-copy">
+        <p class="kicker" data-reveal>Books, Dates &amp; Slow Afternoons</p>
+        <h3 class="benefit-title" data-reveal>Some of the best conversations start over a second espresso.</h3>
+        <p data-reveal>Tucked into a quiet street, with a patio out front for the days worth sitting outside. It's where a first date turns into a second, and a chapter turns into the whole book.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ PARTIES & CATERING ============ -->
-  <section class="parties" id="parties">
-    <div class="media-frame parties-media" data-reveal-clip data-placeholder="toast">
-      <img class="media-img" src="images/parties-celebration.jpg" alt="A celebration table at Il Giardinello" loading="lazy" onerror="this.remove()" />
+  <!-- ============ ATMOSPHERE — marquee gallery ============ -->
+  <section class="atmosphere" id="atmosphere">
+    <div class="section-head center">
+      <p class="kicker" data-reveal>The Room</p>
+      <h2 class="section-title" data-reveal>Low light, good chairs, better coffee</h2>
+      <p class="section-copy" data-reveal>A peek at the space — dim lighting, warm wood, and the small details that make it worth staying in.</p>
     </div>
-    <div class="parties-copy">
-      <p class="kicker" data-reveal>Celebrate With Us</p>
-      <h2 class="section-title" data-reveal>Parties, catering, and everything in between</h2>
-      <p data-reveal>
-        From birthdays and bridal showers to retirement dinners and corporate gatherings, Il Giardinello
-        opens its private and semi-private dining rooms for the celebrations that matter — plus
-        off-premise catering and trays to go, for whenever the party's happening somewhere else.
-      </p>
-      <a class="btn btn-outline" href="tel:+17322869111" data-reveal>Inquire About Your Event</a>
+
+    <div class="carousel" id="atmosphereCarousel">
+      <div class="carousel-track" id="atmosphereTrack">
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-01-latte-art.jpg" alt="Latte art on a flat white" loading="lazy" onerror="this.remove()" /></div><figcaption>A flat white, done right</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-02-interior-wide.jpg" alt="Wide shot of the dim, warm interior" loading="lazy" onerror="this.remove()" /></div><figcaption>The main room</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-03-pastry-case.jpg" alt="Pastry case with croissants and buns" loading="lazy" onerror="this.remove()" /></div><figcaption>Fresh, every morning</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="dusk"><img class="media-img" src="images/gallery-04-reading-nook.jpg" alt="A quiet reading nook with a book and cup" loading="lazy" onerror="this.remove()" /></div><figcaption>The reading nook</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-05-kids-corner.jpg" alt="The kids' corner with toys and books" loading="lazy" onerror="this.remove()" /></div><figcaption>The kids' corner</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-06-patio-dusk.jpg" alt="Outdoor patio strung with warm lights at dusk" loading="lazy" onerror="this.remove()" /></div><figcaption>The patio, at dusk</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-07-pour-over.jpg" alt="A pour-over coffee being brewed" loading="lazy" onerror="this.remove()" /></div><figcaption>Brewed to order</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="dusk"><img class="media-img" src="images/gallery-08-window-seat.jpg" alt="A window seat with soft daylight" loading="lazy" onerror="this.remove()" /></div><figcaption>The window seat</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-09-beans.jpg" alt="Fresh roasted coffee beans" loading="lazy" onerror="this.remove()" /></div><figcaption>Roasted with care</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-10-counter.jpg" alt="The espresso bar and counter" loading="lazy" onerror="this.remove()" /></div><figcaption>The bar</figcaption></figure>
+        <!-- duplicated for a seamless auto-slide loop -->
+        <figure class="gallery-item" aria-hidden="true"><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-01-latte-art.jpg" alt="" loading="lazy" onerror="this.remove()" /></div><figcaption>A flat white, done right</figcaption></figure>
+        <figure class="gallery-item" aria-hidden="true"><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-02-interior-wide.jpg" alt="" loading="lazy" onerror="this.remove()" /></div><figcaption>The main room</figcaption></figure>
+        <figure class="gallery-item" aria-hidden="true"><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-03-pastry-case.jpg" alt="" loading="lazy" onerror="this.remove()" /></div><figcaption>Fresh, every morning</figcaption></figure>
+        <figure class="gallery-item" aria-hidden="true"><div class="media-frame" data-placeholder="dusk"><img class="media-img" src="images/gallery-04-reading-nook.jpg" alt="" loading="lazy" onerror="this.remove()" /></div><figcaption>The reading nook</figcaption></figure>
+        <figure class="gallery-item" aria-hidden="true"><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-05-kids-corner.jpg" alt="" loading="lazy" onerror="this.remove()" /></div><figcaption>The kids' corner</figcaption></figure>
+      </div>
     </div>
   </section>
 
-  <!-- ============ ABOUT ============ -->
-  <section class="about" id="about">
+  <!-- ============ OUR STORY ============ -->
+  <section class="about" id="story">
     <div class="about-media" data-parallax>
-      <div class="media-frame media-frame-tall" data-reveal-clip data-placeholder="deep">
-        <img class="media-img" src="images/about-portrait.jpg" alt="Gennaro and Danielle Costigliola" loading="lazy" onerror="this.remove()" />
+      <div class="media-frame media-frame-tall" data-reveal-clip data-placeholder="dusk">
+        <img class="media-img" src="images/story-interior.jpg" alt="A dim, warm corner of the Caffeine Heaven dining room" loading="lazy" onerror="this.remove()" />
       </div>
     </div>
     <div class="about-copy">
       <p class="kicker" data-reveal>Our Story</p>
-      <h2 class="section-title" data-reveal>From Bacoli to the Jersey Shore</h2>
+      <h2 class="section-title" data-reveal>Built to be a reason to stay</h2>
       <p data-reveal>
-        Gennaro Costigliola was sixteen when he left Bacoli — a small town on the Bay of Naples —
-        carrying thirty years of family cooking ahead of him before he even knew it. The recipes came
-        with him: pasta rolled by hand, sauces that are never rushed, seafood cooked the way it's
-        cooked along that coast.
+        Caffeine Heaven started with a simple idea: a coffee shop should be somewhere worth
+        staying, not just stopping by. Low light, good chairs, and coffee that's actually
+        good — not because it's trendy, but because it should be.
       </p>
       <p data-reveal>
-        Today, alongside his wife Danielle, he brings that same Neapolitan table to Toms River.
-        Stop by most evenings and you'll find him doing what he's always done — walking the room,
-        checking on every table, making sure the night feels the way it did back home.
+        So that's what we built: a dim, comfortable corner of the neighborhood where the wifi
+        works, the espresso's dialed in, a play corner keeps the kids happy, and nobody's
+        rushing you out the door.
       </p>
-      <a class="text-link" href="#reserve" data-reveal>Meet us at the table <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="#menu" data-reveal>See what's brewing <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
-  <!-- ============ AWARD STRIP ============ -->
-  <section class="award-strip" data-reveal>
-    <p><span class="award-icon" aria-hidden="true">★</span> <strong>2025 Community Choice Award</strong> — Best Italian Restaurant in Ocean County, two years running. Thank you, Ocean County.</p>
+  <!-- ============ AMENITIES STRIP ============ -->
+  <section class="amenity-strip" data-reveal>
+    <p>
+      <strong>Free Wifi</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Outlets at Every Table</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Kids' Corner</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Dog-Friendly Patio</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Open Every Day</strong>
+    </p>
+  </section>
+
+  <!-- ============ MENU TEASER ============ -->
+  <section class="menu-teaser" id="menu">
+    <div class="section-head center">
+      <p class="kicker" data-reveal>From the Bar</p>
+      <h2 class="section-title" data-reveal>What to order first</h2>
+    </div>
+    <ul class="menu-list">
+      <li data-reveal><span class="dish">Cortado</span><span class="dish-note">Double shot, steamed milk, no foam</span></li>
+      <li data-reveal><span class="dish">Seasonal Oat Latte</span><span class="dish-note">Rotates with what's in season</span></li>
+      <li data-reveal><span class="dish">Pour-Over</span><span class="dish-note">Single-origin, brewed to order</span></li>
+      <li data-reveal><span class="dish">Butter Croissant</span><span class="dish-note">Baked daily, always warm by morning</span></li>
+      <li data-reveal><span class="dish">Cardamom Bun</span><span class="dish-note">A quiet favorite</span></li>
+    </ul>
+    <a class="btn btn-outline" href="#visit" data-reveal>Come Try the Full Menu</a>
   </section>
 
   <!-- ============ TESTIMONIALS ============ -->
+  <!-- Placeholder quotes, written in the brand voice — swap in real customer
+       reviews before launch. -->
   <section class="testimonials" id="testimonials">
     <div class="section-head center">
       <p class="kicker" data-reveal>In Their Words</p>
-      <h2 class="section-title" data-reveal>Loved, one table at a time</h2>
-      <p class="rating-line" data-reveal>4.5★ average across roughly 1,900 diners on the Jersey Shore</p>
+      <h2 class="section-title" data-reveal>The neighborhood's favorite corner</h2>
+      <p class="rating-line" data-reveal>★★★★★ Loved by regulars</p>
     </div>
 
     <div class="testimonial-viewport">
       <div class="testimonial-track" id="testimonialTrack">
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>“I found the best Italian restaurant.”</p>
-          <cite>Maria T.</cite>
+          <p>"I came in to work for an hour. I left three hours later, on my second cortado."</p>
+          <cite>Priya</cite>
         </blockquote>
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>“Food was fantastic and the service was extremely attentive.”</p>
-          <cite>Bernard C.</cite>
+          <p>"The kids' corner is a lifesaver. First coffee shop we've actually relaxed in with a toddler."</p>
+          <cite>Daniel</cite>
         </blockquote>
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>“The best Italian food, and service, in or around Toms River.”</p>
-          <cite>James R.</cite>
+          <p>"Quiet, dim, and the espresso is genuinely excellent. My whole personality now."</p>
+          <cite>Sam</cite>
         </blockquote>
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>“Genaro comes to every table — it still feels like a family kitchen.”</p>
-          <cite>Linda S.</cite>
+          <p>"Took a first date here because it felt low-key. We've been back every week since."</p>
+          <cite>Maya</cite>
         </blockquote>
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>“Generous portions, and every sauce tastes like it took all day.”</p>
-          <cite>Robert P.</cite>
+          <p>"The patio at dusk is the best-kept secret on the street."</p>
+          <cite>Owen</cite>
         </blockquote>
-        <!-- duplicated for seamless marquee loop -->
+        <!-- duplicated for a seamless marquee loop -->
         <blockquote class="testimonial-card" aria-hidden="true">
           <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>“I found the best Italian restaurant.”</p>
-          <cite>Maria T.</cite>
-        </blockquote>
-        <blockquote class="testimonial-card" aria-hidden="true">
-          <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>“Food was fantastic and the service was extremely attentive.”</p>
-          <cite>Bernard C.</cite>
+          <p>"I came in to work for an hour. I left three hours later, on my second cortado."</p>
+          <cite>Priya</cite>
         </blockquote>
         <blockquote class="testimonial-card" aria-hidden="true">
           <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>“The best Italian food, and service, in or around Toms River.”</p>
-          <cite>James R.</cite>
+          <p>"The kids' corner is a lifesaver. First coffee shop we've actually relaxed in with a toddler."</p>
+          <cite>Daniel</cite>
+        </blockquote>
+        <blockquote class="testimonial-card" aria-hidden="true">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>"Quiet, dim, and the espresso is genuinely excellent. My whole personality now."</p>
+          <cite>Sam</cite>
         </blockquote>
       </div>
     </div>
   </section>
 
-  <!-- ============ MENU TEASER ============ -->
-  <section class="menu-teaser" id="menu">
-    <div class="section-head center">
-      <p class="kicker" data-reveal>From the Kitchen</p>
-      <h2 class="section-title" data-reveal>A few of the table's favorites</h2>
-    </div>
-    <ul class="menu-list">
-      <li data-reveal><span class="dish">Stuffed Rigatoni alla Vodka</span><span class="dish-note">A guest favorite, made fresh to order</span></li>
-      <li data-reveal><span class="dish">Veal Saltimbocca</span><span class="dish-note">Prosciutto, sage, marsala — $20.95</span></li>
-      <li data-reveal><span class="dish">Linguine alle Vongole</span><span class="dish-note">Fresh clams, white wine, garlic — $15.95</span></li>
-      <li data-reveal><span class="dish">Chicken Scarpariello</span><span class="dish-note">Sweet & hot peppers, rosemary potatoes — $29.95</span></li>
-      <li data-reveal><span class="dish">Calamari Fritti</span><span class="dish-note">Lightly fried, marinara</span></li>
-    </ul>
-    <a class="btn btn-outline" href="https://www.ilgiardinello.com/menus/" target="_blank" rel="noopener" data-reveal>View Full Menu</a>
-  </section>
-
-  <!-- ============ CTA / RESERVE ============ -->
-  <section class="cta" id="reserve">
+  <!-- ============ CTA / VISIT ============ -->
+  <section class="cta" id="visit">
     <div class="cta-inner">
-      <p class="kicker kicker-light" data-reveal>Join Us</p>
-      <h2 class="cta-title" data-reveal>The table is set.</h2>
-      <p class="cta-copy" data-reveal>Reservations are taken by phone — BYOB, and always worth the call.</p>
+      <p class="kicker" data-reveal>Come Say Hi</p>
+      <h2 class="cta-title" data-reveal>Grab a table before it's gone.</h2>
+      <p class="cta-copy" data-reveal>Tucked into a quiet corner of the neighborhood — come see why people stay longer than they planned.</p>
       <div class="cta-actions" data-reveal>
-        <a class="btn btn-solid btn-lg" href="tel:+17322869111">Call (732) 286-9111</a>
-        <a class="btn btn-ghost-light btn-lg" href="https://order.online/store/il-giardinello-di-bacoli-toms-river-34806655" target="_blank" rel="noopener">Order Online</a>
+        <a class="btn btn-solid btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions</a>
+        <a class="btn btn-ghost-light btn-lg" href="#menu">See the Menu</a>
       </div>
       <div class="cta-details" data-reveal>
         <div>
-          <span class="label">Address</span>
-          <p>1232 Route 166<br />Stella Towne Center<br />Toms River, NJ 08753</p>
+          <span class="label">Find Us</span>
+          <!-- TODO: replace with the exact address once confirmed -->
+          <p>A quiet stretch of the neighborhood.<br /><a href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get directions →</a></p>
         </div>
         <div>
           <span class="label">Hours</span>
-          <p>Tue–Fri, Sun · 5:00–8:30pm<br />Saturday · 5:00–9:00pm<br />Closed Monday</p>
+          <!-- TODO: confirm real hours before launch -->
+          <p>Mon–Fri · 6:30am–7pm<br />Sat–Sun · 7am–6pm</p>
         </div>
         <div>
           <span class="label">Also</span>
-          <p>Off-Premise Catering<br />Private &amp; Semi-Private Dining</p>
+          <p>Free Wifi &amp; Outlets<br />Kids' Corner · Patio Seating</p>
         </div>
       </div>
     </div>
@@ -395,9 +301,9 @@
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <a href="#hero" class="wordmark wordmark-footer">Il Giardinello <span class="wordmark-sub">Di&nbsp;Bacoli</span></a>
-    <p class="footer-address">1232 Route 166, Toms River, NJ 08753 &nbsp;·&nbsp; <a href="tel:+17322869111">(732) 286-9111</a></p>
-    <p class="footer-fine">© <span id="year"></span> Il Giardinello Di Bacoli</p>
+    <a href="#hero" class="wordmark wordmark-footer">Caffeine <span class="wordmark-sub">Heaven</span></a>
+    <p class="footer-address">A quiet corner of the neighborhood &nbsp;·&nbsp; <a href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions</a></p>
+    <p class="footer-fine">© <span id="year"></span> Caffeine Heaven</p>
   </div>
 </footer>
 

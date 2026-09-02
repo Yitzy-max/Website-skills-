@@ -1,9 +1,9 @@
 /* =========================================================================
-   Il Giardinello Di Bacoli — motion layer
+   Caffeine Heaven — motion layer
    Lenis (momentum scroll) + GSAP/ScrollTrigger (reveals, parallax, marquee)
    + Three.js (hero ambient crossfade, gallery hover-distortion)
 
-   Every WebGL texture first tries to load the restaurant's real photography
+   Every WebGL texture first tries to load Caffeine Heaven's real photography
    from /images/*.jpg. If a file isn't there yet, it falls back to a soft,
    procedurally-generated gradient so the page never looks broken pre-launch.
    Swap in real photos and everything upgrades automatically — no code
@@ -26,7 +26,7 @@ const gsapReady = !!(window.gsap && window.ScrollTrigger);
 if (!gsapReady) {
   document.querySelectorAll("[data-reveal], [data-reveal-mask], [data-reveal-clip]")
     .forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; el.style.clipPath = "none"; });
-  console.warn("[Il Giardinello] GSAP failed to load — scroll animations disabled, content shown statically.");
+  console.warn("[Caffeine Heaven] GSAP failed to load — scroll animations disabled, content shown statically.");
 }
 
 /* -------------------------------------------------------------------------
@@ -131,7 +131,7 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
     );
   });
 
-  // gentle parallax on the About portrait
+  // gentle parallax on the story portrait
   const parallaxEl = document.querySelector("[data-parallax]");
   if (parallaxEl) {
     gsap.fromTo(
@@ -145,9 +145,17 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
     );
   }
 
-  // hero: quiet zoom-out as the visitor scrolls past it
+  // hero: the room slowly reveals as the visitor scrolls past it — a quiet
+  // zoom-out plus a fade, so the cinematic open has a clear end before the
+  // rest of the (non-video) page takes over
   gsap.to(".hero-canvas", {
     scale: 1.12,
+    ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+  });
+  gsap.to(".hero-godrays", {
+    opacity: 0.3,
+    y: -60,
     ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
   });
@@ -161,8 +169,8 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
 
 /* -------------------------------------------------------------------------
    Marquee helper — continuous auto-slide, pauses gently on hover so a card
-   or photo can actually be read/looked at. The track's content must already
-   be duplicated in the HTML (aria-hidden on the copy) for a seamless loop;
+   or photo can actually be looked at. The track's content must already be
+   duplicated in the HTML (aria-hidden on the copy) for a seamless loop;
    this just animates it from 0 to -50% and repeats.
    ------------------------------------------------------------------------- */
 function initMarquee(track, duration) {
@@ -173,23 +181,23 @@ function initMarquee(track, duration) {
 }
 
 initMarquee(document.getElementById("testimonialTrack"), 34);
-// slower and longer — this strip has more than double the cards, and a
-// leisurely pace suits "a kitchen that doesn't hurry"
-initMarquee(document.getElementById("galleryTrack"), 60);
+// slower and longer — a leisurely pace suits a room built for lingering
+initMarquee(document.getElementById("atmosphereTrack"), 55);
 
 /* -------------------------------------------------------------------------
-   Shared texture helper: real photo first, procedural gradient fallback
+   Shared texture helper: real photo first, procedural gradient fallback.
+   Stops lean into the brand palette — roasted copper, warm cream, amber,
+   and a low dusk brown — so an unfinished image slot still feels intentional.
    ------------------------------------------------------------------------- */
 const PLACEHOLDER_VARIANTS = {
-  warm:  ["#F3E6D4", "#D6B98A", "#8A6A45"],
-  deep:  ["#E9DCC5", "#8C7A63", "#2A2521"],
-  clay:  ["#F0D9C4", "#B99565", "#6B4E30"],
-  toast: ["#F5E3C0", "#DFA85C", "#9C6B2E"],
-  wine:  ["#EFDCC8", "#B97D5E", "#6E3C2C"],
+  roast: ["#3B2A19", "#8F5E2E", "#C9884C"],
+  cream: ["#2A2115", "#8B7F6C", "#E7A968"],
+  amber: ["#241A10", "#C9884C", "#E3B75B"],
+  dusk:  ["#1A140D", "#5C3B22", "#8F5E2E"],
 };
 
-function proceduralTexture(variant = "warm", seed = 0) {
-  const stops = PLACEHOLDER_VARIANTS[variant] || PLACEHOLDER_VARIANTS.warm;
+function proceduralTexture(variant = "roast", seed = 0) {
+  const stops = PLACEHOLDER_VARIANTS[variant] || PLACEHOLDER_VARIANTS.roast;
   const size = 512;
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = size;
@@ -209,10 +217,11 @@ function proceduralTexture(variant = "warm", seed = 0) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, size, size);
 
-  // soft radial vignette for depth
-  const vg = ctx.createRadialGradient(size * 0.3, size * 0.25, size * 0.05, size * 0.5, size * 0.5, size * 0.75);
-  vg.addColorStop(0, "rgba(255,255,255,0.12)");
-  vg.addColorStop(1, "rgba(0,0,0,0.18)");
+  // soft radial "window light" for depth — low-key, like light through a
+  // dim room rather than a bright vignette
+  const vg = ctx.createRadialGradient(size * 0.28, size * 0.22, size * 0.04, size * 0.5, size * 0.5, size * 0.8);
+  vg.addColorStop(0, "rgba(255,235,200,0.10)");
+  vg.addColorStop(1, "rgba(0,0,0,0.35)");
   ctx.fillStyle = vg;
   ctx.fillRect(0, 0, size, size);
 
@@ -257,13 +266,13 @@ async function initHero() {
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
   const sources = [
-    { url: "../images/hero-1.jpg", variant: "warm", seed: 1 },
-    { url: "../images/hero-2.jpg", variant: "clay", seed: 2 },
-    { url: "../images/hero-3.jpg", variant: "deep", seed: 3 },
-    { url: "../images/hero-4.jpg", variant: "warm", seed: 4 },
+    { url: "../images/hero-1.jpg", variant: "roast", seed: 1 },
+    { url: "../images/hero-2.jpg", variant: "amber", seed: 2 },
+    { url: "../images/hero-3.jpg", variant: "dusk", seed: 3 },
+    { url: "../images/hero-4.jpg", variant: "cream", seed: 4 },
   ];
   const textures = await Promise.all(sources.map((s) => loadTextureWithFallback(s.url, s.variant, s.seed)));
-  const noise = proceduralTexture("deep", 9);
+  const noise = proceduralTexture("dusk", 9);
 
   const uniforms = {
     uFrom: { value: textures[0] },
@@ -310,7 +319,7 @@ async function initHero() {
         vec4 b = texture2D(uTo, uv);
         vec3 color = mix(b.rgb, a.rgb, edge);
         // slight darken at the wipe edge for a premium, filmic transition
-        float edgeGlow = smoothstep(0.0, 0.06, abs(edge - 0.5) - 0.0) ;
+        float edgeGlow = smoothstep(0.0, 0.06, abs(edge - 0.5) - 0.0);
         color *= 1.0 - (1.0 - edgeGlow) * 0.06;
         gl_FragColor = vec4(color, 1.0);
       }
@@ -366,7 +375,8 @@ async function initHero() {
 }
 
 /* -------------------------------------------------------------------------
-   GALLERY — shared WebGL overlay: ripple / displacement distortion on hover
+   ATMOSPHERE GALLERY — shared WebGL overlay: ripple / displacement
+   distortion on hover
    ------------------------------------------------------------------------- */
 function initGalleryDistortion() {
   const items = document.querySelectorAll(".gallery-item");
@@ -445,7 +455,7 @@ function initGalleryDistortion() {
   items.forEach((item, idx) => {
     const frame = item.querySelector(".media-frame");
     const img = item.querySelector(".media-img");
-    const variant = frame ? frame.dataset.placeholder || "warm" : "warm";
+    const variant = frame ? frame.dataset.placeholder || "roast" : "roast";
 
     item.addEventListener("mouseenter", async () => {
       active = item;
@@ -524,7 +534,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   try {
     THREE = await import("https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js");
   } catch (err) {
-    console.warn("[Il Giardinello] Three.js failed to load — hero/gallery WebGL effects disabled; the rest of the page is unaffected.", err);
+    console.warn("[Caffeine Heaven] Three.js failed to load — hero/gallery WebGL effects disabled; the rest of the page is unaffected.", err);
     return;
   }
   initHero();
