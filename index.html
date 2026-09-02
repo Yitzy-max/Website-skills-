@@ -58,6 +58,11 @@
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
     <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+    <!-- Real hero video (see videos/README.md). Falls back to the WebGL
+         canvas above if the file isn't there yet or fails to load. -->
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true" onerror="this.style.display='none'">
+      <source src="videos/hero-table.mp4" type="video/mp4" />
+    </video>
     <div class="hero-veil"></div>
     <div class="hero-content">
       <p class="kicker kicker-light" data-reveal>Toms River · New Jersey</p>
