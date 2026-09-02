@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Caffeine Heaven — A Quiet Corner of Heaven</title>
-<meta name="description" content="Caffeine Heaven — a dim, unhurried coffee shop built for staying. Work, read, bring the kids, or just breathe, over genuinely good coffee and fresh pastries." />
+<title>The Caffeine Haven — Toms River, NJ</title>
+<meta name="description" content="The Caffeine Haven — downtown Toms River's coffee shop for slow mornings, deep work, and a play corner for the kids. Specialty lattes, fresh-baked pastries, 216 Main St." />
 
 <!-- Editorial type: a warm, soft-serif display face (coffee/bakery-brand energy)
      paired with a clean modern grotesque for everything else. -->
@@ -18,12 +18,132 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
+<!-- ============ SHARED SVG ARTWORK ============
+     Everything here is original line/flat-illustration built for this
+     brand — the sunburst mirrors the mark on The Caffeine Haven's own
+     cups; the cups and pastries are a stylized stand-in for real
+     product photography (see images/README.md) used for the hero's
+     "spread" animation below. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="icon-sunburst" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+      <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <line x1="27" y1="20" x2="33" y2="20" />
+        <line x1="24.95" y1="24.95" x2="29.19" y2="29.19" />
+        <line x1="20" y1="27" x2="20" y2="33" />
+        <line x1="15.05" y1="24.95" x2="10.81" y2="29.19" />
+        <line x1="13" y1="20" x2="7" y2="20" />
+        <line x1="15.05" y1="15.05" x2="10.81" y2="10.81" />
+        <line x1="20" y1="13" x2="20" y2="7" />
+        <line x1="24.95" y1="15.05" x2="29.19" y2="10.81" />
+      </g>
+    </symbol>
+
+    <!-- cups: a shared tapered body, varied fill/topping to suggest the drink -->
+    <symbol id="cup-mocha" viewBox="0 0 100 150">
+      <path d="M16,42 L21,142 Q50,151 79,142 L84,42 Z" fill="#EDE6D8" stroke="#3A3128" stroke-width="2"/>
+      <path d="M20,44 L24,120 Q50,127 76,120 L80,44 Z" fill="#6B4426"/>
+      <ellipse cx="50" cy="42" rx="34" ry="9" fill="#F4ECDE" stroke="#3A3128" stroke-width="2"/>
+      <ellipse cx="50" cy="42" rx="34" ry="9" fill="none" stroke="#8F5E2E" stroke-width="1" opacity="0.4"/>
+      <rect x="45" y="8" width="7" height="38" rx="3.5" fill="#3A3128" transform="rotate(-8 48 27)"/>
+      <use href="#icon-sunburst" x="30" y="68" width="40" height="40" color="#8F5E2E" opacity="0.55"/>
+    </symbol>
+
+    <symbol id="cup-cocoa" viewBox="0 0 100 150">
+      <path d="M18,50 L23,142 Q50,150 77,142 L82,50 Z" fill="#F4ECDE" stroke="#3A3128" stroke-width="2"/>
+      <path d="M22,52 Q50,60 78,52 L76,64 Q50,72 24,64 Z" fill="#8F5E2E" opacity="0.5"/>
+      <path d="M20,38 Q28,20 50,20 Q72,20 80,38 Q72,50 50,50 Q28,50 20,38 Z" fill="#F9F2E4" stroke="#3A3128" stroke-width="2"/>
+      <circle cx="36" cy="34" r="1.6" fill="#8F5E2E"/><circle cx="46" cy="27" r="1.6" fill="#8F5E2E"/>
+      <circle cx="58" cy="30" r="1.6" fill="#8F5E2E"/><circle cx="64" cy="38" r="1.6" fill="#8F5E2E"/>
+      <circle cx="50" cy="40" r="1.6" fill="#8F5E2E"/>
+      <use href="#icon-sunburst" x="30" y="80" width="40" height="40" color="#8F5E2E" opacity="0.5"/>
+    </symbol>
+
+    <symbol id="cup-iced-coffee" viewBox="0 0 100 150">
+      <path d="M16,42 L21,142 Q50,151 79,142 L84,42 Z" fill="#EFE8DA" stroke="#3A3128" stroke-width="2" opacity="0.9"/>
+      <path d="M20,58 L24,120 Q50,127 76,120 L80,58 Z" fill="#C9884C" opacity="0.85"/>
+      <path d="M21,44 Q50,54 79,44 L78,58 Q50,68 22,58 Z" fill="#F4ECDE" opacity="0.9"/>
+      <ellipse cx="50" cy="42" rx="34" ry="9" fill="none" stroke="#3A3128" stroke-width="2"/>
+      <rect x="45" y="6" width="7" height="40" rx="3.5" fill="#3A3128" transform="rotate(6 48 26)"/>
+      <use href="#icon-sunburst" x="30" y="80" width="40" height="40" color="#8F5E2E" opacity="0.55"/>
+    </symbol>
+
+    <symbol id="cup-coldbrew" viewBox="0 0 100 150">
+      <path d="M16,42 L21,142 Q50,151 79,142 L84,42 Z" fill="#EFE8DA" stroke="#3A3128" stroke-width="2" opacity="0.9"/>
+      <path d="M20,44 L24,138 Q50,145 76,138 L80,44 Z" fill="#3B2A19"/>
+      <ellipse cx="50" cy="42" rx="34" ry="9" fill="none" stroke="#3A3128" stroke-width="2"/>
+      <rect x="45" y="8" width="7" height="38" rx="3.5" fill="#3A3128" transform="rotate(-6 48 27)"/>
+      <use href="#icon-sunburst" x="30" y="70" width="40" height="40" color="#E7A968" opacity="0.5"/>
+    </symbol>
+
+    <symbol id="cup-chai" viewBox="0 0 100 150">
+      <path d="M16,42 L21,142 Q50,151 79,142 L84,42 Z" fill="#EFE8DA" stroke="#3A3128" stroke-width="2" opacity="0.9"/>
+      <path d="M20,44 L24,120 Q50,127 76,120 L80,44 Z" fill="#C9884C"/>
+      <ellipse cx="50" cy="42" rx="34" ry="9" fill="none" stroke="#3A3128" stroke-width="2"/>
+      <g fill="#8F5E2E" opacity="0.7">
+        <circle cx="38" cy="45" r="1.3"/><circle cx="46" cy="43" r="1.3"/><circle cx="54" cy="45" r="1.3"/>
+        <circle cx="62" cy="43" r="1.3"/><circle cx="50" cy="41" r="1.3"/>
+      </g>
+      <rect x="45" y="8" width="7" height="38" rx="3.5" fill="#3A3128" transform="rotate(8 48 27)"/>
+      <use href="#icon-sunburst" x="30" y="70" width="40" height="40" color="#8F5E2E" opacity="0.5"/>
+    </symbol>
+
+    <!-- pastries: a small plate (a quiet nod to the real cafe's green plates) plus one baked good -->
+    <symbol id="pastry-muffin" viewBox="0 0 130 110">
+      <ellipse cx="65" cy="88" rx="58" ry="14" fill="#7C9377"/>
+      <ellipse cx="65" cy="86" rx="50" ry="10" fill="#8FA88A"/>
+      <path d="M32,80 L38,44 L92,44 L98,80 Z" fill="#F4ECDE" opacity="0.9"/>
+      <path d="M35,52 L40,80 M50,48 L53,80 M65,46 L65,80 M80,48 L77,80 M95,52 L90,80" stroke="#D9C4A6" stroke-width="2" opacity="0.6"/>
+      <path d="M28,48 Q65,20 102,48 Q94,58 65,58 Q36,58 28,48 Z" fill="#B9793E"/>
+      <circle cx="45" cy="42" r="2" fill="#5C3B22"/><circle cx="58" cy="36" r="2" fill="#5C3B22"/>
+      <circle cx="72" cy="38" r="2" fill="#5C3B22"/><circle cx="84" cy="44" r="2" fill="#5C3B22"/>
+      <circle cx="65" cy="30" r="2" fill="#5C3B22"/>
+    </symbol>
+
+    <symbol id="pastry-blueberry-muffin" viewBox="0 0 130 110">
+      <ellipse cx="65" cy="88" rx="58" ry="14" fill="#7C9377"/>
+      <ellipse cx="65" cy="86" rx="50" ry="10" fill="#8FA88A"/>
+      <path d="M32,80 L38,44 L92,44 L98,80 Z" fill="#F4ECDE" opacity="0.9"/>
+      <path d="M35,52 L40,80 M50,48 L53,80 M65,46 L65,80 M80,48 L77,80 M95,52 L90,80" stroke="#D9C4A6" stroke-width="2" opacity="0.6"/>
+      <path d="M28,48 Q65,20 102,48 Q94,58 65,58 Q36,58 28,48 Z" fill="#E7C793"/>
+      <circle cx="46" cy="40" r="3" fill="#3B4A7A"/><circle cx="60" cy="34" r="3" fill="#3B4A7A"/>
+      <circle cx="75" cy="40" r="3" fill="#3B4A7A"/><circle cx="87" cy="46" r="3" fill="#3B4A7A"/>
+    </symbol>
+
+    <symbol id="pastry-cinnamon-bun" viewBox="0 0 130 110">
+      <ellipse cx="65" cy="88" rx="58" ry="14" fill="#7C9377"/>
+      <ellipse cx="65" cy="86" rx="50" ry="10" fill="#8FA88A"/>
+      <circle cx="65" cy="60" r="34" fill="#C9884C"/>
+      <path d="M65,60 m-24,0 a24,24 0 1,1 48,0 a18,18 0 1,0 -36,0 a12,12 0 1,1 24,0 a6,6 0 1,0 -12,0"
+            fill="none" stroke="#8F5E2E" stroke-width="2.4" opacity="0.75"/>
+      <path d="M38,44 Q50,36 65,42 Q80,48 92,40" fill="none" stroke="#F9F2E4" stroke-width="4" stroke-linecap="round"/>
+      <path d="M34,58 Q50,52 65,58 Q80,64 96,56" fill="none" stroke="#F9F2E4" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="pastry-donut" viewBox="0 0 130 110">
+      <ellipse cx="65" cy="88" rx="58" ry="14" fill="#7C9377"/>
+      <ellipse cx="65" cy="86" rx="50" ry="10" fill="#8FA88A"/>
+      <circle cx="65" cy="58" r="34" fill="#E9C79A"/>
+      <circle cx="65" cy="58" r="12" fill="#7C9377"/>
+      <path d="M33,50 A34,34 0 0 1 97,50 A34,34 0 0 1 65,88 A24,24 0 0 1 41,68 A34,34 0 0 1 33,50 Z" fill="#E7A968" opacity="0.9"/>
+      <g fill="#8F5E2E">
+        <circle cx="48" cy="40" r="1.6"/><circle cx="58" cy="34" r="1.6"/><circle cx="70" cy="33" r="1.6"/>
+        <circle cx="82" cy="38" r="1.6"/><circle cx="88" cy="50" r="1.6"/><circle cx="52" cy="48" r="1.6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
     <a href="#hero" class="wordmark">
-      <span class="wordmark-mark">Caffeine</span>
-      <span class="wordmark-sub">Heaven</span>
+      <svg class="wordmark-icon" aria-hidden="true"><use href="#icon-sunburst" /></svg>
+      <span class="wordmark-text">
+        <span class="wordmark-mark">Caffeine</span>
+        <span class="wordmark-sub">Haven</span>
+      </span>
     </a>
 
     <button class="nav-trigger" id="navTrigger" aria-expanded="false" aria-controls="navPanel">
@@ -43,11 +163,11 @@
       </ol>
       <div class="nav-panel-meta">
         <p class="nav-meta-label">Find Us</p>
-        <!-- TODO: replace with the exact street address once confirmed -->
-        <p>Tucked into a quiet corner of the neighborhood.</p>
-        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions →</a></p>
-        <!-- TODO: confirm real hours before launch -->
-        <p class="nav-meta-hours">Mon–Fri&nbsp;6:30am–7pm<br />Sat–Sun&nbsp;7am–6pm</p>
+        <p>216 Main St<br />Toms River, NJ 08753</p>
+        <p><a href="tel:+17323418738">(732) 341-8738</a></p>
+        <p><a href="https://www.google.com/maps/place/The+Caffeine+Haven/@39.9541947,-74.2011914,17z/data=!3m1!4b1!4m6!3m5!1s0x89c19d0005e39b5b:0xa9bc641f5d30c690!8m2!3d39.9541906!4d-74.1986165" target="_blank" rel="noopener">Get Directions →</a></p>
+        <!-- Hours vary slightly by source (7am-2pm vs 7am-4pm) — confirm before launch -->
+        <p class="nav-meta-hours">Open Daily<br />7am&nbsp;–&nbsp;4pm</p>
       </div>
     </nav>
   </div>
@@ -57,26 +177,40 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
-    <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
-    <!-- Real hero video (see videos/README.md). Falls back to the WebGL
-         canvas above if the file isn't there yet or fails to load. -->
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true" onerror="this.style.display='none'">
-      <source src="videos/hero-steam.mp4" type="video/mp4" />
-    </video>
     <div class="hero-godrays" aria-hidden="true"></div>
     <div class="hero-veil"></div>
+
     <div class="hero-content">
-      <p class="kicker" data-reveal>Coffee · Quiet · Room to Breathe</p>
+      <p class="kicker" data-reveal>Coffee · Quiet Mornings · Room for the Kids</p>
       <h1 class="hero-title" data-reveal>
         <span class="hero-title-line">Caffeine</span>
-        <span class="hero-title-line">Heaven</span>
+        <span class="hero-title-line">Haven</span>
       </h1>
-      <p class="hero-sub" data-reveal>A dim, unhurried coffee shop built for staying — to work, to read, to bring the kids, or just be.</p>
+      <p class="hero-sub" data-reveal>Downtown Toms River's coffee shop for slow mornings, deep work, and a play corner for the kids.</p>
       <div class="hero-actions" data-reveal>
         <a class="btn btn-solid" href="#menu">See the Menu</a>
-        <a class="btn btn-ghost-light" href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions</a>
+        <a class="btn btn-ghost-light" href="https://www.google.com/maps/place/The+Caffeine+Haven/@39.9541947,-74.2011914,17z/data=!3m1!4b1!4m6!3m5!1s0x89c19d0005e39b5b:0xa9bc641f5d30c690!8m2!3d39.9541906!4d-74.1986165" target="_blank" rel="noopener">Get Directions</a>
       </div>
     </div>
+
+    <!-- The "spread" — a stand-in for real product photography (see
+         images/README.md). Cups and pastries drop in from above and settle
+         onto the counter, back row first, so the shop's own drinks and
+         baked goods feel like the hero's real subject. -->
+    <div class="hero-spread" id="heroSpread" aria-hidden="true">
+      <div class="hero-counter"></div>
+      <svg class="spread-item spread-cup" data-row="back" style="--x:6%"><use href="#cup-mocha" /></svg>
+      <svg class="spread-item spread-cup" data-row="back" style="--x:24%"><use href="#cup-cocoa" /></svg>
+      <svg class="spread-item spread-cup" data-row="back" style="--x:44%"><use href="#cup-iced-coffee" /></svg>
+      <svg class="spread-item spread-cup" data-row="back" style="--x:64%"><use href="#cup-coldbrew" /></svg>
+      <svg class="spread-item spread-cup" data-row="back" style="--x:83%"><use href="#cup-chai" /></svg>
+
+      <svg class="spread-item spread-pastry" data-row="front" style="--x:14%"><use href="#pastry-muffin" /></svg>
+      <svg class="spread-item spread-pastry" data-row="front" style="--x:38%"><use href="#pastry-cinnamon-bun" /></svg>
+      <svg class="spread-item spread-pastry" data-row="front" style="--x:61%"><use href="#pastry-blueberry-muffin" /></svg>
+      <svg class="spread-item spread-pastry" data-row="front" style="--x:85%"><use href="#pastry-donut" /></svg>
+    </div>
+
     <div class="hero-scroll-cue" aria-hidden="true"><span class="cue-line"></span>Scroll</div>
   </section>
 
@@ -92,39 +226,39 @@
     <div class="section-head center">
       <p class="kicker" data-reveal>Three Reasons to Stay</p>
       <h2 class="section-title" data-reveal>Built for lingering, not just for lattes</h2>
-      <p class="section-copy" data-reveal>Fast wifi and quiet corners for the ones working. A play corner for the kids. A patio out front for everyone else. Caffeine Heaven was designed around staying, not rushing.</p>
+      <p class="section-copy" data-reveal>Quiet corners for the ones working. A whole corner of toys for the kids. Board games at every table for everyone else. Caffeine Haven was built around staying, not rushing.</p>
     </div>
 
     <div class="benefit-row">
       <div class="benefit-media media-frame" data-reveal-clip data-placeholder="roast">
-        <img class="media-img" src="images/benefit-work.jpg" alt="A quiet worktable at Caffeine Heaven, laptop and coffee" loading="lazy" onerror="this.remove()" />
+        <img class="media-img" src="images/benefit-work.jpg" alt="A quiet worktable at Caffeine Haven, laptop and coffee" loading="lazy" onerror="this.remove()" />
       </div>
       <div class="benefit-copy">
         <p class="kicker" data-reveal>For the Deep-Focus Crowd</p>
         <h3 class="benefit-title" data-reveal>Order a second cup. Stay as long as you like.</h3>
-        <p data-reveal>Fast wifi, plenty of outlets, and tables built for laptops and long to-do lists. Quiet corners for calls, communal tables for company, and coffee that keeps up with a whole afternoon of work.</p>
+        <p data-reveal>It's quiet in the early morning, and it doesn't really pick up until around 10:30 — which leaves a long, calm window for laptops, long to-do lists, and a coffee that keeps up with the whole thing.</p>
       </div>
     </div>
 
     <div class="benefit-row benefit-row--reverse">
       <div class="benefit-media media-frame" data-reveal-clip data-placeholder="cream">
-        <img class="media-img" src="images/benefit-family.jpg" alt="A cozy kids' corner with toys at Caffeine Heaven" loading="lazy" onerror="this.remove()" />
+        <img class="media-img" src="images/benefit-family.jpg" alt="A cozy kids' corner with toys at Caffeine Haven" loading="lazy" onerror="this.remove()" />
       </div>
       <div class="benefit-copy">
         <p class="kicker" data-reveal>Kids Welcome</p>
-        <h3 class="benefit-title" data-reveal>A corner for them. A quiet minute for you.</h3>
-        <p data-reveal>A dedicated play corner keeps little ones busy while you finish an errand list — or just finish your coffee while it's still hot. Come for the chaos, leave with ten minutes of peace.</p>
+        <h3 class="benefit-title" data-reveal>A whole corner for them. A quiet minute for you.</h3>
+        <p data-reveal>There's a dedicated play corner — toys and all — so the kids stay busy while you actually finish that conversation, or just finish your coffee while it's still hot.</p>
       </div>
     </div>
 
     <div class="benefit-row">
       <div class="benefit-media media-frame" data-reveal-clip data-placeholder="dusk">
-        <img class="media-img" src="images/benefit-patio.jpg" alt="Outdoor patio seating at Caffeine Heaven at dusk" loading="lazy" onerror="this.remove()" />
+        <img class="media-img" src="images/benefit-games.jpg" alt="Board games out on a table at Caffeine Haven" loading="lazy" onerror="this.remove()" />
       </div>
       <div class="benefit-copy">
         <p class="kicker" data-reveal>Books, Dates &amp; Slow Afternoons</p>
-        <h3 class="benefit-title" data-reveal>Some of the best conversations start over a second espresso.</h3>
-        <p data-reveal>Tucked into a quiet street, with a patio out front for the days worth sitting outside. It's where a first date turns into a second, and a chapter turns into the whole book.</p>
+        <h3 class="benefit-title" data-reveal>There's always a board game out, if you want one.</h3>
+        <p data-reveal>Tucked into downtown Main Street, with a table free and a game within reach — it's where a first date turns into a second, and a quick stop turns into an afternoon.</p>
       </div>
     </div>
   </section>
@@ -141,12 +275,12 @@
       <div class="carousel-track" id="atmosphereTrack">
         <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-01-latte-art.jpg" alt="Latte art on a flat white" loading="lazy" onerror="this.remove()" /></div><figcaption>A flat white, done right</figcaption></figure>
         <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-02-interior-wide.jpg" alt="Wide shot of the dim, warm interior" loading="lazy" onerror="this.remove()" /></div><figcaption>The main room</figcaption></figure>
-        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-03-pastry-case.jpg" alt="Pastry case with croissants and buns" loading="lazy" onerror="this.remove()" /></div><figcaption>Fresh, every morning</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-03-pastry-case.jpg" alt="Pastry case with muffins and buns" loading="lazy" onerror="this.remove()" /></div><figcaption>Fresh, every morning</figcaption></figure>
         <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="dusk"><img class="media-img" src="images/gallery-04-reading-nook.jpg" alt="A quiet reading nook with a book and cup" loading="lazy" onerror="this.remove()" /></div><figcaption>The reading nook</figcaption></figure>
         <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-05-kids-corner.jpg" alt="The kids' corner with toys and books" loading="lazy" onerror="this.remove()" /></div><figcaption>The kids' corner</figcaption></figure>
-        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-06-patio-dusk.jpg" alt="Outdoor patio strung with warm lights at dusk" loading="lazy" onerror="this.remove()" /></div><figcaption>The patio, at dusk</figcaption></figure>
-        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-07-pour-over.jpg" alt="A pour-over coffee being brewed" loading="lazy" onerror="this.remove()" /></div><figcaption>Brewed to order</figcaption></figure>
-        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="dusk"><img class="media-img" src="images/gallery-08-window-seat.jpg" alt="A window seat with soft daylight" loading="lazy" onerror="this.remove()" /></div><figcaption>The window seat</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-06-board-games.jpg" alt="Board games out on a table" loading="lazy" onerror="this.remove()" /></div><figcaption>Games, on the house</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="amber"><img class="media-img" src="images/gallery-07-pour-over.jpg" alt="A coffee being brewed" loading="lazy" onerror="this.remove()" /></div><figcaption>Brewed to order</figcaption></figure>
+        <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="dusk"><img class="media-img" src="images/gallery-08-storefront.jpg" alt="The storefront on Main Street" loading="lazy" onerror="this.remove()" /></div><figcaption>216 Main Street</figcaption></figure>
         <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="roast"><img class="media-img" src="images/gallery-09-beans.jpg" alt="Fresh roasted coffee beans" loading="lazy" onerror="this.remove()" /></div><figcaption>Roasted with care</figcaption></figure>
         <figure class="gallery-item" data-reveal-clip><div class="media-frame" data-placeholder="cream"><img class="media-img" src="images/gallery-10-counter.jpg" alt="The espresso bar and counter" loading="lazy" onerror="this.remove()" /></div><figcaption>The bar</figcaption></figure>
         <!-- duplicated for a seamless auto-slide loop -->
@@ -163,21 +297,22 @@
   <section class="about" id="story">
     <div class="about-media" data-parallax>
       <div class="media-frame media-frame-tall" data-reveal-clip data-placeholder="dusk">
-        <img class="media-img" src="images/story-interior.jpg" alt="A dim, warm corner of the Caffeine Heaven dining room" loading="lazy" onerror="this.remove()" />
+        <img class="media-img" src="images/story-interior.jpg" alt="A dim, warm corner of the Caffeine Haven dining room" loading="lazy" onerror="this.remove()" />
       </div>
     </div>
     <div class="about-copy">
       <p class="kicker" data-reveal>Our Story</p>
       <h2 class="section-title" data-reveal>Built to be a reason to stay</h2>
       <p data-reveal>
-        Caffeine Heaven started with a simple idea: a coffee shop should be somewhere worth
-        staying, not just stopping by. Low light, good chairs, and coffee that's actually
-        good — not because it's trendy, but because it should be.
+        Caffeine Haven opened in August 2024 in downtown Toms River, in a storefront that
+        used to be a beloved local coffee stop. The goal wasn't just a good cup of
+        coffee — it was somewhere people would actually want to stay.
       </p>
       <p data-reveal>
-        So that's what we built: a dim, comfortable corner of the neighborhood where the wifi
-        works, the espresso's dialed in, a play corner keeps the kids happy, and nobody's
-        rushing you out the door.
+        So that's what's here: a quiet morning before the 10:30 rush, a corner of toys
+        for the kids, and a stack of board games for whoever wants one. Work here,
+        catch up with a friend here, or just get a coffee and a muffin and watch
+        Main Street go by.
       </p>
       <a class="text-link" href="#menu" data-reveal>See what's brewing <span aria-hidden="true">→</span></a>
     </div>
@@ -187,36 +322,40 @@
   <section class="amenity-strip" data-reveal>
     <p>
       <strong>Free Wifi</strong> <span class="amenity-dot" aria-hidden="true">·</span>
-      <strong>Outlets at Every Table</strong> <span class="amenity-dot" aria-hidden="true">·</span>
-      <strong>Kids' Corner</strong> <span class="amenity-dot" aria-hidden="true">·</span>
-      <strong>Dog-Friendly Patio</strong> <span class="amenity-dot" aria-hidden="true">·</span>
-      <strong>Open Every Day</strong>
+      <strong>Kids' Play Corner</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Board Games at Every Table</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Open 7 Days</strong> <span class="amenity-dot" aria-hidden="true">·</span>
+      <strong>Downtown Toms River</strong>
     </p>
   </section>
 
   <!-- ============ MENU TEASER ============ -->
+  <!-- Prices are real, pulled from the shop's public delivery listing —
+       confirm against the in-store menu before launch, since cafe pricing
+       changes often. -->
   <section class="menu-teaser" id="menu">
     <div class="section-head center">
       <p class="kicker" data-reveal>From the Bar</p>
       <h2 class="section-title" data-reveal>What to order first</h2>
     </div>
     <ul class="menu-list">
-      <li data-reveal><span class="dish">Cortado</span><span class="dish-note">Double shot, steamed milk, no foam</span></li>
-      <li data-reveal><span class="dish">Seasonal Oat Latte</span><span class="dish-note">Rotates with what's in season</span></li>
-      <li data-reveal><span class="dish">Pour-Over</span><span class="dish-note">Single-origin, brewed to order</span></li>
-      <li data-reveal><span class="dish">Butter Croissant</span><span class="dish-note">Baked daily, always warm by morning</span></li>
-      <li data-reveal><span class="dish">Cardamom Bun</span><span class="dish-note">A quiet favorite</span></li>
+      <li data-reveal><span class="dish">Iced Latte</span><span class="dish-note">Espresso, cold milk, your choice of syrup — $6.03</span></li>
+      <li data-reveal><span class="dish">Brown Sugar Cinnamon Latte</span><span class="dish-note">A Caffeine Haven regular order — $7.18</span></li>
+      <li data-reveal><span class="dish">Tiramisu Latte</span><span class="dish-note">Coffee-shop dessert, in a cup — $7.18</span></li>
+      <li data-reveal><span class="dish">Banana Chocolate Chip Muffin</span><span class="dish-note">Baked fresh — $4.60</span></li>
+      <li data-reveal><span class="dish">Cinnamon Walnut Bun</span><span class="dish-note">A sticky-bun kind of morning</span></li>
     </ul>
     <a class="btn btn-outline" href="#visit" data-reveal>Come Try the Full Menu</a>
   </section>
 
   <!-- ============ TESTIMONIALS ============ -->
-  <!-- Placeholder quotes, written in the brand voice — swap in real customer
-       reviews before launch. -->
+  <!-- Placeholder quotes written in the brand voice around real, public
+       review themes (quiet mornings, the kids' corner, quick service) —
+       swap in actual customer reviews (with permission) before launch. -->
   <section class="testimonials" id="testimonials">
     <div class="section-head center">
       <p class="kicker" data-reveal>In Their Words</p>
-      <h2 class="section-title" data-reveal>The neighborhood's favorite corner</h2>
+      <h2 class="section-title" data-reveal>Downtown's favorite corner</h2>
       <p class="rating-line" data-reveal>★★★★★ Loved by regulars</p>
     </div>
 
@@ -224,7 +363,7 @@
       <div class="testimonial-track" id="testimonialTrack">
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>"I came in to work for an hour. I left three hours later, on my second cortado."</p>
+          <p>"Came in for a quiet coffee before 10 and got exactly that. My laptop and I stayed for two hours."</p>
           <cite>Priya</cite>
         </blockquote>
         <blockquote class="testimonial-card">
@@ -234,7 +373,7 @@
         </blockquote>
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>"Quiet, dim, and the espresso is genuinely excellent. My whole personality now."</p>
+          <p>"Quick, friendly, and they keep board games on the tables. My new Sunday spot."</p>
           <cite>Sam</cite>
         </blockquote>
         <blockquote class="testimonial-card">
@@ -244,13 +383,13 @@
         </blockquote>
         <blockquote class="testimonial-card">
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p>"The patio at dusk is the best-kept secret on the street."</p>
+          <p>"Great little spot on Main Street — good light for photos, better coffee than the light."</p>
           <cite>Owen</cite>
         </blockquote>
         <!-- duplicated for a seamless marquee loop -->
         <blockquote class="testimonial-card" aria-hidden="true">
           <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>"I came in to work for an hour. I left three hours later, on my second cortado."</p>
+          <p>"Came in for a quiet coffee before 10 and got exactly that. My laptop and I stayed for two hours."</p>
           <cite>Priya</cite>
         </blockquote>
         <blockquote class="testimonial-card" aria-hidden="true">
@@ -260,7 +399,7 @@
         </blockquote>
         <blockquote class="testimonial-card" aria-hidden="true">
           <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>"Quiet, dim, and the espresso is genuinely excellent. My whole personality now."</p>
+          <p>"Quick, friendly, and they keep board games on the tables. My new Sunday spot."</p>
           <cite>Sam</cite>
         </blockquote>
       </div>
@@ -272,25 +411,24 @@
     <div class="cta-inner">
       <p class="kicker" data-reveal>Come Say Hi</p>
       <h2 class="cta-title" data-reveal>Grab a table before it's gone.</h2>
-      <p class="cta-copy" data-reveal>Tucked into a quiet corner of the neighborhood — come see why people stay longer than they planned.</p>
+      <p class="cta-copy" data-reveal>216 Main Street, downtown Toms River — come see why people stay longer than they planned.</p>
       <div class="cta-actions" data-reveal>
-        <a class="btn btn-solid btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions</a>
+        <a class="btn btn-solid btn-lg" href="https://www.google.com/maps/place/The+Caffeine+Haven/@39.9541947,-74.2011914,17z/data=!3m1!4b1!4m6!3m5!1s0x89c19d0005e39b5b:0xa9bc641f5d30c690!8m2!3d39.9541906!4d-74.1986165" target="_blank" rel="noopener">Get Directions</a>
         <a class="btn btn-ghost-light btn-lg" href="#menu">See the Menu</a>
       </div>
       <div class="cta-details" data-reveal>
         <div>
           <span class="label">Find Us</span>
-          <!-- TODO: replace with the exact address once confirmed -->
-          <p>A quiet stretch of the neighborhood.<br /><a href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get directions →</a></p>
+          <p>216 Main St<br />Toms River, NJ 08753<br /><a href="tel:+17323418738">(732) 341-8738</a></p>
         </div>
         <div>
           <span class="label">Hours</span>
-          <!-- TODO: confirm real hours before launch -->
-          <p>Mon–Fri · 6:30am–7pm<br />Sat–Sun · 7am–6pm</p>
+          <!-- confirm exact hours before launch — sources vary slightly -->
+          <p>Open Daily<br />7am – 4pm</p>
         </div>
         <div>
           <span class="label">Also</span>
-          <p>Free Wifi &amp; Outlets<br />Kids' Corner · Patio Seating</p>
+          <p>Kids' Corner · Board Games<br /><a href="https://www.instagram.com/thecaffeinehaven/" target="_blank" rel="noopener">@thecaffeinehaven</a></p>
         </div>
       </div>
     </div>
@@ -301,9 +439,12 @@
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <a href="#hero" class="wordmark wordmark-footer">Caffeine <span class="wordmark-sub">Heaven</span></a>
-    <p class="footer-address">A quiet corner of the neighborhood &nbsp;·&nbsp; <a href="https://www.google.com/maps/search/?api=1&amp;query=Caffeine+Heaven" target="_blank" rel="noopener">Get Directions</a></p>
-    <p class="footer-fine">© <span id="year"></span> Caffeine Heaven</p>
+    <a href="#hero" class="wordmark wordmark-footer">
+      <svg class="wordmark-icon" aria-hidden="true"><use href="#icon-sunburst" /></svg>
+      Caffeine <span class="wordmark-sub">Haven</span>
+    </a>
+    <p class="footer-address">216 Main St, Toms River, NJ 08753 &nbsp;·&nbsp; <a href="tel:+17323418738">(732) 341-8738</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/thecaffeinehaven/" target="_blank" rel="noopener">Instagram</a></p>
+    <p class="footer-fine">© <span id="year"></span> The Caffeine Haven</p>
   </div>
 </footer>
 
@@ -312,7 +453,8 @@
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-<!-- Three.js (ESM) is imported inside js/main.js -->
+<!-- Three.js (ESM) is imported inside js/main.js, used only for the
+     atmosphere gallery's hover effect -->
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

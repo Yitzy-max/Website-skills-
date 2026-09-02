@@ -1,10 +1,11 @@
 /* =========================================================================
-   Caffeine Heaven — motion layer
-   Lenis (momentum scroll) + GSAP/ScrollTrigger (reveals, parallax, marquee)
-   + Three.js (hero ambient crossfade, gallery hover-distortion)
+   The Caffeine Haven — motion layer
+   Lenis (momentum scroll) + GSAP/ScrollTrigger (reveals, parallax, marquee,
+   the hero's cup/pastry drop-in) + Three.js (atmosphere gallery hover-
+   distortion only).
 
-   Every WebGL texture first tries to load Caffeine Heaven's real photography
-   from /images/*.jpg. If a file isn't there yet, it falls back to a soft,
+   Every WebGL texture first tries to load the shop's real photography from
+   /images/*.jpg. If a file isn't there yet, it falls back to a soft,
    procedurally-generated gradient so the page never looks broken pre-launch.
    Swap in real photos and everything upgrades automatically — no code
    changes needed. See /images/README.md for the exact filenames expected.
@@ -26,7 +27,8 @@ const gsapReady = !!(window.gsap && window.ScrollTrigger);
 if (!gsapReady) {
   document.querySelectorAll("[data-reveal], [data-reveal-mask], [data-reveal-clip]")
     .forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; el.style.clipPath = "none"; });
-  console.warn("[Caffeine Heaven] GSAP failed to load — scroll animations disabled, content shown statically.");
+  document.querySelectorAll(".spread-item").forEach((el) => { el.style.opacity = "1"; el.style.transform = "translateX(-50%)"; });
+  console.warn("[Caffeine Haven] GSAP failed to load — scroll animations disabled, content shown statically.");
 }
 
 /* -------------------------------------------------------------------------
@@ -145,11 +147,11 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
     );
   }
 
-  // hero: the room slowly reveals as the visitor scrolls past it — a quiet
-  // zoom-out plus a fade, so the cinematic open has a clear end before the
-  // rest of the (non-video) page takes over
-  gsap.to(".hero-canvas", {
-    scale: 1.12,
+  // hero: everything fades/lifts as the visitor scrolls past it, so the
+  // cinematic open has a clear end before the rest of the page takes over
+  gsap.to(".hero-spread", {
+    y: 40,
+    opacity: 0.5,
     ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
   });
@@ -164,6 +166,58 @@ if (gsapReady) gsap.registerPlugin(ScrollTrigger);
     opacity: 0.4,
     ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+  });
+})();
+
+/* -------------------------------------------------------------------------
+   HERO SPREAD — the cups and pastries drop in from above and settle onto
+   the counter, back row (drinks) first, then the front row (pastries), so
+   the shop's own menu feels like it's being set out in front of you. Pure
+   DOM/GSAP — no Three.js dependency, so it plays immediately on load
+   rather than waiting on the WebGL bootstrap at the bottom of this file.
+   ------------------------------------------------------------------------- */
+(function heroSpread() {
+  const items = Array.from(document.querySelectorAll(".spread-item"));
+  if (!items.length) return;
+
+  if (reducedMotion || !gsapReady) {
+    items.forEach((el) => { el.style.opacity = "1"; });
+    return;
+  }
+
+  const back = items.filter((el) => el.dataset.row === "back");
+  const front = items.filter((el) => el.dataset.row === "front");
+
+  const tl = gsap.timeline({ delay: 0.5 });
+  [back, front].forEach((row, rowIndex) => {
+    tl.fromTo(
+      row,
+      { y: -160, opacity: 0, rotation: () => gsap.utils.random(-9, 9) },
+      {
+        y: 0,
+        opacity: 1,
+        rotation: 0,
+        duration: 1,
+        ease: "back.out(1.6)",
+        stagger: 0.1,
+      },
+      rowIndex === 0 ? 0 : 0.35 // front row starts just after the back row begins
+    );
+  });
+
+  // a slow, barely-there idle float once everything has landed — enough to
+  // feel alive without ever looking like a loading animation
+  tl.add(() => {
+    items.forEach((el, i) => {
+      gsap.to(el, {
+        y: `+=${gsap.utils.random(4, 8)}`,
+        duration: gsap.utils.random(2.6, 3.6),
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        delay: i * 0.15,
+      });
+    });
   });
 })();
 
@@ -240,139 +294,6 @@ function proceduralTexture(variant = "roast", seed = 0) {
   return tex;
 }
 
-function loadTextureWithFallback(url, variant, seed) {
-  return new Promise((resolve) => {
-    const loader = new THREE.TextureLoader();
-    loader.load(
-      url,
-      (tex) => { tex.colorSpace = THREE.SRGBColorSpace; resolve(tex); },
-      undefined,
-      () => resolve(proceduralTexture(variant, seed))
-    );
-  });
-}
-
-/* -------------------------------------------------------------------------
-   HERO — ambient crossfade between images, custom wipe/dissolve shader
-   ------------------------------------------------------------------------- */
-async function initHero() {
-  const canvas = document.getElementById("heroCanvas");
-  if (!canvas) return;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-  const sources = [
-    { url: "../images/hero-1.jpg", variant: "roast", seed: 1 },
-    { url: "../images/hero-2.jpg", variant: "amber", seed: 2 },
-    { url: "../images/hero-3.jpg", variant: "dusk", seed: 3 },
-    { url: "../images/hero-4.jpg", variant: "cream", seed: 4 },
-  ];
-  const textures = await Promise.all(sources.map((s) => loadTextureWithFallback(s.url, s.variant, s.seed)));
-  const noise = proceduralTexture("dusk", 9);
-
-  const uniforms = {
-    uFrom: { value: textures[0] },
-    uTo: { value: textures[1] },
-    uNoise: { value: noise },
-    uProgress: { value: 0 },
-    uResolution: { value: new THREE.Vector2(1, 1) },
-    uTexAspect: { value: 1 },
-  };
-
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      precision highp float;
-      varying vec2 vUv;
-      uniform sampler2D uFrom;
-      uniform sampler2D uTo;
-      uniform sampler2D uNoise;
-      uniform float uProgress;
-      uniform vec2 uResolution;
-      uniform float uTexAspect;
-
-      // cover-fit uv so the texture always fills the viewport without stretching
-      vec2 coverUv(vec2 uv) {
-        float screenAspect = uResolution.x / uResolution.y;
-        vec2 scale = screenAspect > uTexAspect
-          ? vec2(1.0, screenAspect / uTexAspect)
-          : vec2(uTexAspect / screenAspect, 1.0);
-        return (uv - 0.5) * scale + 0.5;
-      }
-
-      void main() {
-        vec2 uv = coverUv(vUv);
-        float n = texture2D(uNoise, vUv * 1.4).r;
-        float edge = smoothstep(uProgress - 0.18, uProgress + 0.18, n * 0.85 + vUv.y * 0.15);
-        vec4 a = texture2D(uFrom, uv);
-        vec4 b = texture2D(uTo, uv);
-        vec3 color = mix(b.rgb, a.rgb, edge);
-        // slight darken at the wipe edge for a premium, filmic transition
-        float edgeGlow = smoothstep(0.0, 0.06, abs(edge - 0.5) - 0.0);
-        color *= 1.0 - (1.0 - edgeGlow) * 0.06;
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `,
-  });
-
-  const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
-  scene.add(quad);
-
-  function resize() {
-    const w = canvas.clientWidth || window.innerWidth;
-    const h = canvas.clientHeight || window.innerHeight;
-    renderer.setSize(w, h, false);
-    uniforms.uResolution.value.set(w, h);
-  }
-  resize();
-  window.addEventListener("resize", resize);
-
-  function setTexAspect(tex) {
-    const img = tex.image;
-    uniforms.uTexAspect.value = img && img.width ? img.width / img.height : 1.5;
-  }
-  setTexAspect(textures[0]);
-
-  let i = 0;
-  function render() { renderer.render(scene, camera); }
-  render();
-
-  if (reducedMotion || !gsapReady || textures.length < 2) return; // static frame is enough
-
-  function nextSlide() {
-    const from = i % textures.length;
-    const to = (i + 1) % textures.length;
-    uniforms.uFrom.value = textures[from];
-    uniforms.uTo.value = textures[to];
-    setTexAspect(textures[from]);
-    uniforms.uProgress.value = 0;
-
-    gsap.to(uniforms.uProgress, {
-      value: 1,
-      duration: 2.2,
-      ease: "power2.inOut",
-      onUpdate: render,
-      onComplete: () => { i++; render(); },
-    });
-  }
-
-  render();
-  gsap.delayedCall(4.5, function loop() {
-    nextSlide();
-    gsap.delayedCall(6, loop);
-  });
-}
 
 /* -------------------------------------------------------------------------
    ATMOSPHERE GALLERY — shared WebGL overlay: ripple / displacement
@@ -527,16 +448,15 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 /* -------------------------------------------------------------------------
    WebGL bootstrap — everything above this line works with zero dependency
-   on Three.js. Only the hero crossfade and gallery hover-distortion need it,
-   so it's loaded last, dynamically, and failure here can't blank the page.
+   on Three.js. Only the atmosphere gallery's hover-distortion needs it, so
+   it's loaded last, dynamically, and failure here can't blank the page.
    ------------------------------------------------------------------------- */
 (async () => {
   try {
     THREE = await import("https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js");
   } catch (err) {
-    console.warn("[Caffeine Heaven] Three.js failed to load — hero/gallery WebGL effects disabled; the rest of the page is unaffected.", err);
+    console.warn("[Caffeine Haven] Three.js failed to load — the gallery hover effect is disabled; the rest of the page is unaffected.", err);
     return;
   }
-  initHero();
   initGalleryDistortion();
 })();

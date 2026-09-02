@@ -8,35 +8,42 @@ design-critique commands, and component registries available while coding.
 
 ## The site
 
-A static, cinematic, image-forward landing page for **Caffeine Heaven**, a dim,
-unhurried neighborhood coffee shop — built as the first real page in this repo, using
-the skills and MCP tooling above.
+A static, cinematic, image-forward landing page for **[The Caffeine Haven](https://www.instagram.com/thecaffeinehaven/)**,
+a real coffee shop at 216 Main St in downtown Toms River, NJ — built as the first real
+page in this repo, using the skills and MCP tooling above.
 
 - `index.html` / `css/style.css` / `js/main.js` — no framework, no build step; open
   `index.html` directly or serve the repo root.
 - **Design**: a full dark theme (warm near-black throughout, not just the hero) with
   one restrained copper/amber accent and gold used only as a rare glint — Fraunces
-  for display type, Manrope for everything else. The hero plays on the brand's own
-  pun: soft CSS "godray" light drifting through the dark, echoing steam catching
-  light in a dim room.
+  for display type, Manrope for everything else. A small sunburst mark (drawn as an
+  inline SVG symbol) mirrors the logo on the shop's own cups, used in the header,
+  footer, and worked into each cup illustration.
+- **Hero**: a built illustration, not a photo or video — cups and pastries (all
+  inline SVG, defined at the top of `index.html`) drop in from above and settle onto
+  a lit counter (`js/main.js` → `heroSpread()`), staged after a reference photo of the
+  shop's own drinks and baked goods. No image/video assets required, no network
+  dependency beyond the GSAP/Lenis CDNs the rest of the site already uses.
 - **Motion**: [Lenis](https://github.com/darkroomengineering/lenis) momentum scroll +
-  GSAP `ScrollTrigger` for reveals, parallax, and a scroll-scrubbed hero exit; Three.js
-  for a custom-shader hero image crossfade and a hover-ripple distortion on the
-  atmosphere gallery. Every WebGL/GSAP feature is loaded via a resilient bootstrap —
-  if a CDN is ever unreachable for a visitor, the page falls back to fully static (all
-  content visible, no animation) instead of breaking.
-- **Content** is built from the brand brief: a chill, aesthetic, quiet café that's
-  equally good for deep work (wifi, outlets, quiet corners), families (a kids'
-  corner), and readers/dates (a patio, a quiet street) — laid out as three alternating
-  editorial rows rather than a generic three-card grid. Menu items, hours, and address
-  are marked as drafts/placeholders (see the `TODO` comments in `index.html`) —
-  confirm the real details before launch. Testimonials are placeholder copy written
-  in the brand voice, not real reviews — swap them in before launch.
-- **Photography is placeholder** — every image slot has a soft procedural gradient
-  placeholder tuned to the brand's dark palette, and upgrades automatically the
-  moment a real photo is dropped in — see [`images/README.md`](images/README.md) for
-  the exact filenames expected. The hero video slot works the same way — see
-  [`videos/README.md`](videos/README.md) for the concept and generation notes.
+  GSAP `ScrollTrigger` for reveals, parallax, the hero drop-in, and a scroll-scrubbed
+  hero exit; Three.js for a hover-ripple distortion on the atmosphere gallery only.
+  Every WebGL/GSAP feature is loaded via a resilient bootstrap — if a CDN is ever
+  unreachable for a visitor, the page falls back to fully static (all content
+  visible, no animation) instead of breaking.
+- **Content is real**, pulled from the shop's own public listings (Google Business,
+  Yelp, delivery-app menus) and press coverage: address, phone, hours, opening story
+  (August 2024, in a storefront that used to be a different local coffee spot),
+  real menu items/prices, and review themes (quiet mornings, a kids' play corner,
+  board games at the tables). A few details are still marked `TODO` in `index.html`
+  where public sources disagreed slightly (exact hours) — confirm against the
+  in-store menu/hours before launch. Testimonials are placeholder copy written in the
+  brand voice around those real review themes, not verbatim reviews — swap in actual
+  customer quotes (with permission) before launch.
+- **Photography is placeholder** outside the hero — every other image slot has a soft
+  procedural gradient placeholder tuned to the brand's dark palette, and upgrades
+  automatically the moment a real photo is dropped in — see
+  [`images/README.md`](images/README.md) for the exact filenames expected. A real
+  hero video is an optional future upgrade — see [`videos/README.md`](videos/README.md).
 
 ## Skills
 

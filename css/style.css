@@ -185,7 +185,9 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   max-width: 1600px; margin: 0 auto; width: 100%;
 }
 
-.wordmark { display: flex; flex-direction: column; line-height: 1; color: var(--ink); }
+.wordmark { display: flex; align-items: center; gap: 0.6rem; line-height: 1; color: var(--ink); }
+.wordmark-icon { width: 22px; height: 22px; color: var(--accent-ink); flex: none; }
+.wordmark-text { display: flex; flex-direction: column; }
 .wordmark-mark { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.01em; }
 .wordmark-sub { font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; margin-top: 0.3rem; opacity: 0.75; color: var(--accent-ink); }
 
@@ -250,19 +252,13 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
    ========================================================================= */
 .hero {
   position: relative;
-  height: 100svh; min-height: 620px;
-  display: flex; align-items: flex-end;
+  height: 100svh; min-height: 680px;
   overflow: hidden;
   background: var(--bg-deep);
 }
-.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hero-video {
-  position: absolute; inset: 0; z-index: 1;
-  width: 100%; height: 100%; object-fit: cover;
-}
 
-/* soft "heaven light" shafts drifting through the dark room — a quiet nod
-   to the name, built in pure CSS so it costs nothing and never breaks */
+/* soft light shafts drifting through the dark room — built in pure CSS so
+   it costs nothing and never breaks */
 .hero-godrays {
   position: absolute; inset: -10% -10%; z-index: 1;
   background:
@@ -283,10 +279,13 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   pointer-events: none;
 }
 .hero-content {
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
   width: 100%;
-  padding: 0 var(--gutter) clamp(3.5rem, 9vw, 6.5rem);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(6.5rem, 15vh, 9rem) var(--gutter) 0;
   color: var(--ink);
+  text-align: center;
 }
 .hero-title {
   font-family: var(--font-display);
@@ -297,19 +296,69 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 }
 .hero-title-line { display: block; overflow: hidden; }
 .hero-sub {
-  margin-top: 1.5rem;
+  margin: 1.5rem auto 0;
   max-width: 34ch;
   font-size: var(--fs-lg);
   font-weight: 300;
   color: rgba(244,236,222,0.82);
 }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.25rem; }
+.hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.25rem; }
+
+/* -------------------------------------------------------------------------
+   HERO SPREAD — cups and pastries "arrive" on a lit counter along the
+   bottom of the hero (see js/main.js for the drop-in choreography). A
+   stylized stand-in for real product photography, built from the shared
+   SVG symbols defined at the top of index.html.
+   ------------------------------------------------------------------------- */
+.hero-spread {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  height: clamp(200px, 32vh, 320px);
+  pointer-events: none;
+}
+.hero-counter {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(201,136,76,0.10) 55%, rgba(201,136,76,0.16) 100%);
+  border-top: 1px solid var(--line-soft);
+  box-shadow: 0 -30px 60px -20px rgba(201,136,76,0.12);
+}
+.spread-item {
+  position: absolute;
+  left: var(--x);
+  transform: translateX(-50%);
+  filter: drop-shadow(0 16px 20px rgba(0,0,0,0.5));
+  opacity: 0; /* JS animates this in; see js/main.js heroSpread() */
+}
+.spread-cup {
+  width: clamp(56px, 7.2vw, 92px);
+  aspect-ratio: 100 / 150;
+  bottom: 38%;
+}
+.spread-pastry {
+  width: clamp(72px, 9.4vw, 128px);
+  aspect-ratio: 130 / 110;
+  bottom: 4%;
+  z-index: 1;
+}
 
 @media (max-width: 640px) {
-  .hero-content { text-align: center; }
-  .hero-sub { margin-left: auto; margin-right: auto; }
-  .hero-actions { justify-content: center; }
+  .hero-spread { height: clamp(160px, 26vh, 220px); }
+  /* keep the composition legible at small widths — drop the two outer
+     items on each row rather than shrinking everything past readability */
+  .spread-item:nth-of-type(1), .spread-item:nth-of-type(5),
+  .spread-item:nth-of-type(6), .spread-item:nth-of-type(9) { display: none; }
 }
+
+/* short viewports (laptops with browser chrome, landscape phones) — vw-based
+   hero type doesn't know about limited height, so give it its own budget to
+   keep the CTAs clear of the counter below */
+@media (max-height: 820px) {
+  .hero-content { padding-top: clamp(4rem, 9vh, 6rem); }
+  .hero-title { font-size: clamp(2.4rem, 8vw, 5.5rem); }
+  .hero-sub { margin-top: 1rem; }
+  .hero-actions { margin-top: 1.5rem; }
+  .hero-spread { height: clamp(130px, 20vh, 200px); }
+}
+
 .hero-scroll-cue {
   position: absolute; right: var(--gutter); bottom: 2.5rem; z-index: 2;
   display: flex; align-items: center; gap: 0.75rem;
@@ -523,7 +572,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   background: var(--bg-deep);
 }
 .footer-inner { max-width: 1600px; margin: 0 auto; text-align: center; }
-.wordmark-footer { display: inline-flex; flex-direction: row; align-items: baseline; gap: 0.6rem; color: var(--ink); justify-content: center; }
+.wordmark-footer { display: inline-flex; flex-direction: row; align-items: center; gap: 0.6rem; color: var(--ink); justify-content: center; }
 .wordmark-footer .wordmark-sub { margin-top: 0; }
 .footer-address { margin-top: 1rem; color: rgba(244,236,222,0.65); font-size: 0.9rem; }
 .footer-address a:hover { color: var(--accent-ink); }
