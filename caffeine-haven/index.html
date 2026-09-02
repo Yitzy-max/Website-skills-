@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Caffeine Haven — Toms River &amp; Howell, NJ</title>
+  <meta name="description" content="The Caffeine Haven — a quiet haven for coffee and good company on Main Street, Toms River, and in Howell, NJ." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <div id="grain"></div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header id="site-header" data-header>
+    <div class="header-inner">
+      <a class="brand-mark" href="#hero" aria-label="The Caffeine Haven — home">
+        <span class="brand-mark__glyph">CH</span>
+        <span class="brand-mark__name">The&nbsp;Caffeine&nbsp;Haven</span>
+      </a>
+
+      <button class="nav-trigger" id="navTrigger" aria-expanded="false" aria-controls="navPanel">
+        <span>Menu</span>
+        <span class="nav-trigger__bars" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+
+    <nav id="navPanel" class="nav-panel" aria-hidden="true">
+      <ol class="nav-panel__list">
+        <li><a href="#order"><span class="nav-index">01</span>Order&nbsp;Online</a></li>
+        <li><a href="#menu-note"><span class="nav-index">02</span>Menu</a></li>
+        <li><a href="#visit"><span class="nav-index">03</span>Contact</a></li>
+      </ol>
+      <div class="nav-panel__meta">
+        <div>
+          <p class="nav-panel__label">Toms River</p>
+          <p>216 Main St · Mon–Sat, 7am–2pm</p>
+        </div>
+        <div>
+          <p class="nav-panel__label">Howell</p>
+          <p>2981 Route 9 · Daily, 7am–4pm</p>
+        </div>
+        <a class="nav-panel__ig" href="https://www.instagram.com/thecaffeinehaven/" target="_blank" rel="noopener">@thecaffeinehaven</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero" data-hero>
+      <div class="hero__video-frame" data-hero-video-frame>
+        <video
+          id="heroVideo"
+          class="hero__video"
+          muted
+          playsinline
+          preload="auto"
+        ></video>
+        <div class="hero__scrim" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero__content">
+        <p class="eyebrow" data-reveal>Toms River &amp; Howell, NJ · Est. 2024</p>
+        <h1 class="hero__title" data-reveal>
+          <span>The Caffeine</span>
+          <span>Haven</span>
+        </h1>
+        <p class="hero__slogan" data-reveal>A quiet haven for coffee&nbsp;and good company.</p>
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--accent" href="#order">Order Online</a>
+          <a class="btn btn--ghost" href="#menu-note">View the Menu</a>
+        </div>
+      </div>
+
+      <div class="hero__scroll-cue" aria-hidden="true">
+        <span>Scroll</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- ============ IMPACT STATEMENT ============ -->
+    <section class="impact" data-impact>
+      <p class="impact__text" data-split-lines>
+        A place to slow down — a good cup in hand, a book left open, a laptop
+        humming quietly in the corner. No rush. Just Main Street, done right.
+      </p>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section id="gallery" class="gallery" data-gallery>
+      <header class="section-head">
+        <p class="eyebrow" data-reveal>The Room</p>
+        <h2 class="section-head__title" data-reveal>A look inside</h2>
+      </header>
+
+      <div class="gallery__stage" data-gallery-stage>
+        <canvas id="galleryCanvas" data-gallery-canvas></canvas>
+        <div class="gallery__caption">
+          <span class="gallery__index" data-gallery-index>01</span>
+          <span class="gallery__label" data-gallery-label>The room</span>
+        </div>
+      </div>
+
+      <ul class="gallery__rail" data-gallery-rail>
+        <li data-thumb data-index="0"><canvas data-thumb-canvas></canvas><span>The room</span></li>
+        <li data-thumb data-index="1"><canvas data-thumb-canvas></canvas><span>Poured slow</span></li>
+        <li data-thumb data-index="2"><canvas data-thumb-canvas></canvas><span>Baked each morning</span></li>
+        <li data-thumb data-index="3"><canvas data-thumb-canvas></canvas><span>Out front</span></li>
+        <li data-thumb data-index="4"><canvas data-thumb-canvas></canvas><span>The quiet corner</span></li>
+        <li data-thumb data-index="5"><canvas data-thumb-canvas></canvas><span>One cup at a time</span></li>
+      </ul>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="about" data-parallax-section>
+      <div class="about__media" data-parallax-layer data-speed="0.15">
+        <img data-cdn-image="0" alt="Warm, brick-walled interior of The Caffeine Haven" loading="lazy" />
+      </div>
+      <div class="about__panel">
+        <p class="eyebrow" data-reveal>Our Story</p>
+        <h2 class="about__title" data-reveal>From Main Street,<br />with care.</h2>
+        <p class="about__body" data-reveal>
+          The Caffeine Haven opened its doors on Main Street in August 2024 —
+          and quickly became the kind of place Toms River didn't know it was
+          missing. Exposed brick, reclaimed wood, soft indie music humming
+          underneath the conversation. Mornings start quiet here; by 10:30 the
+          tables fill with regulars, laptops, and the occasional stroller. We
+          opened a second haven in Howell not long after, for the same reason
+          we opened the first: good coffee deserves a good place to drink it.
+        </p>
+        <dl class="about__stats" data-reveal>
+          <div><dt>Est.</dt><dd>2024</dd></div>
+          <div><dt>Locations</dt><dd>2</dd></div>
+          <div><dt>Followers</dt><dd>13K+</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ MADE FOR YOU ============ -->
+    <section id="menu-note" class="features">
+      <header class="section-head">
+        <p class="eyebrow" data-reveal>Made for You</p>
+        <h2 class="section-head__title" data-reveal>Whatever brought you in</h2>
+      </header>
+
+      <div class="features__grid">
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__num">01</span>
+          <h3>Room to work</h3>
+          <p>Steady Wi-Fi, quiet mornings, and enough outlets to actually get something done.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__num">02</span>
+          <h3>Good for the whole crew</h3>
+          <p>A stocked corner of toys means you can bring the kids and still finish your coffee hot.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__num">03</span>
+          <h3>Out front, unhurried</h3>
+          <p>Outdoor seating for the days that ask for fresh air and a slower conversation.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__num">04</span>
+          <h3>Built for two</h3>
+          <p>Warm light, low music, small tables — quietly one of the best date spots on Main Street.</p>
+        </article>
+      </div>
+
+      <div class="menu-teaser" data-reveal>
+        <p>Specialty lattes, house lemonade &amp; refreshers, a kids' drink menu, and baked goods made each morning — brown sugar cinnamon lattes and blueberry muffins are the ones people come back for.</p>
+        <a class="text-link" href="https://the-caffeine-haven-toms-river.res-menu.net/menu" target="_blank" rel="noopener">See the full menu →</a>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section id="testimonials" class="testimonials" data-parallax-section>
+      <div class="testimonials__bg" data-parallax-layer data-speed="0.2">
+        <img data-cdn-image="3" alt="Outdoor seating in front of The Caffeine Haven at dusk" loading="lazy" />
+      </div>
+      <header class="section-head section-head--light">
+        <p class="eyebrow" data-reveal>Word on Main Street</p>
+        <h2 class="section-head__title" data-reveal>What people say</h2>
+      </header>
+
+      <div class="testimonials__grid">
+        <blockquote data-reveal>
+          <p>“Cozy, unpretentious, and exactly what this neighborhood needed. I've lost more afternoons here than I'll admit.”</p>
+          <cite>— Google review</cite>
+        </blockquote>
+        <blockquote data-reveal>
+          <p>“Quiet in the morning, full of regulars by ten-thirty — exposed brick, wooden tables, and always something good playing low in the background.”</p>
+          <cite>— Yelp review</cite>
+        </blockquote>
+        <blockquote data-reveal>
+          <p>“The blueberry muffins alone are worth the trip. My kids have toys to play with, I have coffee and quiet — everybody wins.”</p>
+          <cite>— Toms River regular</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============ ORDER / VISIT CTA ============ -->
+    <section id="order" class="cta">
+      <p class="eyebrow" data-reveal>Visit Us</p>
+      <h2 class="cta__title" data-reveal>Come sit for a while.</h2>
+      <div class="cta__actions" data-reveal>
+        <a class="btn btn--accent btn--lg" href="https://the-caffeine-haven.res-pick.com/" target="_blank" rel="noopener">Order Online</a>
+        <a class="btn btn--ghost btn--lg" href="#visit">Get Directions</a>
+      </div>
+
+      <div id="visit" class="cta__locations">
+        <div class="location-card" data-reveal>
+          <h3>Toms River</h3>
+          <p>216 Main St<br />Toms River, NJ 08753</p>
+          <p class="location-card__hours">Mon–Sat · 7am – 2pm</p>
+          <a class="text-link" href="https://www.google.com/maps/place/The+Caffeine+Haven/@39.9541947,-74.2011914,17z" target="_blank" rel="noopener">Get directions →</a>
+        </div>
+        <div class="location-card" data-reveal>
+          <h3>Howell</h3>
+          <p>2981 Route&nbsp;9<br />Howell, NJ 07731</p>
+          <p class="location-card__hours">Daily · 7am – 4pm</p>
+          <a class="text-link" href="#" target="_blank" rel="noopener">Get directions →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__top">
+      <span class="brand-mark__glyph">CH</span>
+      <p>A quiet haven for coffee and good company.</p>
+    </div>
+    <div class="site-footer__meta">
+      <a href="https://www.instagram.com/thecaffeinehaven/" target="_blank" rel="noopener">@thecaffeinehaven</a>
+      <span>216 Main St, Toms River, NJ</span>
+      <span>2981 Route 9, Howell, NJ</span>
+    </div>
+    <p class="site-footer__legal">© <span data-year></span> The Caffeine Haven. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
