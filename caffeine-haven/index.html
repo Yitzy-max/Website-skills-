@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Caffeine Haven — Your quiet corner of the neighborhood</title>
+<meta name="description" content="The Caffeine Haven — a calm, warm neighborhood coffee house. Slow mornings, single-origin espresso, house-made pastries, sidewalk seating, and a quiet corner made for lingering." />
+<meta name="theme-color" content="#100b08" />
+
+<!-- Wordmark type mirrors the shop's storefront lettering: a light, wide, letter-spaced serif -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Grain + vignette overlays for cinematic depth (fixed, above everything, non-interactive) -->
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <!-- Logo, left -->
+    <a href="#hero" class="brand" aria-label="The Caffeine Haven — home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none">
+          <!-- radiating sunburst -->
+          <g stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity=".85">
+            <line x1="24" y1="3" x2="24" y2="9"/>
+            <line x1="34.6" y1="6.2" x2="31.8" y2="11.4"/>
+            <line x1="42" y1="14" x2="36.8" y2="16.9"/>
+            <line x1="13.4" y1="6.2" x2="16.2" y2="11.4"/>
+            <line x1="6" y1="14" x2="11.2" y2="16.9"/>
+          </g>
+          <!-- latte-leaf mark -->
+          <path d="M24 14c-5 3.2-8 7.4-8 12.2C16 32 19.6 36 24 39c4.4-3 8-7 8-12.8 0-4.8-3-9-8-12.2Z" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M24 18c-2.6 2-4 4.6-4 7.6M24 18c2.6 2 4 4.6 4 7.6M24 24c-1.9 1.4-3 3.2-3 5.4M24 24c1.9 1.4 3 3.2 3 5.4" stroke="currentColor" stroke-width="1" opacity=".7"/>
+        </svg>
+      </span>
+      <span class="brand-words">
+        <span class="brand-the">The</span>
+        <span class="brand-name">Caffeine&nbsp;Haven</span>
+      </span>
+    </a>
+
+    <!-- Hamburger -> left dropdown. (Login / Sign up / Cart intentionally removed.) -->
+    <button class="nav-trigger" id="navTrigger" aria-expanded="false" aria-controls="navPanel">
+      <span class="nav-trigger-lines" aria-hidden="true"><i></i><i></i></span>
+      <span class="nav-trigger-label">Menu</span>
+    </button>
+  </div>
+
+  <!-- Left dropdown navigation -->
+  <div class="nav-panel" id="navPanel" aria-hidden="true">
+    <nav class="nav-panel-inner" aria-label="Primary">
+      <ol class="nav-list">
+        <li><span class="nav-index">01</span><a href="#hero" data-navlink>Home</a></li>
+        <li><span class="nav-index">02</span><a href="#menu" data-navlink>Menu</a></li>
+        <li><span class="nav-index">03</span><a href="#story" data-navlink>Our Story</a></li>
+        <li><span class="nav-index">04</span><a href="#space" data-navlink>The Space</a></li>
+        <li><span class="nav-index">05</span><a href="#visit" data-navlink>Visit</a></li>
+      </ol>
+      <div class="nav-panel-meta">
+        <p class="nav-meta-label">Open</p>
+        <p>Mon–Fri&nbsp;·&nbsp;6am – 4pm<br />Sat–Sun&nbsp;·&nbsp;7am – 4pm</p>
+        <p class="nav-meta-sep">—</p>
+        <p><a href="#visit" data-navlink>Find your seat →</a></p>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO — the milk pour ============ -->
+  <section class="hero" id="hero">
+    <canvas id="pourCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-fade" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <p class="hero-eyebrow" data-hero="1"><span>Neighborhood coffee house</span></p>
+
+      <h1 class="hero-title">
+        <span class="line" data-hero="2"><span>Start your day</span></span>
+        <span class="line" data-hero="3"><span>with a <em>haven</em>.</span></span>
+      </h1>
+
+      <p class="hero-sub" data-hero="4">
+        A calm, warm corner where the espresso is slow, the pastries are
+        made this morning, and nobody's rushing you out.
+      </p>
+
+      <div class="hero-cta" data-hero="5">
+        <a class="btn btn-solid" href="#menu">See the menu</a>
+        <a class="btn btn-ghost" href="#visit">Find your seat</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" data-hero="6" aria-hidden="true">
+      <span>Scroll</span>
+      <span class="hero-scroll-line"></span>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE — coffees & pastries sliding under the hero ============ -->
+  <section class="marquee-band" aria-label="A taste of the counter">
+    <div class="marquee" data-marquee="left">
+      <div class="marquee-track" id="mqA">
+        <!-- items injected/duplicated by JS; authored once here -->
+        <article class="taste" data-img="images/drink-iced-latte.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Iced Vanilla Latte</span></article>
+        <article class="taste" data-img="images/drink-cortado.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Cortado</span></article>
+        <article class="taste" data-img="images/pastry-blueberry.jpg"><span class="taste-media" data-muffin></span><span class="taste-label">Blueberry Muffin</span></article>
+        <article class="taste" data-img="images/drink-cappuccino.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Cappuccino</span></article>
+        <article class="taste" data-img="images/drink-cold-brew.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Cold Brew</span></article>
+        <article class="taste" data-img="images/pastry-cinnamon.jpg"><span class="taste-media" data-muffin></span><span class="taste-label">Cinnamon Roll</span></article>
+        <article class="taste" data-img="images/drink-matcha.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Iced Matcha</span></article>
+        <article class="taste" data-img="images/drink-mocha.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Mocha</span></article>
+        <article class="taste" data-img="images/pastry-fritter.jpg"><span class="taste-media" data-muffin></span><span class="taste-label">Apple Fritter</span></article>
+        <article class="taste" data-img="images/drink-flat-white.jpg"><span class="taste-media" data-coffee></span><span class="taste-label">Flat White</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY / MANIFESTO ============ -->
+  <section class="story" id="story">
+    <div class="story-inner">
+      <p class="section-kicker" data-reveal>Our Story</p>
+      <h2 class="story-lead">
+        <span class="l" data-reveal-line>Some places you visit.</span>
+        <span class="l" data-reveal-line>This one you settle into.</span>
+      </h2>
+      <div class="story-cols">
+        <p class="story-copy" data-reveal>
+          The Caffeine Haven started with a simple idea — a room quiet enough to
+          actually think in. Warm light, soft music, a table by the window that's
+          yours for as long as you need it.
+        </p>
+        <p class="story-copy" data-reveal>
+          Bring your laptop and the morning disappears. Bring a book and a
+          flat white and it's the best hour of your week. Bring the kids —
+          there's a corner of toys waiting — or bring a date and let the
+          espresso do the talking.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE POUR — scroll-scrubbed signature moment (layered depth) ============ -->
+  <section class="pour" id="pour">
+    <div class="pour-sticky">
+      <div class="pour-stage">
+        <!-- The filling cup -->
+        <div class="cup" aria-hidden="true">
+          <div class="cup-body">
+            <div class="cup-fill" id="cupFill"></div>
+            <div class="cup-foam" id="cupFoam"></div>
+            <div class="cup-gloss"></div>
+          </div>
+          <div class="cup-saucer"></div>
+        </div>
+        <!-- Floating feature captions, revealed on scroll -->
+        <div class="pour-notes">
+          <p class="pour-note" data-pour-note="0"><span class="pn-num">01</span> Single-origin espresso, pulled to order</p>
+          <p class="pour-note" data-pour-note="1"><span class="pn-num">02</span> Oat, whole, or house almond — no upcharge</p>
+          <p class="pour-note" data-pour-note="2"><span class="pn-num">03</span> Pastries baked in-house before the doors open</p>
+        </div>
+      </div>
+      <p class="pour-caption" data-reveal>Watch it come together.</p>
+    </div>
+    <!-- scroll length driver -->
+    <div class="pour-scrub" id="pourScrub"></div>
+  </section>
+
+  <!-- ============ MENU ============ -->
+  <section class="menu" id="menu">
+    <div class="menu-inner">
+      <div class="menu-head">
+        <p class="section-kicker" data-reveal>The Menu</p>
+        <h2 class="menu-title" data-reveal>Small, seasonal, done right.</h2>
+        <p class="menu-note" data-reveal>A rotating handful of things we're proud of — ask the counter what's new this week.</p>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-col" data-reveal>
+          <h3 class="menu-col-title">Espresso &amp; Slow Bar</h3>
+          <ul class="menu-list">
+            <li><span class="mi-name">Cortado</span><span class="mi-dot"></span><span class="mi-price">4.5</span></li>
+            <li><span class="mi-name">Flat White</span><span class="mi-dot"></span><span class="mi-price">5</span></li>
+            <li><span class="mi-name">Cappuccino</span><span class="mi-dot"></span><span class="mi-price">5</span></li>
+            <li><span class="mi-name">Honey Lavender Latte</span><span class="mi-dot"></span><span class="mi-price">6</span></li>
+            <li><span class="mi-name">Brown Sugar Oat Latte</span><span class="mi-dot"></span><span class="mi-price">6.5</span></li>
+            <li><span class="mi-name">Pour-Over, single origin</span><span class="mi-dot"></span><span class="mi-price">5.5</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-col" data-reveal>
+          <h3 class="menu-col-title">Iced &amp; Cold</h3>
+          <ul class="menu-list">
+            <li><span class="mi-name">Classic Cold Brew</span><span class="mi-dot"></span><span class="mi-price">5</span></li>
+            <li><span class="mi-name">Iced Vanilla Latte</span><span class="mi-dot"></span><span class="mi-price">6</span></li>
+            <li><span class="mi-name">Iced Matcha</span><span class="mi-dot"></span><span class="mi-price">6</span></li>
+            <li><span class="mi-name">Maple Cinnamon Mocha</span><span class="mi-dot"></span><span class="mi-price">6.5</span></li>
+            <li><span class="mi-name">Sparkling Espresso Tonic</span><span class="mi-dot"></span><span class="mi-price">6</span></li>
+            <li><span class="mi-name">Kids' Steamer</span><span class="mi-dot"></span><span class="mi-price">3.5</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-col" data-reveal>
+          <h3 class="menu-col-title">From the Case</h3>
+          <ul class="menu-list">
+            <li><span class="mi-name">Blueberry Muffin</span><span class="mi-dot"></span><span class="mi-price">4</span></li>
+            <li><span class="mi-name">Cinnamon Roll</span><span class="mi-dot"></span><span class="mi-price">4.5</span></li>
+            <li><span class="mi-name">Apple Fritter</span><span class="mi-dot"></span><span class="mi-price">4.5</span></li>
+            <li><span class="mi-name">Chocolate Chip Muffin</span><span class="mi-dot"></span><span class="mi-price">4</span></li>
+            <li><span class="mi-name">Cinnamon Sugar Doughnut</span><span class="mi-dot"></span><span class="mi-price">3.5</span></li>
+            <li><span class="mi-name">Crumb-top Scone</span><span class="mi-dot"></span><span class="mi-price">4</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="menu-fine" data-reveal>Prices are a sample set — swap in the real board anytime.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE SPACE — gallery ============ -->
+  <section class="space" id="space">
+    <div class="space-head">
+      <p class="section-kicker" data-reveal>The Space</p>
+      <h2 class="space-title" data-reveal>Made for lingering.</h2>
+    </div>
+
+    <div class="space-grid">
+      <figure class="tile tile-tall" data-img="images/space-counter.jpg" data-reveal><span class="tile-media" data-photo="deep"></span><figcaption>The counter, first thing</figcaption></figure>
+      <figure class="tile" data-img="images/space-room.jpg" data-reveal><span class="tile-media" data-photo="warm"></span><figcaption>The back room</figcaption></figure>
+      <figure class="tile" data-img="images/space-latte.jpg" data-reveal><span class="tile-media" data-photo="toast"></span><figcaption>This morning's pour</figcaption></figure>
+      <figure class="tile tile-wide" data-img="images/space-outside.jpg" data-reveal><span class="tile-media" data-photo="sage"></span><figcaption>Sidewalk seating when it's kind out</figcaption></figure>
+      <figure class="tile" data-img="images/space-pastries.jpg" data-reveal><span class="tile-media" data-photo="toast"></span><figcaption>The case</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES — made for lingering ============ -->
+  <section class="linger">
+    <div class="linger-inner">
+      <article class="feat" data-reveal>
+        <span class="feat-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+        </span>
+        <h3>Quiet enough to work</h3>
+        <p>Fast wifi, outlets at most tables, and the kind of hush that lets you actually get things done.</p>
+      </article>
+      <article class="feat" data-reveal>
+        <span class="feat-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="10" r="2.2"/><path d="M3.5 20c.6-3.2 2.6-5 4.5-5s3.9 1.8 4.5 5M14 20c.4-2.2 1.7-3.5 2.8-3.5s2.2 1.1 2.7 3"/></svg>
+        </span>
+        <h3>A corner for the kids</h3>
+        <p>A little shelf of toys in the back, so a coffee with the little ones is actually relaxing.</p>
+      </article>
+      <article class="feat" data-reveal>
+        <span class="feat-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 11h16v2a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6v-2Z"/><path d="M20 11a3 3 0 0 0 0-6M8 3v2M12 3v2M16 3v2"/></svg>
+        </span>
+        <h3>Sidewalk seating</h3>
+        <p>Tables out front for the mornings the weather cooperates and you'd rather be outside.</p>
+      </article>
+      <article class="feat" data-reveal>
+        <span class="feat-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 9-2 4.5 4.5 0 0 1 9 2c-2 4.5-9 9-9 9Z"/></svg>
+        </span>
+        <h3>Quietly good for a date</h3>
+        <p>Low light, soft music, and a back table nobody will rush you out of.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ VISIT ============ -->
+  <section class="visit" id="visit">
+    <div class="visit-inner">
+      <div class="visit-copy" data-reveal>
+        <p class="section-kicker">Visit</p>
+        <h2 class="visit-title">Come find your quiet corner.</h2>
+        <p class="visit-lead">Walk in, order at the counter, and stay a while. No reservations, no rush.</p>
+        <a class="btn btn-solid btn-lg" href="#hero">Get directions</a>
+      </div>
+
+      <div class="visit-card" data-reveal>
+        <div class="visit-hours">
+          <p class="vh-label">Hours</p>
+          <ul>
+            <li><span>Monday – Friday</span><span>6:00am – 4:00pm</span></li>
+            <li><span>Saturday – Sunday</span><span>7:00am – 4:00pm</span></li>
+          </ul>
+        </div>
+        <div class="visit-line"></div>
+        <div class="visit-where">
+          <p class="vh-label">Where</p>
+          <p class="visit-addr">The Caffeine Haven<br /><span data-placeholder>Add your street address here</span></p>
+          <p class="visit-social"><a href="#" aria-label="Instagram">Instagram</a> · <a href="#" aria-label="Directions">Directions</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="#hero" class="brand brand-footer" aria-label="The Caffeine Haven — home">
+      <span class="brand-words">
+        <span class="brand-the">The</span>
+        <span class="brand-name">Caffeine&nbsp;Haven</span>
+      </span>
+    </a>
+    <p class="footer-tag">Your quiet corner of the neighborhood.</p>
+    <p class="footer-meta">Open daily · Mon–Fri 6–4 · Sat–Sun 7–4</p>
+    <p class="footer-fine">© <span id="year">2026</span> The Caffeine Haven. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Lenis — smooth momentum scrolling -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+<script src="js/main.js"></script>
+</body>
+</html>
