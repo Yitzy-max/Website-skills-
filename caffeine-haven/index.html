@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Caffeine Haven — a quiet café just off Route 9, Howell NJ</title>
+<meta name="description" content="A quiet neighborhood café in Howell, New Jersey. Coffee, pastries, a seat by the window, and nobody asking you to leave. 2981 Route 9 North.">
+<meta name="theme-color" content="#120e0b">
+<meta property="og:title" content="The Caffeine Haven">
+<meta property="og:description" content="A quiet café just off Route 9 in Howell, NJ. Come in, stay a while.">
+<meta property="og:image" content="images/exterior-dusk.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23120e0b'/%3E%3Ccircle cx='16' cy='16' r='8.6' fill='none' stroke='%23e8dcc6' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23d39a52'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-variable-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script>
+document.documentElement.classList.replace('no-js','js');
+/* Photos drop into /images later. Until a file exists, its frame paints itself
+   as a warm empty plate instead of a broken-image icon. */
+addEventListener('error', function (e) {
+  var el = e.target;
+  if (!el || el.tagName !== 'IMG') return;
+  el.setAttribute('data-missing', '');
+  el.setAttribute('data-src', el.getAttribute('src') || '');
+  /* swap in a transparent pixel so the browser draws no broken-image icon;
+     the frame's own background does the rest */
+  el.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  var box = el.parentElement;
+  if (!box) return;
+  box.classList.add('is-empty');
+  if (!box.hasAttribute('data-slot')) {
+    var name = (el.getAttribute('data-src') || '').split('/').pop().replace(/\.[a-z0-9]+$/i, '').replace(/[-_]/g, ' ');
+    box.setAttribute('data-slot', name);
+  }
+}, true);
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "The Caffeine Haven",
+  "description": "A quiet neighborhood cafe in Howell, New Jersey. Coffee, pastries, and a seat nobody is going to ask you to give up.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2981 Route 9 North",
+    "addressLocality": "Howell",
+    "addressRegion": "NJ",
+    "postalCode": "07731",
+    "addressCountry": "US"
+  },
+  "telephone": "+1-732-948-3326",
+  "priceRange": "$",
+  "servesCuisine": ["Coffee", "Pastries"],
+  "sameAs": ["https://www.instagram.com/the_caffeine_haven"],
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "06:00", "closes": "16:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "07:00", "closes": "16:00" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="nav__mark" href="#top" aria-label="The Caffeine Haven, back to top">
+    <span class="nav__mark-the">the</span> Caffeine Haven
+  </a>
+  <p class="nav__status label" id="openStatus" aria-live="polite"></p>
+  <nav class="nav__links" aria-label="Site">
+    <a href="#counter">Menu</a>
+    <a href="#visit">Visit</a>
+  </nav>
+</header>
+
+<aside class="room label" aria-hidden="true">
+  <span class="room__dot"></span>
+  <span class="room__label" id="roomLabel">Route 9</span>
+</aside>
+
+<main id="top">
+
+  <!-- ============ 1. OUTSIDE → THE DOOR (pinned threshold) ============ -->
+  <div class="hero-wrap" data-room="Route 9">
+    <section class="hero" aria-label="Welcome">
+      <div class="hero__out">
+        <img src="images/exterior-dusk.jpg" alt="The Caffeine Haven at dusk, warm light in the windows, seen from the parking lot off Route 9." fetchpriority="high">
+      </div>
+      <div class="hero__in" aria-hidden="true">
+        <img src="images/interior-door.jpg" alt="">
+      </div>
+      <div class="hero__veil" aria-hidden="true"></div>
+      <div class="hero__dark" aria-hidden="true"></div>
+
+      <div class="hero__content wrap">
+        <p class="hero__eyebrow label">A neighborhood café &middot; Howell, New Jersey</p>
+        <h1 class="hero__title">
+          <span class="line"><span class="t-the">the</span></span>
+          <span class="line"><span>Caffeine</span></span>
+          <span class="line"><span>Haven</span></span>
+        </h1>
+        <p class="hero__lead">Coffee, pastries, and a seat nobody is going to ask you to give up.</p>
+      </div>
+
+      <div class="hero__cue" aria-hidden="true">
+        <span class="label">Come in</span>
+        <i></i>
+      </div>
+
+      <div class="hero__thresh" aria-hidden="true">
+        <p class="hero__thresh-1">Route 9 is loud.<br>This isn't.</p>
+        <p class="hero__thresh-2">Come in.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ 2. THE QUIET ============ -->
+  <section class="quiet" data-room="The quiet">
+    <div class="wrap grid">
+      <figure class="quiet__wide reveal-img" data-parallax="0.06">
+        <img src="images/rain-window.jpg" alt="Rain on the front window at dusk, seen from a table inside." loading="lazy">
+      </figure>
+      <figure class="quiet__detail reveal-img" data-parallax="-0.14">
+        <img src="images/cup-table.jpg" alt="A chipped ceramic mug and half a blueberry muffin on a scratched wooden table." loading="lazy">
+      </figure>
+      <div class="quiet__copy">
+        <h2 class="h-display">
+          <span class="line"><span>Stay</span></span>
+          <span class="line"><span><em>a while.</em></span></span>
+        </h2>
+        <p class="lead reveal">Nobody's turning tables. Order something, find a seat, and let the afternoon go however it goes. You can hear the espresso machine, the door, and not much else.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. THE WINDOW SEAT (work) ============ -->
+  <section class="work" data-room="The window seat">
+    <div class="work__media" data-parallax-inner="0.12">
+      <img src="images/window-laptop.jpg" alt="Someone working on a laptop at the window table in the morning light." loading="lazy">
+    </div>
+    <div class="work__copy wrap">
+      <h2 class="h-display">
+        <span class="line"><span>The window seat</span></span>
+        <span class="line"><span>has an <em>outlet.</em></span></span>
+      </h2>
+      <p class="lead reveal">Good wifi and the good kind of quiet. Whole mornings get done here. The staff will keep the coffee coming and leave you alone otherwise.</p>
+      <ul class="facts reveal" aria-label="Good to know">
+        <li>Free wifi</li>
+        <li>Outlets at most tables</li>
+        <li>Doors open at 6 on weekdays</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 4. THE ARMCHAIR (reading) ============ -->
+  <section class="read" data-room="The armchair">
+    <div class="wrap">
+      <h2 class="read__text h-giant">
+        <span class="line"><span>Nobody will ask</span></span>
+        <span class="line"><span><em>what you're</em></span></span>
+        <span class="line"><span><em>reading.</em></span></span>
+      </h2>
+      <figure class="read__img reveal-img" data-parallax="-0.1">
+        <img src="images/armchair-book.jpg" alt="Hands holding an open paperback in the armchair by the lamp." loading="lazy">
+      </figure>
+      <p class="read__note reveal">The armchair under the lamp is the good one. Get there early.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. THE LITTLE CORNER (kids) ============ -->
+  <section class="kids" data-room="The little corner">
+    <div class="wrap grid">
+      <div class="kids__copy">
+        <h2 class="h-display">
+          <span class="line"><span>Bring</span></span>
+          <span class="line"><span><em>them.</em></span></span>
+        </h2>
+        <p class="lead reveal">There's a little corner with books and blocks where the small ones can be small. You get to finish a coffee while it's still hot, which is rarer than it should be.</p>
+      </div>
+      <figure class="kids__img reveal-img" data-parallax="0.08">
+        <img src="images/kids-corner.jpg" alt="The kids' corner: a low table, wooden blocks, crayons, and a basket of picture books." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 6. OUT FRONT (outdoor) ============ -->
+  <section class="outside" data-room="Out front">
+    <div class="outside__media" data-parallax-inner="0.16">
+      <img src="images/out-front.jpg" alt="Bistro tables on the sidewalk out front, a dog asleep under one of them, early morning." loading="lazy">
+    </div>
+    <div class="outside__copy wrap">
+      <h2 class="h-display">
+        <span class="line"><span>Out front,</span></span>
+        <span class="line"><span>when the weather's <em>right.</em></span></span>
+      </h2>
+      <p class="lead reveal">A few tables on the sidewalk. Dogs welcome. Sun on your face before the day gets going.</p>
+    </div>
+  </section>
+
+  <!-- ============ 7. THE COUNTER (menu) ============ -->
+  <section class="counter" id="counter" data-room="The counter">
+    <div class="wrap counter__layout">
+      <div class="counter__sticky">
+        <figure class="counter__img is-active" data-menu-img="drinks">
+          <img src="images/pour.jpg" alt="Milk being poured into a cup at the counter, the art a little lopsided." loading="lazy">
+        </figure>
+        <figure class="counter__img" data-menu-img="case">
+          <img src="images/pastry-case.jpg" alt="The pastry case: muffins, croissants, scones, a few already gone." loading="lazy">
+        </figure>
+      </div>
+
+      <div class="counter__list">
+        <h2 class="h-display counter__title">
+          <span class="line"><span>What's</span></span>
+          <span class="line"><span><em>good.</em></span></span>
+        </h2>
+        <p class="lead reveal">The lattes are the reason people drive past three other coffee places to get here. Seasonal drinks change with the weather, so ask what's new.</p>
+
+        <div class="menu" data-menu-group="drinks">
+          <h3 class="label reveal">Signature lattes</h3>
+          <ul class="menu__items">
+            <li class="menu__item reveal"><span class="menu__name">Brown sugar cinnamon</span><span class="menu__desc">The one everybody orders first.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Tiramisu</span><span class="menu__desc">Espresso, mascarpone, cocoa. Dessert, technically.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Banana crème</span><span class="menu__desc">Sweeter than it sounds. Better than it sounds.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Matcha</span><span class="menu__desc">Hot or iced, with whatever milk you like.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Cold brew</span><span class="menu__desc">Steeped overnight. Strong, smooth, no sugar needed.</span></li>
+          </ul>
+          <h3 class="label reveal">And the usual</h3>
+          <ul class="menu__items menu__items--compact">
+            <li class="menu__item reveal"><span class="menu__name">Espresso</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Cappuccino</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Drip coffee</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Chai</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Hot chocolate</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Tea</span></li>
+          </ul>
+        </div>
+
+        <div class="menu" data-menu-group="case">
+          <h3 class="label reveal">From the case</h3>
+          <ul class="menu__items">
+            <li class="menu__item reveal"><span class="menu__name">Muffins</span><span class="menu__desc">Blueberry, banana nut, whatever came out of the oven this morning.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Croissants</span><span class="menu__desc">Plain, chocolate, almond when we have them.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Scones &amp; cookies</span><span class="menu__desc">The chocolate chip cookie is bigger than it needs to be.</span></li>
+            <li class="menu__item reveal"><span class="menu__name">Bagels &amp; breakfast bites</span><span class="menu__desc">Something to go with the coffee if you're staying.</span></li>
+          </ul>
+          <p class="menu__note reveal">Prices and the full board are at the counter. Order ahead for pickup, or just walk in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. A TABLE FOR TWO (date) ============ -->
+  <section class="date" data-room="A table for two">
+    <div class="wrap grid">
+      <figure class="date__img reveal-img" data-parallax="0.05">
+        <img src="images/two-cups.jpg" alt="Two cups on a small round table by the window, afternoon light." loading="lazy">
+      </figure>
+      <div class="date__copy">
+        <h2 class="h-display">
+          <span class="line"><span>Meet someone</span></span>
+          <span class="line"><span><em>here.</em></span></span>
+        </h2>
+        <p class="lead reveal">No music too loud, nobody hovering. Two cups, a window, and enough quiet to actually talk. The afternoon light does most of the work.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. HOWELL (neighborhood) ============ -->
+  <section class="town" data-room="Howell">
+    <div class="wrap">
+      <h2 class="town__title h-giant">
+        <span class="line"><span>Regulars.</span></span>
+        <span class="line"><span><em>That's the word.</em></span></span>
+      </h2>
+      <div class="town__body grid">
+        <figure class="town__owner reveal-img" data-parallax="-0.08">
+          <img src="images/owner-counter.jpg" alt="The owner behind the counter, mid-laugh, handing a cup across." loading="lazy">
+        </figure>
+        <div class="town__copy">
+          <p class="lead reveal">Same faces most mornings. The owners know the orders, and usually the names. It's a small place off a big road, and it feels like it belongs to the people who keep coming back.</p>
+          <ul class="town__quotes" aria-label="From the reviews">
+            <li class="reveal"><q>Quality coffee, always consistent.</q></li>
+            <li class="reveal"><q>The owners are so sweet and so appreciative of your business.</q></li>
+            <li class="reveal"><q>A friendly place to slow down for a moment.</q></li>
+          </ul>
+          <p class="town__source label reveal">From the reviews</p>
+        </div>
+        <figure class="town__interior reveal-img" data-parallax="0.1">
+          <img src="images/interior-door.jpg" alt="The room from the doorway: mismatched wooden tables, pendant bulbs, the armchair in the corner." loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. COME IN (visit) ============ -->
+  <section class="visit" id="visit" data-room="Come in">
+    <div class="visit__bg" data-parallax-inner="0.2" aria-hidden="true">
+      <img src="images/exterior-dusk.jpg" alt="" loading="lazy">
+    </div>
+    <div class="visit__content wrap">
+      <h2 class="visit__title h-giant">
+        <span class="line"><span>Come</span></span>
+        <span class="line"><span><em>in.</em></span></span>
+      </h2>
+      <div class="visit__grid">
+        <div class="visit__block reveal">
+          <span class="label">Where</span>
+          <address>2981 Route 9 North<br>Howell, NJ 07731</address>
+          <a class="link" href="https://www.google.com/maps/dir/?api=1&amp;destination=2981+Route+9+North,+Howell,+NJ+07731" target="_blank" rel="noopener">Directions</a>
+        </div>
+        <div class="visit__block reveal">
+          <span class="label">When</span>
+          <dl class="hours">
+            <div><dt>Mon – Fri</dt><dd>6am – 4pm</dd></div>
+            <div><dt>Sat – Sun</dt><dd>7am – 4pm</dd></div>
+          </dl>
+        </div>
+        <div class="visit__block reveal">
+          <span class="label">Say hi</span>
+          <a class="link" href="tel:+17329483326">(732) 948-3326</a>
+          <a class="link" href="https://www.instagram.com/the_caffeine_haven" target="_blank" rel="noopener">@the_caffeine_haven</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__mark" aria-hidden="true">Caffeine Haven</div>
+  <div class="foot__meta wrap">
+    <span>&copy; 2026 The Caffeine Haven</span>
+    <span>Howell, New Jersey</span>
+    <a href="#top">Back to the top</a>
+  </div>
+</footer>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>

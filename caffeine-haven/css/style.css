@@ -1,0 +1,525 @@
+/* =====================================================================
+   The Caffeine Haven — Howell, NJ
+   Dark, cinematic, lived-in. One typeface family (Fraunces) carries the
+   voice; a small grotesk handles labels. Sections overlap on purpose.
+   ===================================================================== */
+
+/* ---------- typefaces, served from this folder, no CDN ---------- */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('../fonts/fraunces-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('../fonts/fraunces-variable-italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('../fonts/hanken-grotesk-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink:     #120e0b;   /* page ground: espresso black */
+  --roast:   #1b1410;   /* raised surface */
+  --walnut:  #3a2a20;   /* rules, deep mid-tone */
+  --tan:     #927a60;   /* secondary text */
+  --cream:   #e8dcc6;   /* body text */
+  --milk:    #f6efe3;   /* headlines */
+  --lamp:    #d39a52;   /* one accent: the light in the window */
+
+  --serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --sans:  'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+
+  --gutter: clamp(20px, 5.2vw, 104px);
+  --gap: clamp(16px, 2vw, 32px);
+
+  --fs-hero:  clamp(4.2rem, 13.5vw, 13.5rem);
+  --fs-giant: clamp(3rem, 8.4vw, 8.6rem);
+  --fs-h2:    clamp(2.5rem, 5.4vw, 5.6rem);
+  --fs-lead:  clamp(1.1rem, 1.3vw, 1.32rem);
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--serif);
+  font-variation-settings: 'opsz' 14, 'SOFT' 40, 'WONK' 0;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  overflow-x: clip;
+}
+
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+address { font-style: normal; }
+h1, h2, h3, p { margin: 0; }
+em { font-style: italic; font-weight: 300; }
+
+::selection { background: var(--lamp); color: var(--ink); }
+
+:focus-visible { outline: 1px solid var(--lamp); outline-offset: 4px; }
+
+/* ---------- layout primitives ---------- */
+.wrap { padding-inline: var(--gutter); }
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); }
+
+/* ---------- type ---------- */
+.label {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tan);
+}
+
+.h-display, .h-giant, .hero__title {
+  color: var(--milk);
+  font-weight: 300;
+  line-height: .96;
+  letter-spacing: -.018em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  text-wrap: balance;
+}
+.h-display { font-size: var(--fs-h2); }
+.h-giant { font-size: var(--fs-giant); line-height: .92; letter-spacing: -.028em; }
+.h-display em, .h-giant em, .hero__title em { color: var(--milk); }
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--cream);
+  font-variation-settings: 'opsz' 18, 'SOFT' 30, 'WONK' 0;
+  max-width: 34em;
+}
+
+/* line-mask reveals: every heading line sits in an overflow-hidden box */
+.line { display: block; overflow: hidden; padding-bottom: .22em; margin-bottom: -.22em; }
+.line > span { display: block; will-change: transform; }
+.js .line > span { transform: translateY(112%); }
+
+.js .reveal { opacity: 0; transform: translateY(18px); }
+.js .reveal-img { clip-path: inset(0 0 100% 0); }
+.js .reveal-img img { transform: scale(1.18); transform-origin: 50% 100%; }
+
+/* ---------- grain ---------- */
+.grain {
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  pointer-events: none; z-index: 60;
+  opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* ---------- nav ---------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding: clamp(18px, 2.4vw, 28px) var(--gutter);
+  transition: transform .6s var(--ease-out), opacity .6s var(--ease-out);
+  mix-blend-mode: difference;
+}
+.nav.is-hidden { transform: translateY(-110%); opacity: 0; }
+.nav__mark {
+  font-size: 1.15rem; color: var(--milk);
+  font-variation-settings: 'opsz' 36, 'SOFT' 100, 'WONK' 1;
+  letter-spacing: -.01em; white-space: nowrap;
+}
+.nav__mark-the { font-style: italic; font-weight: 300; font-size: .8em; margin-right: .1em; }
+.nav__status { text-align: center; color: var(--milk); opacity: .8; }
+.nav__status::before {
+  content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; margin-right: .6em; vertical-align: middle;
+}
+.nav__status.is-open::before { background: #9dc48c; }
+.nav__status:empty { display: none; }
+.nav__links { display: flex; gap: clamp(20px, 3vw, 40px); justify-content: end; }
+.nav__links a {
+  font-family: var(--sans); font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+  color: var(--milk); position: relative; padding-bottom: 3px;
+}
+.nav__links a::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .5s var(--ease-out);
+}
+.nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---------- room wayfinding (bottom-left) ---------- */
+.room {
+  position: fixed; left: var(--gutter); bottom: clamp(20px, 3vw, 36px); z-index: 50;
+  display: flex; align-items: center; gap: .8em; color: var(--tan);
+  pointer-events: none;
+}
+.room__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--lamp); box-shadow: 0 0 12px 2px rgba(211,154,82,.45); }
+.room__label { display: inline-block; transition: opacity .4s ease, transform .4s var(--ease-out); }
+.room__label.is-swapping { opacity: 0; transform: translateY(6px); }
+.room.is-gone { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s var(--ease-out); }
+.room { transition: opacity .5s ease, transform .5s var(--ease-out); }
+
+/* =====================================================================
+   1. HERO / THRESHOLD — a sticky stage inside a tall track.
+   Scrolling zooms the exterior into the lit window and the room fades up.
+   ===================================================================== */
+.hero-wrap { height: 300vh; position: relative; }
+.hero {
+  position: sticky; top: 0; height: 100vh; height: 100svh;
+  overflow: hidden; background: var(--ink);
+}
+.hero__out, .hero__in { position: absolute; inset: 0; }
+.hero__out img, .hero__in img { width: 100%; height: 100%; object-fit: cover; }
+.hero__out img { transform-origin: var(--window-x, 60%) var(--window-y, 52%); }
+.hero__in { opacity: 0; }
+.hero__in img { transform: scale(1.12); }
+.hero__veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(18,14,11,.92) 0%, rgba(18,14,11,.35) 38%, rgba(18,14,11,0) 62%, rgba(18,14,11,.4) 100%);
+}
+.hero__dark { position: absolute; inset: 0; background: var(--ink); opacity: 0; }
+
+.hero__content {
+  position: absolute; left: 0; right: 0; bottom: clamp(36px, 9vh, 110px);
+  z-index: 2;
+}
+.hero__eyebrow { margin-bottom: clamp(18px, 3vh, 34px); color: var(--cream); opacity: .85; }
+.hero__title {
+  font-size: var(--fs-hero); line-height: .84; letter-spacing: -.03em;
+  margin-left: -.04em;
+}
+.hero__title .t-the {
+  font-style: italic; font-size: .36em; letter-spacing: 0;
+  display: inline-block; margin-left: .12em; margin-bottom: .1em; color: var(--cream);
+}
+.hero__lead {
+  margin-top: clamp(20px, 3vh, 34px);
+  font-size: var(--fs-lead); max-width: 30em; color: var(--cream);
+  font-variation-settings: 'opsz' 18, 'SOFT' 30, 'WONK' 0;
+}
+.js .hero__eyebrow, .js .hero__lead, .js .hero__cue { opacity: 0; transform: translateY(14px); }
+
+.hero__cue {
+  position: absolute; right: var(--gutter); bottom: clamp(36px, 9vh, 110px); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 14px; color: var(--cream);
+}
+.hero__cue i { display: block; width: 1px; height: 64px; background: linear-gradient(var(--lamp), transparent); position: relative; overflow: hidden; }
+.hero__cue i::after {
+  content: ''; position: absolute; inset: 0; background: var(--milk);
+  animation: cue 2.4s var(--ease-out) infinite;
+}
+@keyframes cue { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(100%); } }
+
+.hero__thresh {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; place-items: center; text-align: center; padding: var(--gutter);
+  pointer-events: none;
+}
+.hero__thresh p {
+  grid-area: 1 / 1; color: var(--milk); font-weight: 300;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; letter-spacing: -.02em;
+}
+.hero__thresh-1 { font-size: clamp(2rem, 4.6vw, 4.6rem); line-height: 1.05; opacity: 0; }
+.hero__thresh-2 { font-size: clamp(3.2rem, 9vw, 9rem); font-style: italic; opacity: 0; }
+
+/* =====================================================================
+   2. THE QUIET — slides up over the interior frame of the hero
+   ===================================================================== */
+.quiet {
+  position: relative; z-index: 2;
+  padding-block: clamp(120px, 22vh, 260px) clamp(56px, 9vh, 110px);
+  background: linear-gradient(to bottom, rgba(18,14,11,0) 0%, var(--ink) 22vh);
+  margin-top: -40vh;
+}
+.quiet .grid { grid-template-rows: auto auto; row-gap: clamp(40px, 6vh, 80px); }
+.quiet__wide { grid-column: 1 / 8; grid-row: 1; aspect-ratio: 2 / 3; overflow: hidden; }
+.quiet__wide img { width: 100%; height: 100%; object-fit: cover; }
+.quiet__detail {
+  grid-column: 6 / 10; grid-row: 1; align-self: end; z-index: 2;
+  aspect-ratio: 3 / 4; overflow: hidden; margin-bottom: -12vh;
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,.6);
+}
+.quiet__detail img { width: 100%; height: 100%; object-fit: cover; }
+.quiet__copy { grid-column: 8 / 13; grid-row: 1; align-self: center; padding-left: clamp(0px, 2vw, 40px); }
+.quiet__copy .lead { margin-top: clamp(24px, 3vh, 40px); }
+
+/* =====================================================================
+   3. THE WINDOW SEAT — image runs right, copy sits low-left over it
+   ===================================================================== */
+.work { position: relative; z-index: 1; padding-block: clamp(60px, 10vh, 120px) 0; }
+.work__media {
+  position: relative; margin-left: 34%; height: clamp(520px, 92vh, 980px); overflow: hidden;
+}
+.work__media img { width: 100%; height: 120%; object-fit: cover; margin-top: -10%; }
+.work__copy {
+  position: relative; z-index: 2; margin-top: clamp(-260px, -34vh, -160px);
+  max-width: 44rem;
+}
+.work__copy .lead { margin-top: clamp(24px, 3vh, 40px); max-width: 30em; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: clamp(24px, 3vh, 40px); }
+.facts li { font-family: var(--sans); font-size: .82rem; letter-spacing: .04em; color: var(--tan); position: relative; padding-left: 14px; }
+.facts li::before { content: ''; position: absolute; left: 0; top: .55em; width: 5px; height: 5px; border-radius: 50%; background: var(--lamp); }
+
+/* =====================================================================
+   4. THE ARMCHAIR — giant type behind, photo in front
+   ===================================================================== */
+.read { position: relative; z-index: 2; padding-block: clamp(140px, 24vh, 300px) clamp(120px, 18vh, 240px); }
+.read .wrap { position: relative; }
+.read__text { position: relative; z-index: 1; color: var(--milk); max-width: 12ch; }
+.read__text .line:nth-child(2) { margin-left: 14vw; }
+.read__text .line:nth-child(3) { margin-left: 22vw; }
+.read__img {
+  position: absolute; right: var(--gutter); top: -8vh; z-index: 2;
+  width: clamp(240px, 26vw, 400px); aspect-ratio: 2 / 3; overflow: hidden;
+  box-shadow: 0 50px 90px -30px rgba(0,0,0,.7);
+}
+.read__img img { width: 100%; height: 100%; object-fit: cover; }
+.read__note { margin-top: clamp(32px, 5vh, 56px); margin-left: 22vw; max-width: 24em; color: var(--tan); font-size: 1rem; }
+
+/* =====================================================================
+   5. THE LITTLE CORNER
+   ===================================================================== */
+.kids { position: relative; z-index: 1; padding-block: clamp(40px, 8vh, 100px) clamp(120px, 18vh, 240px); }
+.kids__copy { grid-column: 2 / 6; align-self: end; padding-bottom: 8vh; z-index: 2; }
+.kids__copy .lead { margin-top: clamp(24px, 3vh, 40px); }
+.kids__img { grid-column: 6 / 13; aspect-ratio: 3 / 2; overflow: hidden; }
+.kids__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* =====================================================================
+   6. OUT FRONT — full bleed, copy pinned to the bottom of the frame
+   ===================================================================== */
+.outside { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: flex-end; }
+.outside__media { position: absolute; inset: 0; overflow: hidden; }
+.outside__media img { width: 100%; height: 124%; object-fit: cover; margin-top: -12%; }
+.outside__media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(18,14,11,.9), rgba(18,14,11,.15) 50%, rgba(18,14,11,.55));
+}
+.outside__copy { position: relative; z-index: 2; padding-block: clamp(80px, 12vh, 140px); max-width: 52rem; }
+.outside__copy .lead { margin-top: clamp(24px, 3vh, 40px); }
+
+/* =====================================================================
+   7. THE COUNTER — sticky photograph, editorial list
+   ===================================================================== */
+.counter { position: relative; z-index: 2; background: var(--ink); padding-block: clamp(120px, 18vh, 240px); }
+.counter__layout { display: grid; grid-template-columns: 5fr 7fr; column-gap: clamp(32px, 6vw, 120px); align-items: start; }
+.counter__sticky { position: sticky; top: 12vh; aspect-ratio: 3 / 4; overflow: hidden; }
+.counter__img { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+.counter__img.is-active { opacity: 1; }
+.counter__img img { width: 100%; height: 100%; object-fit: cover; }
+.counter__list { padding-top: 4vh; }
+.counter__list .lead { margin-top: clamp(24px, 3vh, 40px); }
+.menu { margin-top: clamp(56px, 8vh, 96px); }
+.menu .label { margin-bottom: 18px; }
+.menu__items { border-top: 1px solid var(--walnut); }
+.menu__item {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr); column-gap: 24px; align-items: baseline;
+  padding: 18px 0; border-bottom: 1px solid var(--walnut);
+  transition: padding-left .5s var(--ease-out);
+}
+.menu__item:hover { padding-left: 10px; }
+.menu__name { font-size: clamp(1.35rem, 1.9vw, 1.8rem); color: var(--milk); font-variation-settings: 'opsz' 48, 'SOFT' 80, 'WONK' 1; letter-spacing: -.01em; }
+.menu__desc { color: var(--tan); font-size: 1rem; }
+.menu__items--compact .menu__item { grid-template-columns: 1fr; padding: 12px 0; }
+.menu__items--compact .menu__name { font-size: 1.15rem; }
+.menu__items--compact { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; }
+.menu__items--compact .menu__item:nth-last-child(-n+2) { border-bottom: 1px solid var(--walnut); }
+.menu__items + .label { margin-top: clamp(40px, 6vh, 64px); }
+.menu__note { margin-top: 28px; color: var(--tan); max-width: 32em; }
+
+/* =====================================================================
+   8. A TABLE FOR TWO
+   ===================================================================== */
+.date { position: relative; z-index: 2; padding-block: clamp(40px, 8vh, 100px) clamp(110px, 16vh, 200px); }
+.date__img { grid-column: 1 / 9; aspect-ratio: 3 / 2; overflow: hidden; }
+.date__img img { width: 100%; height: 100%; object-fit: cover; }
+.date__img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(18,14,11,0) 46%, rgba(18,14,11,.72) 78%, rgba(18,14,11,.94) 100%);
+}
+.date__img { position: relative; }
+.date__copy { grid-column: 8 / 13; align-self: end; margin-left: -12%; z-index: 2; padding-bottom: 4vh; }
+.date__copy .lead { margin-top: clamp(24px, 3vh, 40px); }
+
+/* =====================================================================
+   9. HOWELL — three depths: portrait behind, copy, room in front
+   ===================================================================== */
+.town { position: relative; z-index: 2; padding-block: 0 clamp(120px, 18vh, 240px); }
+.town__title { max-width: 14ch; }
+.town__title .line:nth-child(2) { margin-left: 8vw; }
+.town__body { margin-top: clamp(48px, 8vh, 96px); align-items: start; }
+.town__owner { grid-column: 1 / 5; aspect-ratio: 3 / 4; overflow: hidden; margin-top: 10vh; }
+.town__owner img { width: 100%; height: 100%; object-fit: cover; }
+.town__copy { grid-column: 5 / 10; padding-inline: clamp(8px, 2vw, 40px); z-index: 2; }
+.town__quotes { margin-top: clamp(32px, 5vh, 56px); border-top: 1px solid var(--walnut); }
+.town__quotes li { padding: 16px 0; border-bottom: 1px solid var(--walnut); font-style: italic; font-weight: 300; font-size: 1.25rem; color: var(--milk); font-variation-settings: 'opsz' 40, 'SOFT' 80, 'WONK' 1; }
+.town__quotes q { quotes: '“' '”'; }
+.town__source { margin-top: 14px; }
+.town__interior { grid-column: 9 / 13; aspect-ratio: 2 / 3; overflow: hidden; margin-top: -14vh; margin-left: -18%; z-index: 3; box-shadow: 0 50px 90px -30px rgba(0,0,0,.7); }
+.town__interior img { width: 100%; height: 100%; object-fit: cover; }
+
+/* =====================================================================
+   10. COME IN — bookend on the exterior, now a little darker
+   ===================================================================== */
+.visit { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: flex-end; overflow: hidden; }
+.visit__bg { position: absolute; inset: 0; }
+.visit__bg img { width: 100%; height: 130%; object-fit: cover; margin-top: -15%; filter: brightness(.55) saturate(.85); }
+.visit__bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--ink) 0%, rgba(18,14,11,.25) 45%, rgba(18,14,11,.85) 100%); }
+.visit__content { position: relative; z-index: 2; width: 100%; padding-block: clamp(120px, 20vh, 240px) clamp(60px, 10vh, 120px); }
+.visit__grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap);
+  margin-top: clamp(48px, 8vh, 96px); padding-top: clamp(28px, 4vh, 44px); border-top: 1px solid rgba(232,220,198,.2);
+  max-width: 56rem;
+}
+.visit__block { display: flex; flex-direction: column; gap: 12px; }
+.visit__block .label { margin-bottom: 6px; }
+.visit__block address, .hours { font-size: 1.1rem; color: var(--milk); line-height: 1.45; }
+.hours { margin: 0; }
+.hours div { display: flex; gap: 16px; }
+.hours dt { min-width: 5.5em; color: var(--cream); }
+.hours dd { margin: 0; }
+.link { position: relative; display: inline-block; width: max-content; color: var(--milk); font-size: 1.1rem; padding-bottom: 2px; }
+.link::after { content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%; background: var(--lamp); transform: scaleX(.35); transform-origin: left; transition: transform .5s var(--ease-out); }
+.link:hover::after { transform: scaleX(1); }
+
+/* ---------- footer ---------- */
+.foot { position: relative; z-index: 2; background: var(--ink); overflow: hidden; }
+.foot__mark {
+  font-size: clamp(3.4rem, 13vw, 14rem); line-height: .78; white-space: nowrap; text-align: center;
+  color: var(--roast); font-weight: 300; letter-spacing: -.04em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  transform: translateY(.22em); user-select: none;
+}
+.foot__meta {
+  display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  padding-block: 22px 26px; font-family: var(--sans); font-size: .78rem; letter-spacing: .04em; color: var(--tan);
+  border-top: 1px solid var(--walnut); position: relative; background: var(--ink);
+}
+.foot__meta a { color: var(--cream); }
+
+/* =====================================================================
+   RESPONSIVE — mobile is its own layout, not a squeezed desktop
+   ===================================================================== */
+@media (max-width: 1023px) {
+  .read__text .line:nth-child(2) { margin-left: 6vw; }
+  .read__text .line:nth-child(3) { margin-left: 12vw; }
+  .read__img { width: clamp(200px, 30vw, 320px); top: 0; }
+  .town__copy { grid-column: 5 / 13; }
+  .town__interior { grid-column: 3 / 9; margin: 6vh 0 0 0; }
+}
+
+@media (max-width: 767px) {
+  :root { --fs-hero: clamp(4rem, 21vw, 7rem); --fs-h2: clamp(2.3rem, 11vw, 3.6rem); --fs-giant: clamp(2.6rem, 12.5vw, 4.4rem); }
+  body { font-size: 1rem; }
+  .nav { grid-template-columns: 1fr auto; }
+  .nav__status { display: none; }
+  .room { display: none; }
+
+  .hero-wrap { height: 240vh; }
+  .hero__content { bottom: 14vh; }
+  .hero__title { line-height: .86; }
+  .hero__lead { max-width: 20em; font-size: 1.05rem; }
+  .hero__cue { right: auto; left: var(--gutter); bottom: 5vh; flex-direction: row; gap: 12px; }
+  .hero__cue i { width: 40px; height: 1px; background: var(--lamp); }
+  .hero__cue i::after { animation: none; display: none; }
+  .hero__thresh-1 { font-size: 2rem; }
+  .hero__thresh-2 { font-size: 3.6rem; }
+
+  .quiet { margin-top: -30vh; padding-top: 24vh; }
+  .quiet .grid { grid-template-columns: 1fr; row-gap: 0; }
+  .quiet__wide { grid-column: 1; grid-row: 1; aspect-ratio: 4 / 5; width: 88%; }
+  .quiet__detail { grid-column: 1; grid-row: 1; width: 52%; justify-self: end; margin-bottom: -14vh; margin-right: 0; }
+  .quiet__copy { grid-column: 1; grid-row: 2; padding: 20vh 0 0; }
+
+  .work { padding-top: 40px; }
+  .work__media { margin-left: 0; height: 74vh; }
+  .work__copy { margin-top: -20vh; }
+
+  .read { padding-block: 100px 90px; }
+  .read__text { max-width: none; }
+  .read__img { position: relative; right: auto; top: auto; width: 62%; margin: -14vw 0 0 auto; }
+  .read__note { margin-left: 0; }
+
+  .kids .grid { grid-template-columns: 1fr; row-gap: 32px; }
+  .kids__copy { grid-column: 1; padding-bottom: 0; order: 2; }
+  .kids__img { grid-column: 1; aspect-ratio: 4 / 5; order: 1; }
+
+  .outside { min-height: 88vh; }
+
+  .counter__layout { grid-template-columns: 1fr; row-gap: 40px; }
+  .counter__sticky { position: relative; top: auto; aspect-ratio: 4 / 5; }
+  .counter__img { transition: none; }
+  .counter__img[data-menu-img="case"] { display: none; }
+  .counter__list { padding-top: 0; }
+  .menu__item { grid-template-columns: 1fr; row-gap: 4px; }
+  .menu__items--compact { grid-template-columns: 1fr 1fr; }
+
+  .date .grid { grid-template-columns: 1fr; }
+  .date__img { grid-column: 1; }
+  .date__copy { grid-column: 1; margin-left: 0; padding: 32px 0 0; }
+  .date__img::after { background: linear-gradient(to top, rgba(18,14,11,.9), rgba(18,14,11,0) 45%); }
+
+  .town__body.grid { grid-template-columns: 1fr; row-gap: 32px; }
+  .town__owner { grid-column: 1; margin-top: 0; width: 70%; }
+  .town__copy { grid-column: 1; padding-inline: 0; }
+  .town__interior { grid-column: 1; width: 64%; margin: 0 0 0 auto; }
+
+  .visit__grid { grid-template-columns: 1fr; gap: 36px; }
+  .foot__meta { flex-direction: column; gap: 8px; }
+}
+
+/* ---------- reduced motion: everything visible, nothing moves ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js .line > span, .js .reveal, .js .hero__eyebrow, .js .hero__lead, .js .hero__cue { transform: none; opacity: 1; }
+  .js .reveal-img { clip-path: none; }
+  .js .reveal-img img { transform: none; }
+  .hero__cue i::after { animation: none; }
+  /* nothing hides the nav when motion is off, so keep it out of the copy */
+  .nav { position: absolute; mix-blend-mode: normal; }
+  .room { display: none; }
+  .hero-wrap { height: auto; }
+  .hero { position: relative; }
+  .hero__thresh { display: none; }
+  .quiet { margin-top: 0; }
+}
+
+/* =====================================================================
+   EMPTY PHOTO FRAMES — until the real photographs are dropped into
+   /images, each frame paints itself as a warm plate instead of showing
+   a broken-image icon. Delete nothing here: it stays out of the way
+   the moment a file exists at that path.
+   ===================================================================== */
+img[data-missing] {
+  color: transparent;
+  font-size: 0;
+  background-color: #191210;
+  background-image:
+    radial-gradient(120% 100% at 30% 25%, rgba(211,154,82,.13), rgba(211,154,82,0) 58%),
+    repeating-linear-gradient(115deg, rgba(246,239,227,.016) 0 2px, rgba(246,239,227,0) 2px 9px),
+    linear-gradient(155deg, #2b1f17 0%, #191210 52%, #100c09 100%);
+}
