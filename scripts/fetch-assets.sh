@@ -10,8 +10,6 @@ while IFS='|' read -r name size q url; do
     ffmpeg -nostdin -v error -y -i ".tmp-assets/$name.mp4" -an -vf "scale=1280:-2" -c:v libx264 -crf "$q" -preset slow -pix_fmt yuv420p -movflags +faststart "videos/$name.mp4"
     # VP9 twin for browsers without H.264 (and for headless test runs)
     ffmpeg -nostdin -v error -y -i ".tmp-assets/$name.mp4" -an -vf "scale=1280:-2" -c:v libvpx-vp9 -crf 34 -b:v 0 -row-mt 1 -pix_fmt yuv420p "videos/$name.webm"
-    # 10-frame contact sheet, one frame per second, for checking the pour timing
-    ffmpeg -nostdin -v error -y -i ".tmp-assets/$name.mp4" -vf "fps=1,scale=384:-1,tile=5x2" -q:v 4 "videos/$name-contact-sheet.jpg"
   else
     curl -sfL -o ".tmp-assets/$name.png" "$url" </dev/null
     ffmpeg -nostdin -v error -y -i ".tmp-assets/$name.png" -vf "scale=$size:-2:flags=lanczos" -c:v libwebp -quality "$q" -compression_level 6 "images/$name.webp"
