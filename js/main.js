@@ -175,7 +175,11 @@ updateHeader();
     const d = video.duration || 10;
     if (video.currentTime / d >= REVEAL_AT) reveal();
   });
-  video.addEventListener("error", reveal, true);
+  // Only give up on the video if the element itself errors or the *last*
+  // <source> fails (an earlier codec being unsupported is not a failure).
+  video.addEventListener("error", reveal);
+  const sources = video.querySelectorAll("source");
+  if (sources.length) sources[sources.length - 1].addEventListener("error", reveal);
   const p = video.play && video.play();
   if (p && typeof p.catch === "function") p.catch(() => setTimeout(reveal, 400));
   setTimeout(reveal, 4200);
