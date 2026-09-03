@@ -1,6 +1,6 @@
 # Website Skills
 
-The codebase for a website, built with Claude Code. Three design skills are wired up
+The codebase for a website, built with Claude Code. Four design skills are wired up
 as **always-on plugins** for this project (see [Auto-activation](#auto-activation)
 below), plus two MCP servers for pulling in ready-made UI components — so every
 Claude Code session opened in this repo automatically has UI/UX pattern databases,
@@ -64,6 +64,18 @@ typography, animation, and visual detail. Auto-invoked for frontend work.
 - Source: https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design
 - Also listed at: https://claude.com/plugins/frontend-design
 
+### [`skills/scroll-craft/`](skills/scroll-craft)
+**scroll-craft** (plugin: `nateherk-design`) — by [Nate Herk](https://github.com/nateherkai)
+
+Builds premium, scroll-driven interactive landing pages on a full design floor
+(typography, spacing, colour, depth, motion, accessibility) rather than an animation
+library — scroll becomes the timeline (video scrubs with the wheel, sections pin,
+rails pan, headlines assemble). The page then verifies its own contrast, motion, and
+accessibility by screenshotting itself at every scroll position.
+
+- Source: https://github.com/nateherkai/scroll-craft
+- License: MIT
+
 ## Resources
 
 ### [`resources/magic-ui-mcp.md`](resources/magic-ui-mcp.md)
@@ -81,20 +93,20 @@ components directly into a project through shadcn's registry/MCP tooling.
 
 ## Auto-activation
 
-The three skills above are registered as real Claude Code **plugins** (not just files
+The four skills above are registered as real Claude Code **plugins** (not just files
 sitting in a folder) via a local marketplace, so they load automatically in every
 Claude Code session opened in this repo — no manual install step:
 
 - [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) — declares the
-  local marketplace `website-skills`, pointing at the three vendored plugin sources.
+  local marketplace `website-skills`, pointing at the four vendored plugin sources.
 - [`.claude/settings.json`](.claude/settings.json) — registers that marketplace
-  (`extraKnownMarketplaces`) and enables all three plugins by default
+  (`extraKnownMarketplaces`) and enables all four plugins by default
   (`enabledPlugins`), checked into git so it applies for every contributor. This also
   makes `impeccable`'s agents and hooks work correctly (its hooks reference
   `${CLAUDE_PLUGIN_ROOT}`, which only resolves for a properly installed plugin, not a
   bare copied file).
 
-Verify anytime with `claude plugin list` (should show all three as `enabled`,
+Verify anytime with `claude plugin list` (should show all four as `enabled`,
 `Scope: project`) or `claude plugin details <name>@website-skills` for a full
 component breakdown (skills/agents/hooks).
 

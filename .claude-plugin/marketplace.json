@@ -24,6 +24,12 @@
       "source": "./skills/frontend-design",
       "description": "Anthropic's official skill for creating distinctive, production-grade frontend interfaces that avoid generic AI aesthetics.",
       "category": "design"
+    },
+    {
+      "name": "nateherk-design",
+      "source": "./skills/scroll-craft",
+      "description": "scroll-craft: build a premium, scroll-driven interactive landing page. Scroll becomes the timeline, and the page verifies its own contrast, motion and accessibility by screenshotting itself.",
+      "category": "design"
     }
   ]
 }

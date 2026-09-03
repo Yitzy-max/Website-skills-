@@ -3,7 +3,8 @@
   "enabledPlugins": {
     "ui-ux-pro-max@website-skills": true,
     "impeccable@website-skills": true,
-    "frontend-design@website-skills": true
+    "frontend-design@website-skills": true,
+    "nateherk-design@website-skills": true
   },
   "extraKnownMarketplaces": {
     "website-skills": {
