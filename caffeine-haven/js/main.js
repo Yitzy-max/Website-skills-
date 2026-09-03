@@ -1,11 +1,12 @@
 /* =========================================================================
    The Caffeine Haven — motion layer
-   - Milk-pour hero (canvas 2D) that reveals the headline as the milk lands
-   - Lenis momentum scroll + GSAP/ScrollTrigger reveals, parallax, cup-fill
-   - Infinite coffee/pastry marquee (rAF, runs even if GSAP is unavailable)
-   - Every image slot upgrades to real photography when the file exists,
-     otherwise a procedural fallback keeps the page looking finished.
-   Nothing here throws fatally: if a CDN is blocked, content shows statically.
+   - HERO mirrors the reference template: copy left, a sliding coffee-card
+     carousel right, over a dark milk-pour background. Text reveals as the
+     pour lands. Drop images/hero-bg.jpg to replace the canvas with a photo.
+   - Lenis momentum scroll + GSAP/ScrollTrigger reveals, parallax, cup-fill.
+   - Infinite coffee/pastry marquee (rAF, runs even without GSAP).
+   - Image slots upgrade to real photography when the file exists.
+   Nothing throws fatally: if a CDN is blocked, content shows statically.
    ========================================================================= */
 (function () {
   "use strict";
@@ -13,387 +14,208 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var gsapReady = !!(window.gsap && window.ScrollTrigger);
   if (gsapReady) window.gsap.registerPlugin(window.ScrollTrigger);
+  var CREMA = "239,228,209", CARAMEL = "201,160,102";
 
-  /* ---------------------------------------------------------------------
-     0. Year
-     --------------------------------------------------------------------- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------------------------------------------------------------------
-     1. Navigation — left dropdown
-     --------------------------------------------------------------------- */
+  /* --------------------------- Navigation --------------------------- */
   (function nav() {
     var trigger = document.getElementById("navTrigger");
     var panel = document.getElementById("navPanel");
     if (!trigger || !panel) return;
-
     var scrim = document.createElement("div");
     scrim.className = "nav-scrim";
     document.body.appendChild(scrim);
-
-    function open() {
-      document.body.classList.add("nav-open");
-      trigger.setAttribute("aria-expanded", "true");
-      panel.setAttribute("aria-hidden", "false");
-    }
-    function close() {
-      document.body.classList.remove("nav-open");
-      trigger.setAttribute("aria-expanded", "false");
-      panel.setAttribute("aria-hidden", "true");
-    }
-    function toggle() {
-      document.body.classList.contains("nav-open") ? close() : open();
-    }
-    trigger.addEventListener("click", toggle);
+    function close() { document.body.classList.remove("nav-open"); trigger.setAttribute("aria-expanded", "false"); panel.setAttribute("aria-hidden", "true"); }
+    function open() { document.body.classList.add("nav-open"); trigger.setAttribute("aria-expanded", "true"); panel.setAttribute("aria-hidden", "false"); }
+    trigger.addEventListener("click", function () { document.body.classList.contains("nav-open") ? close() : open(); });
     scrim.addEventListener("click", close);
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") close();
-    });
-    panel.querySelectorAll("[data-navlink]").forEach(function (a) {
-      a.addEventListener("click", close);
-    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    panel.querySelectorAll("[data-navlink]").forEach(function (a) { a.addEventListener("click", close); });
   })();
 
-  /* ---------------------------------------------------------------------
-     2. Header scrolled state
-     --------------------------------------------------------------------- */
+  /* ------------------------- Header scrolled ------------------------ */
   (function header() {
     var el = document.getElementById("siteHeader");
     if (!el) return;
-    function onScroll() {
-      el.classList.toggle("is-scrolled", window.scrollY > 40);
-    }
+    function onScroll() { el.classList.toggle("is-scrolled", window.scrollY > 40); }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
   })();
 
-  /* ---------------------------------------------------------------------
-     3. Image slots — upgrade to real photos when present
-     --------------------------------------------------------------------- */
+  /* --------------------- Image slots -> real photos ----------------- */
   (function photos() {
     document.querySelectorAll("[data-img]").forEach(function (host) {
       var url = host.getAttribute("data-img");
-      var media = host.querySelector(".taste-media, .tile-media");
-      if (!url || !media) return;
+      if (!url) return;
+      var media = host.querySelector(".taste-media, .tile-media, .show-media") || host;
       var probe = new Image();
-      probe.onload = function () {
-        media.style.backgroundImage = "url('" + url + "')";
-        media.classList.add("has-photo");
-      };
-      probe.onerror = function () { /* keep procedural fallback */ };
+      probe.onload = function () { media.style.backgroundImage = "url('" + url + "')"; media.classList.add("has-photo"); };
       probe.src = url;
     });
   })();
 
-  /* ---------------------------------------------------------------------
-     4. Infinite marquee (independent of GSAP)
-     --------------------------------------------------------------------- */
+  /* --------------------------- Marquee ------------------------------ */
   (function marquee() {
     var track = document.getElementById("mqA");
     if (!track) return;
-    // duplicate items so the strip can loop seamlessly
-    var original = track.innerHTML;
-    track.innerHTML = original + original;
+    track.innerHTML = track.innerHTML + track.innerHTML;
     if (reduce) return;
-
-    var offset = 0;
-    var speed = 0.4; // px per frame
-    var half = 0;
+    var offset = 0, speed = 0.4, half = 0;
     function measure() { half = track.scrollWidth / 2; }
-    measure();
-    window.addEventListener("resize", measure);
-
+    measure(); window.addEventListener("resize", measure);
     var paused = false;
     track.parentElement.addEventListener("mouseenter", function () { paused = true; });
     track.parentElement.addEventListener("mouseleave", function () { paused = false; });
-
-    function tick() {
-      if (!paused && half > 0) {
-        offset -= speed;
-        if (-offset >= half) offset += half;
-        track.style.transform = "translate3d(" + offset + "px,0,0)";
-      }
+    (function tick() {
+      if (!paused && half > 0) { offset -= speed; if (-offset >= half) offset += half; track.style.transform = "translate3d(" + offset + "px,0,0)"; }
       requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+    })();
   })();
 
-  /* ---------------------------------------------------------------------
-     5. Milk-pour hero (canvas 2D)
-     Reveals the headline (hero.is-poured) as the milk lands (~850ms).
-     --------------------------------------------------------------------- */
-  (function pourHero() {
+  /* ---------------------- Hero card carousel ------------------------ */
+  (function showcase() {
+    var track = document.getElementById("showTrack");
+    var prev = document.getElementById("showPrev");
+    var next = document.getElementById("showNext");
+    var dotsWrap = document.getElementById("showDots");
+    if (!track) return;
+    var cards = Array.prototype.slice.call(track.children);
+    var n = cards.length, idx = 0, timer = null;
+
+    // dots
+    var dots = [];
+    if (dotsWrap) {
+      cards.forEach(function (_, i) {
+        var d = document.createElement("button");
+        d.className = "show-dot" + (i === 0 ? " is-on" : "");
+        d.setAttribute("aria-label", "Slide " + (i + 1));
+        d.addEventListener("click", function () { go(i, true); });
+        dotsWrap.appendChild(d); dots.push(d);
+      });
+    }
+    function step() {
+      // distance from one card's left edge to the next (card width + gap)
+      if (n < 2) return 0;
+      return cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
+    }
+    function maxIdx() {
+      var win = track.parentElement.clientWidth;
+      var s = step(); if (!s) return 0;
+      var visible = Math.max(1, Math.round(win / s));
+      return Math.max(0, n - visible);
+    }
+    function go(i, user) {
+      idx = Math.max(0, Math.min(i, maxIdx()));
+      track.style.transform = "translate3d(" + (-idx * step()) + "px,0,0)";
+      dots.forEach(function (d, di) { d.classList.toggle("is-on", di === idx); });
+      if (user) restart();
+    }
+    function nextSlide() { go(idx >= maxIdx() ? 0 : idx + 1); }
+    function restart() { if (timer) clearInterval(timer); if (!reduce) timer = setInterval(nextSlide, 4200); }
+
+    if (prev) prev.addEventListener("click", function () { go(idx - 1, true); });
+    if (next) next.addEventListener("click", function () { go(idx + 1, true); });
+    track.parentElement.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); });
+    track.parentElement.addEventListener("mouseleave", restart);
+    window.addEventListener("resize", function () { go(Math.min(idx, maxIdx())); });
+    setTimeout(function () { go(0); restart(); }, 200);
+  })();
+
+  /* ================= HERO background — milk-pour ambiance ============ */
+  (function heroBg() {
     var hero = document.getElementById("hero");
     var canvas = document.getElementById("pourCanvas");
     if (!hero) return;
-
-    // Safety net: reveal the headline no matter what, shortly after load.
     var revealed = false;
-    function reveal() {
-      if (revealed) return;
-      revealed = true;
-      hero.classList.add("is-poured");
-    }
+    function reveal() { if (!revealed) { revealed = true; hero.classList.add("is-poured"); } }
 
-    if (!canvas || !canvas.getContext || reduce) {
-      // No canvas / reduced motion — reveal immediately, skip animation.
-      setTimeout(reveal, reduce ? 60 : 400);
-      return;
-    }
-
+    if (!canvas || !canvas.getContext || reduce) { setTimeout(reveal, reduce ? 60 : 360); return; }
     var ctx = canvas.getContext("2d");
     var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var cx, cy, R;
-
+    var px, steam = [], bokeh = [];
     function fit() {
       W = canvas.clientWidth; H = canvas.clientHeight;
-      canvas.width = Math.round(W * dpr);
-      canvas.height = Math.round(H * dpr);
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cx = W / 2;
-      cy = H * 0.48;
-      R = Math.min(W, H) * (W < 640 ? 0.34 : 0.24);
+      px = W < 820 ? W * 0.5 : W * 0.72;   // pour axis (behind the cards)
+      bokeh = [];
+      var nb = W < 820 ? 8 : 16;
+      for (var i = 0; i < nb; i++) bokeh.push({ x: Math.random() * W, y: Math.random() * H, r: 40 + Math.random() * 120, a: 0.02 + Math.random() * 0.05, sp: 0.4 + Math.random(), ph: Math.random() * 6.28 });
     }
-    fit();
-    window.addEventListener("resize", fit);
-
-    var CREMA = "239,228,209";
-    var CARAMEL = "201,160,102";
+    fit(); window.addEventListener("resize", fit);
     var start = performance.now();
-    var rings = [];   // cream ripples
-    var steam = [];   // rising wisps
 
-    function spawnRing(t) { rings.push({ born: t, r0: R * 0.08 }); }
-
-    function drawBackground() {
-      var g = ctx.createRadialGradient(cx, cy - R * 0.3, R * 0.1, cx, cy, Math.max(W, H) * 0.75);
-      g.addColorStop(0, "#1d1510");
-      g.addColorStop(0.55, "#140e0a");
-      g.addColorStop(1, "#0c0806");
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
-      // warm glow behind cup
-      var gl = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 2.2);
-      gl.addColorStop(0, "rgba(" + CARAMEL + ",0.10)");
-      gl.addColorStop(1, "rgba(" + CARAMEL + ",0)");
-      ctx.fillStyle = gl;
-      ctx.fillRect(0, 0, W, H);
-    }
-
-    function drawCupDisc() {
-      // rim
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, R * 1.06, 0, Math.PI * 2);
-      ctx.fillStyle = "#0e0a07";
-      ctx.fill();
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(" + CREMA + ",0.10)";
-      ctx.stroke();
-      ctx.restore();
-      // crema surface
-      var g = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.3, R * 0.1, cx, cy, R);
-      g.addColorStop(0, "#5b3a20");
-      g.addColorStop(0.5, "#3f2814");
-      g.addColorStop(1, "#28180d");
-      ctx.beginPath();
-      ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.fillStyle = g;
-      ctx.fill();
-    }
-
-    function withDiscClip(fn) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.clip();
-      fn();
-      ctx.restore();
-    }
-
-    function drawStream(elapsed) {
-      // stream active 120ms..1250ms
-      var s = (elapsed - 120) / 380;        // head descent progress
-      if (elapsed < 120) return;
-      var headP = Math.min(1, s);
-      var impactY = cy - R * 0.15;
-      var topY = -20;
-      var headY = topY + (impactY - topY) * ease(headP);
-      var fade = elapsed > 1100 ? Math.max(0, 1 - (elapsed - 1100) / 260) : 1;
-      if (fade <= 0) return;
-      var wob = Math.sin(elapsed / 90) * 3;
-      var w = R * 0.06;
-      ctx.save();
-      ctx.globalAlpha = fade;
-      var grad = ctx.createLinearGradient(0, topY, 0, headY);
-      grad.addColorStop(0, "rgba(" + CREMA + ",0.0)");
-      grad.addColorStop(0.2, "rgba(" + CREMA + ",0.85)");
-      grad.addColorStop(1, "rgba(" + CREMA + ",0.95)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.moveTo(cx - w, topY);
-      ctx.bezierCurveTo(cx - w + wob, (topY + headY) / 2, cx - w * 0.6 + wob, headY, cx, headY + w);
-      ctx.bezierCurveTo(cx + w * 0.6 + wob, headY, cx + w + wob, (topY + headY) / 2, cx + w, topY);
-      ctx.closePath();
-      ctx.fill();
-      // bright core
-      ctx.fillStyle = "rgba(255,250,240,0.6)";
-      ctx.fillRect(cx - w * 0.28, topY, w * 0.56, headY - topY);
-      ctx.restore();
-    }
-
-    function drawRings(t) {
-      withDiscClip(function () {
-        for (var i = rings.length - 1; i >= 0; i--) {
-          var age = (t - rings[i].born) / 1400;
-          if (age > 1) { rings.splice(i, 1); continue; }
-          var r = rings[i].r0 + age * R * 1.15;
-          var a = (1 - age) * 0.5;
-          ctx.beginPath();
-          ctx.arc(cx, cy - R * 0.15, r, 0, Math.PI * 2);
-          ctx.lineWidth = R * 0.05 * (1 - age) + 1;
-          ctx.strokeStyle = "rgba(" + CREMA + "," + a + ")";
-          ctx.stroke();
-        }
-        // central foam pool grows after impact
-      });
-    }
-
-    function drawFoam(elapsed) {
-      var p = clamp((elapsed - 500) / 900, 0, 1);
-      if (p <= 0) return;
-      withDiscClip(function () {
-        var fr = R * (0.16 + 0.5 * ease(p));
-        var g = ctx.createRadialGradient(cx - fr * 0.2, cy - R * 0.15 - fr * 0.25, fr * 0.1, cx, cy - R * 0.15, fr);
-        g.addColorStop(0, "rgba(" + CREMA + ",0.92)");
-        g.addColorStop(0.6, "rgba(" + CREMA + ",0.5)");
-        g.addColorStop(1, "rgba(" + CARAMEL + ",0)");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(cx, cy - R * 0.15, fr, 0, Math.PI * 2);
-        ctx.fill();
-        // rosetta hint — symmetric crescents forming down the pool
-        if (p > 0.35) drawLeaf(clamp((p - 0.35) / 0.6, 0, 1), fr);
-      });
-    }
-
-    function drawLeaf(p, fr) {
-      var topY = cy - R * 0.15 - fr * 0.55;
-      var botY = cy - R * 0.15 + fr * 0.72;
-      var pairs = 5;
-      ctx.save();
-      ctx.strokeStyle = "rgba(63,40,20,0.55)";
-      ctx.fillStyle = "rgba(63,40,20,0.28)";
-      ctx.lineWidth = 1.4;
-      var shown = Math.floor(p * pairs) + 1;
-      for (var i = 0; i < shown && i < pairs; i++) {
-        var yy = topY + (botY - topY) * (i / pairs);
-        var spread = fr * (0.5 * (1 - i / (pairs + 1))) + 4;
-        drawCrescent(cx, yy, spread, -1);
-        drawCrescent(cx, yy, spread, 1);
-      }
-      // stem
-      ctx.beginPath();
-      ctx.moveTo(cx, topY);
-      ctx.lineTo(cx, botY);
-      ctx.stroke();
-      ctx.restore();
-    }
-    function drawCrescent(x, y, s, dir) {
-      ctx.beginPath();
-      ctx.moveTo(x, y - s * 0.5);
-      ctx.quadraticCurveTo(x + dir * s, y - s * 0.1, x, y + s * 0.5);
-      ctx.quadraticCurveTo(x + dir * s * 0.45, y, x, y - s * 0.5);
-      ctx.fill();
-      ctx.stroke();
-    }
-
-    function drawSwirl(t) {
-      // slow ambient rotation highlight on the crema
-      withDiscClip(function () {
-        var ang = t / 4200;
-        var hx = cx + Math.cos(ang) * R * 0.3;
-        var hy = cy + Math.sin(ang) * R * 0.3;
-        var g = ctx.createRadialGradient(hx, hy, 0, hx, hy, R * 0.7);
-        g.addColorStop(0, "rgba(" + CREMA + ",0.08)");
-        g.addColorStop(1, "rgba(" + CREMA + ",0)");
-        ctx.fillStyle = g;
-        ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
-      });
-    }
-
-    function drawSteam(t, elapsed) {
-      if (elapsed > 1300 && Math.random() < 0.06 && steam.length < 30) {
-        steam.push({ born: t, x: cx + (Math.random() - 0.5) * R * 0.7, life: 2600 + Math.random() * 1400, sway: Math.random() * 6.28 });
-      }
-      for (var i = steam.length - 1; i >= 0; i--) {
-        var s = steam[i];
-        var age = (t - s.born) / s.life;
-        if (age > 1) { steam.splice(i, 1); continue; }
-        var y = cy - R * 0.9 - age * R * 1.7;
-        var x = s.x + Math.sin(age * 6 + s.sway) * 16;
-        var a = Math.sin(age * Math.PI) * 0.14;
-        var rad = 10 + age * 34;
-        var g = ctx.createRadialGradient(x, y, 0, x, y, rad);
-        g.addColorStop(0, "rgba(" + CREMA + "," + a + ")");
-        g.addColorStop(1, "rgba(" + CREMA + ",0)");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(x, y, rad, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function ease(x) { return 1 - Math.pow(1 - x, 3); }
-    function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
-
-    var lastRing = 0;
     function frame(now) {
-      var elapsed = now - start;
+      var t = now - start;
       if (!document.hidden) {
-        drawBackground();
-        drawCupDisc();
-        // spawn ripples during/after impact
-        if (elapsed > 480 && elapsed < 1400 && now - lastRing > 200) { spawnRing(now); lastRing = now; }
-        drawRings(now);
-        drawFoam(elapsed);
-        drawSwirl(now);
-        drawStream(elapsed);
-        drawSteam(now, elapsed);
+        ctx.clearRect(0, 0, W, H);
+        // warm key glow on the pour side
+        var gl = ctx.createRadialGradient(px, H * 0.4, 0, px, H * 0.5, Math.max(W, H) * 0.7);
+        gl.addColorStop(0, "rgba(" + CARAMEL + ",0.16)");
+        gl.addColorStop(1, "rgba(" + CARAMEL + ",0)");
+        ctx.fillStyle = gl; ctx.fillRect(0, 0, W, H);
+        // drifting bokeh (depth)
+        for (var i = 0; i < bokeh.length; i++) {
+          var b = bokeh[i];
+          var yy = (b.y - now * 0.01 * b.sp) % (H + 240); if (yy < -120) yy += H + 240;
+          var xx = b.x + Math.sin(now * 0.0004 + b.ph) * 24;
+          var rg = ctx.createRadialGradient(xx, yy, 0, xx, yy, b.r);
+          rg.addColorStop(0, "rgba(" + CARAMEL + "," + b.a + ")"); rg.addColorStop(1, "rgba(" + CARAMEL + ",0)");
+          ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(xx, yy, b.r, 0, 6.2832); ctx.fill();
+        }
+        // the milk pour: a bright ribbon descending on load
+        var landY = H * 0.6;
+        var headP = Math.min(1, t / 620);
+        if (t < 1500) {
+          var topY = -30, headY = topY + (landY - topY) * (1 - Math.pow(1 - headP, 3));
+          var fade = t > 1150 ? Math.max(0, 1 - (t - 1150) / 340) : 1;
+          var wob = Math.sin(t / 80) * 3, w = Math.max(4, W * 0.012);
+          var grad = ctx.createLinearGradient(0, topY, 0, headY);
+          grad.addColorStop(0, "rgba(" + CREMA + ",0)"); grad.addColorStop(0.3, "rgba(" + CREMA + "," + (0.55 * fade) + ")"); grad.addColorStop(1, "rgba(255,250,242," + (0.85 * fade) + ")");
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.moveTo(px - w, topY);
+          ctx.bezierCurveTo(px - w + wob, (topY + headY) / 2, px - w * 0.5 + wob, headY - w, px, headY);
+          ctx.bezierCurveTo(px + w * 0.5 + wob, headY - w, px + w + wob, (topY + headY) / 2, px + w, topY);
+          ctx.closePath(); ctx.fill();
+          // splash bloom where it lands
+          if (headP >= 1) {
+            var bloom = Math.min(1, (t - 620) / 700);
+            var br = bloom * W * 0.10;
+            var bg = ctx.createRadialGradient(px, landY, 0, px, landY, br + 4);
+            bg.addColorStop(0, "rgba(" + CREMA + "," + (0.4 * (1 - bloom) * fade) + ")"); bg.addColorStop(1, "rgba(" + CREMA + ",0)");
+            ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(px, landY, br + 4, 0, 6.2832); ctx.fill();
+          }
+        }
+        // steam wisps rising near the pour axis
+        if (t > 500 && Math.random() < 0.05 && steam.length < 22) steam.push({ born: now, x: px + (Math.random() - 0.5) * W * 0.12, life: 3000 + Math.random() * 1800, sway: Math.random() * 6.28 });
+        for (var s = steam.length - 1; s >= 0; s--) {
+          var p = steam[s], age = (now - p.born) / p.life; if (age > 1) { steam.splice(s, 1); continue; }
+          var y = landY - age * H * 0.5, x = p.x + Math.sin(age * 6 + p.sway) * 20, a = Math.sin(age * Math.PI) * 0.09, rad = 12 + age * 40;
+          var sg = ctx.createRadialGradient(x, y, 0, x, y, rad);
+          sg.addColorStop(0, "rgba(" + CREMA + "," + a + ")"); sg.addColorStop(1, "rgba(" + CREMA + ",0)");
+          ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
+        }
       }
-      if (!revealed && elapsed > 850) reveal();
+      if (!revealed && t > 560) reveal();   // text lands with the pour
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   })();
 
-  /* ---------------------------------------------------------------------
-     6. Scroll system — Lenis + GSAP reveals, parallax, cup-fill
-     Fallback: if GSAP absent, show everything statically.
-     --------------------------------------------------------------------- */
+  /* ================= Scroll system — Lenis + GSAP ==================== */
   function showAllStatic() {
-    document.querySelectorAll("[data-reveal]").forEach(function (el) {
-      el.style.opacity = "1"; el.style.transform = "none";
-    });
-    document.querySelectorAll("[data-reveal-line]").forEach(function (el) {
-      el.style.transform = "none";
-    });
-    // cup half-full so the section still reads
+    document.querySelectorAll("[data-reveal]").forEach(function (el) { el.style.opacity = "1"; el.style.transform = "none"; });
+    document.querySelectorAll("[data-reveal-line]").forEach(function (el) { el.style.transform = "none"; });
     var fill = document.getElementById("cupFill");
     if (fill) fill.style.height = "62%";
-    document.querySelectorAll(".pour-note").forEach(function (n) { n.classList.add("is-on"); });
+    document.querySelectorAll(".pour-note").forEach(function (nn) { nn.classList.add("is-on"); });
   }
-
-  if (!gsapReady) {
-    showAllStatic();
-    console.warn("[Caffeine Haven] GSAP unavailable — content shown statically.");
-    return;
-  }
+  if (!gsapReady) { showAllStatic(); console.warn("[Caffeine Haven] GSAP unavailable — content shown statically."); return; }
 
   var gsap = window.gsap, ST = window.ScrollTrigger;
-
-  // Lenis momentum scroll
   if (!reduce && window.Lenis) {
     var lenis = new window.Lenis({ duration: 1.1, smoothWheel: true, syncTouch: false });
     lenis.on("scroll", ST.update);
@@ -401,75 +223,34 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  // Generic reveals
   gsap.utils.toArray("[data-reveal]").forEach(function (el) {
-    gsap.to(el, {
-      opacity: 1, y: 0, duration: 1.1, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 86%" }
-    });
+    gsap.to(el, { opacity: 1, y: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 86%" } });
   });
-
-  // Line reveals (story lead) — clip-style rise
   gsap.utils.toArray("[data-reveal-line]").forEach(function (el, i) {
-    gsap.fromTo(el, { yPercent: 110 }, {
-      yPercent: 0, duration: 1.1, ease: "power4.out", delay: i * 0.08,
-      scrollTrigger: { trigger: el.closest("h2") || el, start: "top 82%" }
-    });
+    gsap.fromTo(el, { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: "power4.out", delay: i * 0.08, scrollTrigger: { trigger: el.closest("h2") || el, start: "top 82%" } });
   });
-
-  // Marquee subtle parallax already handled by rAF; add a scrub drift to band
-  gsap.utils.toArray(".marquee-band").forEach(function (band) {
-    gsap.fromTo(band, { backgroundPositionY: "0px" }, {
-      ease: "none", scrollTrigger: { trigger: band, scrub: true, start: "top bottom", end: "bottom top" }
-    });
-  });
-
-  // Story lead offset drift (layered depth)
   var storyLead = document.querySelector(".story-lead");
-  if (storyLead) {
-    gsap.to(storyLead, {
-      yPercent: -8, ease: "none",
-      scrollTrigger: { trigger: ".story", scrub: true, start: "top bottom", end: "bottom top" }
-    });
-  }
-
-  // Space gallery — gentle stagger + parallax on media
-  gsap.utils.toArray(".tile-media").forEach(function (m, i) {
-    gsap.fromTo(m, { yPercent: -6 }, {
-      yPercent: 6, ease: "none",
-      scrollTrigger: { trigger: m.closest(".tile"), scrub: true, start: "top bottom", end: "bottom top" }
-    });
+  if (storyLead) gsap.to(storyLead, { yPercent: -8, ease: "none", scrollTrigger: { trigger: ".story", scrub: true, start: "top bottom", end: "bottom top" } });
+  gsap.utils.toArray(".tile-media").forEach(function (m) {
+    gsap.fromTo(m, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: m.closest(".tile"), scrub: true, start: "top bottom", end: "bottom top" } });
   });
 
-  /* ---------- THE POUR — scroll-scrubbed cup fill ---------- */
   (function pourScrub() {
     var scrub = document.getElementById("pourScrub");
     var fill = document.getElementById("cupFill");
     var foam = document.getElementById("cupFoam");
     var notes = gsap.utils.toArray(".pour-note");
     if (!scrub || !fill) return;
-
     ST.create({
-      trigger: ".pour",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.6,
+      trigger: ".pour", start: "top top", end: "bottom bottom", scrub: 0.6,
       onUpdate: function (self) {
-        var p = self.progress;
-        var h = Math.min(1, p * 1.15);           // fill a touch faster than scroll
+        var p = self.progress, h = Math.min(1, p * 1.15);
         fill.style.height = (h * 92) + "%";
-        if (foam) {
-          foam.style.bottom = (h * 92) + "%";
-          foam.style.opacity = h > 0.04 && h < 0.99 ? "1" : "0";
-        }
-        notes.forEach(function (n, i) {
-          var th = 0.28 + i * 0.22;
-          n.classList.toggle("is-on", p >= th);
-        });
+        if (foam) { foam.style.bottom = (h * 92) + "%"; foam.style.opacity = h > 0.04 && h < 0.99 ? "1" : "0"; }
+        notes.forEach(function (nn, i) { nn.classList.toggle("is-on", p >= 0.28 + i * 0.22); });
       }
     });
   })();
 
-  // Recalculate once fonts/images settle
   window.addEventListener("load", function () { ST.refresh(); });
 })();
