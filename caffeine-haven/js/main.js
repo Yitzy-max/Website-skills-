@@ -19,6 +19,26 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ------------- Hero background video (Higgsfield pour) -------------
+     Tries a self-hosted copy first, then the hosted render. If neither
+     loads, the canvas milk-pour fallback stays. Drop the file at
+     videos/hero-pour.mp4 to make the page fully self-contained. */
+  (function heroVideo() {
+    var v = document.getElementById("heroVideo");
+    var hero = document.getElementById("hero");
+    if (!v || !hero || reduce) return;
+    var LOCAL = "videos/hero-pour.mp4";
+    var REMOTE = "https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_190427_0f5d0734-d149-4de6-a721-9c85613f2ac4.mp4";
+    var triedRemote = false;
+    function play() { var pr = v.play && v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+    v.addEventListener("loadeddata", function () { v.classList.add("is-ready"); hero.classList.add("has-video"); play(); });
+    v.addEventListener("error", function () {
+      if (!triedRemote) { triedRemote = true; v.src = REMOTE; v.load(); play(); }
+      // else: both sources failed -> canvas fallback remains
+    });
+    v.src = LOCAL; v.load(); play();
+  })();
+
   /* --------------------------- Navigation --------------------------- */
   (function nav() {
     var trigger = document.getElementById("navTrigger");
