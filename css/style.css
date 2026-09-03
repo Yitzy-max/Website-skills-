@@ -253,6 +253,8 @@ main { position: relative; }
   transform-origin: 50% 40%;
   will-change: transform;
 }
+.hero-video { transition: transform 18s linear; }
+.hero.is-poured .hero-video { transform: scale(1.05); }
 .hero-video, .hero-poster {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   object-position: 68% 50%;

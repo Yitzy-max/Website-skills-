@@ -167,9 +167,10 @@ updateHeader();
 
   if (reducedMotion) { reveal(); return; }
 
-  // Reveal when the pour has landed (~35% in), or after a safety timeout
-  // if autoplay is blocked / the file is missing so nothing ever hides forever.
-  const REVEAL_AT = 0.36;
+  // Reveal once the milk is visibly landing in the cup (~2s into the 10s
+  // pour), or after a safety timeout if autoplay is blocked / the file is
+  // missing, so nothing ever stays hidden.
+  const REVEAL_AT = 0.22;
   video.addEventListener("timeupdate", () => {
     const d = video.duration || 10;
     if (video.currentTime / d >= REVEAL_AT) reveal();
@@ -187,8 +188,13 @@ updateHeader();
       onLeaveBack: () => { video.play && video.play().catch(() => {}); },
     });
   }
-  video.addEventListener("ended", () => { video.currentTime = 0; video.play().catch(() => {}); });
-  video.loop = true;
+  // The pour plays once and holds on the finished latte instead of jump-cutting
+  // back to the start; a very slow push-in keeps the frame alive afterwards.
+  video.loop = false;
+  video.addEventListener("ended", () => {
+    video.pause();
+    hero.classList.add("is-poured");
+  });
 })();
 
 /* -------------------------------------------------------------------------
