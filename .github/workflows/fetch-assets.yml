@@ -5,6 +5,12 @@
 name: Fetch generated assets
 on:
   workflow_dispatch:
+  push:
+    branches: ["claude/premium-scrollcraft-site-2hmotj"]
+    paths:
+      - scripts/asset-sources.txt
+      - scripts/fetch-assets.sh
+      - .github/workflows/fetch-assets.yml
 permissions:
   contents: write
 jobs:
