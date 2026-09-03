@@ -1,0 +1,14 @@
+# name|width|webp-quality|source-url   (video line: name|mp4|crf|url)
+drink-brown-sugar-cinnamon|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_6fc0d956-87bd-44c2-93ba-3a95490263fb.png
+drink-velvet-vanilla-cold-brew|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_434fb806-623d-4a50-8580-059c4e52285d.png
+drink-banana-cream|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_f5bf9a39-33c8-4078-becd-0afb8048100f.png
+bake-blueberry-muffin|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_ece79a57-e7e5-4594-b479-f0a3136bad3d.png
+bake-cronut|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_10a5c27f-ffd6-44f6-82ab-b97a11266308.png
+bake-maple-walnut-scone|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_fc404e38-0338-4827-99e4-db68e4f03a4c.png
+drink-espresso|800|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_4052cf0c-b7e9-44de-ab82-4a526e73854f.png
+room-kids-corner|1000|66|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_d56198a2-874e-4b2b-b3bb-ef012f62a875.png
+room-laptop|1400|64|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_986f827d-ee62-467e-971c-37b3e2ed6bea.png
+room-patio|1400|58|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_277f92db-796e-42ff-8cec-c5da059f3fc6.png
+room-interior|1920|62|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_194325_5b1cc39f-3719-4a3f-866b-afbbebca3ffd.png
+hero-poster|1920|68|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_195126_7057a646-0f08-4745-b6ec-86352f2f6551.png
+hero-pour|mp4|30|https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260903_195124_f6c63b76-4479-4cc2-90cc-058175d1fca4.mp4
