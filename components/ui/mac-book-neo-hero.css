@@ -1,0 +1,391 @@
+/* =========================================================================
+   Styles for <FrameSequenceHero />.
+
+   The component renders only fsh-* class names and ships no styles of its
+   own, so without this file it mounts as a stack of unstyled divs: no pin,
+   no full-bleed frame, no card positioning. Import it wherever you use the
+   component, or paste it into your Tailwind entry css.
+
+   Requires the fsh-shimmer keyframe (see the install notes) — it animates
+   the gradient on .fsh-title-rainbow.
+   ========================================================================= */
+
+.fsh-root {
+  position: relative;
+  background: #fff;
+  color: #1d1d1f;
+  isolation: isolate;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* -------------------------------------------------------------------------
+   Stage. Sticky rather than fixed so the hero releases into whatever comes
+   after it on the page. The negative margin stops the stage adding its own
+   100vh to the scroll container, which keeps the sticky range and the
+   progress range (spacer height - viewport height) ending on the same pixel.
+   ------------------------------------------------------------------------- */
+.fsh-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.fsh-spacer {
+  position: relative;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fsh-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(7rem, 18vh, 11rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 8vh, 5rem);
+}
+
+.fsh-canvas {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* -------------------------------------------------------------------------
+   Nav
+   ------------------------------------------------------------------------- */
+.fsh-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.1rem clamp(1.25rem, 5vw, 4rem);
+  border-bottom: 1px solid transparent;
+  transition: background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fsh-nav-scrolled {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: saturate(1.8) blur(16px);
+  -webkit-backdrop-filter: saturate(1.8) blur(16px);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.fsh-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.fsh-brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #ff9f3a, #ff6f9c, #5e9bff);
+}
+
+.fsh-nav-links {
+  display: flex;
+  gap: 1.85rem;
+}
+
+.fsh-nav-links a {
+  font-size: 0.82rem;
+  color: #494950;
+  text-decoration: none;
+  transition: color 200ms;
+}
+
+.fsh-nav-links a:hover { color: #1d1d1f; }
+
+.fsh-cta {
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  background: #1d1d1f;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 200ms;
+}
+
+.fsh-cta:hover { background: #3a3a3f; }
+
+/* -------------------------------------------------------------------------
+   Headline
+   ------------------------------------------------------------------------- */
+.fsh-copy {
+  position: absolute;
+  top: clamp(5rem, 11vh, 7.5rem);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  text-align: center;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  pointer-events: none;
+}
+
+.fsh-title {
+  margin: 0;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+}
+
+.fsh-title-dark { color: #1d1d1f; }
+
+.fsh-title-rainbow {
+  background: linear-gradient(
+    90deg,
+    #ff9f3a, #ff6f9c, #a37bff, #5e9bff, #ff9f3a
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fsh-shimmer 6s linear infinite;
+}
+
+.fsh-sub {
+  margin: 1.15rem 0 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: #6e6e73;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fsh-sub-hidden {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* -------------------------------------------------------------------------
+   Step cards — every card shares one slot; only the active one shows.
+   Earlier cards leave upward, later ones wait below.
+   ------------------------------------------------------------------------- */
+.fsh-cards {
+  position: absolute;
+  z-index: 20;
+  left: clamp(1.25rem, 5vw, 4rem);
+  bottom: clamp(3.5rem, 9vh, 5.5rem);
+  width: min(27rem, 33vw);
+  min-height: 15rem;
+}
+
+.fsh-card {
+  position: absolute;
+  inset: auto 0 0 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.fsh-card-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.fsh-card-prev {
+  opacity: 0;
+  transform: translateY(-18px);
+}
+
+.fsh-card-inner {
+  position: relative;
+  overflow: hidden;
+  padding: 1.6rem 1.7rem 1.35rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: saturate(1.6) blur(16px);
+  -webkit-backdrop-filter: saturate(1.6) blur(16px);
+}
+
+/* the only place each step's colour shows as a wash */
+.fsh-card-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--c) 0%, transparent 62%);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.fsh-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.95rem;
+}
+
+.fsh-card-num {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: #86868b;
+  font-variant-numeric: tabular-nums;
+}
+
+.fsh-card-num strong { color: #1d1d1f; font-weight: 600; }
+
+.fsh-card-icon { color: var(--c); font-size: 0.95rem; line-height: 1; }
+
+.fsh-card-title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+
+.fsh-card-desc {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #494950;
+}
+
+.fsh-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.45rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.fsh-ticks { display: flex; gap: 5px; flex: 1; }
+
+.fsh-tick {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* transform + transition are set inline per frame by the component */
+.fsh-tick > span {
+  position: absolute;
+  inset: 0;
+  background: var(--c);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.fsh-card-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #86868b;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------
+   Progress + loader
+   ------------------------------------------------------------------------- */
+.fsh-progress {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.07);
+  z-index: 20;
+}
+
+.fsh-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ff9f3a, #ff6f9c, #5e9bff);
+}
+
+.fsh-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  background: #fff;
+  transition: opacity 620ms cubic-bezier(0.16, 1, 0.3, 1), visibility 620ms;
+}
+
+.fsh-loader-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fsh-loader-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: #86868b;
+  text-align: center;
+}
+
+.fsh-loader-track {
+  width: min(230px, 50vw);
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.fsh-loader-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #1d1d1f;
+  transition: width 200ms linear;
+}
+
+/* -------------------------------------------------------------------------
+   Narrow screens — card drops under the frame instead of beside it
+   ------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .fsh-canvas-wrap {
+    padding: clamp(7rem, 20vh, 10rem) 1.25rem 18rem;
+  }
+
+  .fsh-cards {
+    left: 1.25rem;
+    right: 1.25rem;
+    width: auto;
+    bottom: 2.25rem;
+    min-height: 0;
+  }
+
+  .fsh-card-inner { padding: 1.25rem 1.3rem 1.1rem; }
+
+  .fsh-nav-links { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fsh-card,
+  .fsh-sub,
+  .fsh-loader,
+  .fsh-tick > span,
+  .fsh-title-rainbow {
+    transition: none !important;
+    animation: none !important;
+  }
+}
