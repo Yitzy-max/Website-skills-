@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tapas — There's Always Something Good in Tapas</title>
+<meta name="description" content="Tapas — small plates built to be passed around. Short rib nachos, hot honey chicken bites, prime sliders." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/site.css" />
+<link rel="stylesheet" href="css/hero.css" />
+<script>document.documentElement.className = "";</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- =====================================================================
+     HERO — frame-sequence scroll animation.
+     Structure mirrors <FrameSequenceHero /> exactly: loader, nav, sticky
+     stage (canvas + copy + cards + progress), then the scroll spacer that
+     gives the sequence its distance. Driven by js/hero.js.
+     Nothing below <main> is part of the hero.
+     ===================================================================== -->
+<div class="fsh-root" id="hero">
+
+  <div aria-hidden="true" class="fsh-loader">
+    <div class="fsh-loader-text">Loading · 0%</div>
+    <div class="fsh-loader-track"><span class="fsh-loader-fill"></span></div>
+  </div>
+
+  <nav class="fsh-nav">
+    <a class="fsh-brand" href="#hero">
+      <span class="fsh-brand-dot"></span>
+      Tapas
+    </a>
+    <div class="fsh-nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a href="#visit" class="fsh-cta">Book a Table</a>
+  </nav>
+
+  <div class="fsh-stage">
+    <div class="fsh-canvas-wrap">
+      <img src="frames/plate_0001.webp" alt="" class="fsh-canvas" draggable="false" />
+    </div>
+
+    <div class="fsh-copy">
+      <h1 class="fsh-title">
+        <span class="fsh-title-dark">There's Always Something Good in</span>
+        <span class="fsh-title-accent">Tapas</span>
+      </h1>
+      <p class="fsh-sub">Scroll through the table</p>
+    </div>
+
+    <!-- step cards are rendered from the steps array, as in the component -->
+    <div class="fsh-cards"></div>
+
+    <div class="fsh-progress"><span class="fsh-progress-fill"></span></div>
+  </div>
+
+  <div class="fsh-spacer" style="height: 600vh"></div>
+</div>
+
+<!-- =====================================================================
+     Everything below is an ordinary restaurant page. The hero above does
+     not reach into it.
+     ===================================================================== -->
+<main id="main">
+
+  <section class="statement">
+    <p data-reveal>Small plates, built to be passed around, argued over, and <em>ordered again</em>.</p>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="section-head">
+      <p class="kicker" data-reveal>The Plates</p>
+      <h2 class="section-title" data-reveal>What comes to the table</h2>
+      <p class="lede" data-reveal>A short menu, cooked to order. Nothing sits under a lamp.</p>
+    </div>
+
+    <div class="menu-grid">
+      <figure class="dish" data-reveal>
+        <div class="dish-shot"><img src="images/dish-01.jpg" alt="Short rib nachos" loading="lazy" onerror="this.remove()" /></div>
+        <div class="dish-body"><h3 class="dish-name">Short Rib Nachos</h3></div>
+        <p class="dish-note">Slow-cooked short rib, guacamole, pico, chipotle crema, over warm corn chips.</p>
+      </figure>
+
+      <figure class="dish" data-reveal>
+        <div class="dish-shot"><img src="images/dish-02.jpg" alt="Hot honey chicken bites" loading="lazy" onerror="this.remove()" /></div>
+        <div class="dish-body"><h3 class="dish-name">Hot Honey Chicken Bites</h3></div>
+        <p class="dish-note">Fried to order, tossed in hot honey, cooled down with slaw on the side.</p>
+      </figure>
+
+      <figure class="dish" data-reveal>
+        <div class="dish-shot"><img src="images/dish-03.jpg" alt="Loaded beef nachos" loading="lazy" onerror="this.remove()" /></div>
+        <div class="dish-body"><h3 class="dish-name">Loaded Beef Nachos</h3></div>
+        <p class="dish-note">Pulled beef, guacamole, jalapeño, lettuce, pico, chipotle crema.</p>
+      </figure>
+
+      <figure class="dish" data-reveal>
+        <div class="dish-shot"><img src="images/dish-04.jpg" alt="Prime sliders" loading="lazy" onerror="this.remove()" /></div>
+        <div class="dish-body"><h3 class="dish-name">Prime Sliders</h3></div>
+        <p class="dish-note">Two on a soft bun, lettuce and tomato, fries on the side.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <div class="section-head">
+      <p class="kicker" data-reveal>In Their Words</p>
+      <h2 class="section-title" data-reveal>What people say after</h2>
+      <!-- REPLACE: real quotes + rating from the Google listing -->
+      <p class="rating-line" data-reveal><span class="tbc">Add real Google rating + review count</span></p>
+    </div>
+
+    <div class="review-grid">
+      <blockquote class="review" data-reveal>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>“The food, atmosphere, and service were incredible.”</p>
+        <cite><span class="tbc">Reviewer name</span></cite>
+      </blockquote>
+      <blockquote class="review" data-reveal>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p><span class="tbc">Paste a real Google review here</span></p>
+        <cite><span class="tbc">Reviewer name</span></cite>
+      </blockquote>
+      <blockquote class="review" data-reveal>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p><span class="tbc">Paste a real Google review here</span></p>
+        <cite><span class="tbc">Reviewer name</span></cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="visit" id="visit">
+    <div class="section-head">
+      <p class="kicker" data-reveal>Visit</p>
+      <h2 class="section-title" data-reveal>Come sit down</h2>
+    </div>
+
+    <div class="visit-inner">
+      <div class="visit-block" data-reveal>
+        <h3>Address</h3>
+        <p><span class="tbc">Street address</span><br /><span class="tbc">Town, NJ ZIP</span></p>
+      </div>
+      <div class="visit-block" data-reveal>
+        <h3>Hours</h3>
+        <p><span class="tbc">Opening hours</span></p>
+      </div>
+      <div class="visit-block" data-reveal>
+        <h3>Reservations</h3>
+        <p><span class="tbc">Phone number</span></p>
+        <div class="visit-actions">
+          <a class="btn btn-solid" href="#" data-needs="tel">Call to Book</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/place/Tapas/@40.0066092,-74.2182875,17z/data=!3m1!4b1!4m6!3m5!1s0x89c19d0029ed50dd:0xc09b1663defa322d!8m2!3d40.0066051!4d-74.2157126" target="_blank" rel="noopener">Directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-mark">Tapas</span>
+    <p><span class="tbc">Street address</span> · <span class="tbc">Phone</span></p>
+    <p>© <span id="year">2026</span> Tapas</p>
+  </div>
+</footer>
+
+<script src="js/hero.js"></script>
+<script src="js/site.js"></script>
+<script>
+/* =====================================================================
+   Hero configuration — the direct counterpart of the original Demo file.
+   frameCount / framePath / eagerCount / scrollHeight / steps all keep the
+   same shape; only what they point at has changed.
+   ===================================================================== */
+(function () {
+  /* Both flags are flipped automatically by tools/build-frames.sh once the
+     real sequence exists. Until then the hero runs the identical engine over
+     the four plated stills — same scroll math, same steps, same timing, it
+     just cuts between dishes instead of moving through them. */
+  var USE_FRAMES = false;
+  var FRAME_COUNT = 240;
+
+  var STILLS = ["images/dish-01.jpg", "images/dish-02.jpg", "images/dish-03.jpg", "images/dish-04.jpg"];
+
+  var framePath = USE_FRAMES
+    ? function (i) {
+        return "frames/plate_" + String(i).padStart(4, "0") + ".webp";
+      }
+    : function (i) {
+        var per = FRAME_COUNT / STILLS.length;
+        var idx = Math.min(STILLS.length - 1, Math.floor((i - 1) / per));
+        return STILLS[idx];
+      };
+
+  var steps = [
+    { from: 0.02, to: 0.24, color: "#B4552C", num: "01", total: "05", icon: "✦",
+      title: "Small plates, big table.",
+      description: "Everything here is built to be passed around, argued over, and ordered again. It starts with the short rib nachos.",
+      label: "The Table" },
+
+    { from: 0.24, to: 0.46, color: "#C6A15B", num: "02", total: "05", icon: "★",
+      stars: "★★★★★",
+      title: "“The food, atmosphere, and service were incredible.”",
+      description: "One of many. Ask anyone who has sat down here on a Saturday night.",
+      cite: "Google Review",
+      label: "Reviews" },
+
+    { from: 0.46, to: 0.66, color: "#5C6B4A", num: "03", total: "05", icon: "◐",
+      title: "Hot honey chicken bites.",
+      description: "Fried to order, tossed in hot honey, cooled down with slaw. The one nobody wants to share.",
+      label: "From the Fryer" },
+
+    { from: 0.66, to: 0.86, color: "#7A2E3A", num: "04", total: "05", icon: "▣",
+      title: "Loaded beef nachos.",
+      description: "Slow-cooked beef, guacamole, pico, jalapeño, chipotle crema. Built for four, finished by two.",
+      label: "To Share" },
+
+    { from: 0.86, to: 1.01, color: "#1C1714", num: "05", total: "05", icon: "⌁",
+      title: "Prime sliders.",
+      description: "Two on a soft bun, fries on the side. Simple, and hard to stop at two.",
+      label: "The Classics" }
+  ];
+
+  window.FrameSequenceHero(document.getElementById("hero"), {
+    frameCount: FRAME_COUNT,
+    framePath: framePath,
+    eagerCount: 140,
+    steps: steps
+  });
+})();
+</script>
+</body>
+</html>

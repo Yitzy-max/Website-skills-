@@ -1,0 +1,438 @@
+/* =========================================================================
+   Tapas — frame-sequence hero
+   Styles for the .fsh-* structure rendered by hero.js. Warm bone stage,
+   plate dead-centre, everything else pulled to the edges so the food is
+   the only thing with weight in the frame.
+   ========================================================================= */
+
+.fsh-root {
+  position: relative;
+  background: var(--bone);
+  color: var(--ink);
+  /* the hero owns its own stacking context so nothing below it bleeds up */
+  isolation: isolate;
+}
+
+/* -------------------------------------------------------------------------
+   Stage. Sticky rather than fixed so it releases into the page below.
+   The negative margin keeps the stage from adding its own 100vh to the
+   scroll container — that way the sticky range and the progress range
+   (spacer height - viewport height) end on exactly the same pixel.
+   ------------------------------------------------------------------------- */
+.fsh-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  margin-bottom: -100vh;
+  margin-bottom: -100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.fsh-spacer {
+  position: relative;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- the plate itself --- */
+.fsh-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  /* seated below the headline, and pushed off-centre so the step card has
+     clean paper to sit on rather than lying across the food */
+  padding: clamp(7.5rem, 19vh, 12rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+}
+
+.fsh-canvas {
+  width: min(54vw, 54vh, 540px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: translateX(12%);
+}
+
+/* -------------------------------------------------------------------------
+   Nav
+   ------------------------------------------------------------------------- */
+.fsh-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.15rem var(--gutter);
+  transition: background-color 400ms var(--ease-out), border-color 400ms var(--ease-out),
+    backdrop-filter 400ms var(--ease-out);
+  border-bottom: 1px solid transparent;
+}
+
+.fsh-nav-scrolled {
+  background: rgba(246, 242, 236, 0.82);
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom-color: var(--line);
+}
+
+.fsh-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.fsh-brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ember);
+  display: inline-block;
+}
+
+.fsh-nav-links {
+  display: flex;
+  gap: 1.9rem;
+}
+
+.fsh-nav-links a {
+  font-size: 0.83rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 220ms var(--ease-out);
+}
+
+.fsh-nav-links a:hover { color: var(--ink); }
+
+.fsh-cta {
+  font-size: 0.83rem;
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bone);
+  text-decoration: none;
+  transition: background-color 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+.fsh-cta:hover { background: var(--ember); }
+
+/* -------------------------------------------------------------------------
+   Headline
+   ------------------------------------------------------------------------- */
+.fsh-copy {
+  position: absolute;
+  top: clamp(5rem, 10vh, 7rem);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  text-align: center;
+  padding: 0 var(--gutter);
+  pointer-events: none;
+}
+
+.fsh-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.022em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
+/* the qualifying line stays quiet — the name is what should carry */
+.fsh-title-dark {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.78rem, 1.5vw, 0.95rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.fsh-title-accent {
+  display: block;
+  font-size: clamp(2.9rem, 7vw, 6.2rem);
+  font-style: italic;
+  color: var(--ink);
+}
+
+.fsh-sub {
+  margin: 1.4rem 0 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
+
+.fsh-sub-hidden {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* -------------------------------------------------------------------------
+   Step cards. Every card sits in the same slot; only the active one is
+   visible. Earlier cards leave upward, later cards wait below.
+   ------------------------------------------------------------------------- */
+.fsh-cards {
+  position: absolute;
+  z-index: 20;
+  left: var(--gutter);
+  bottom: clamp(3.5rem, 9vh, 5.5rem);
+  width: min(27rem, 33vw);
+  min-height: 15rem;
+}
+
+.fsh-card {
+  position: absolute;
+  inset: auto 0 0 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+  pointer-events: none;
+}
+
+.fsh-card-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.fsh-card-prev {
+  opacity: 0;
+  transform: translateY(-18px);
+}
+
+.fsh-card-inner {
+  position: relative;
+  padding: 1.65rem 1.75rem 1.4rem;
+  border-radius: 18px;
+  background: rgba(255, 253, 250, 0.72);
+  border: 1px solid var(--line);
+  backdrop-filter: saturate(1.3) blur(16px);
+  -webkit-backdrop-filter: saturate(1.3) blur(16px);
+  overflow: hidden;
+}
+
+/* the one place the per-step colour shows — a faint wash, not a glow */
+.fsh-card-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--c) 0%, transparent 62%);
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.fsh-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.fsh-card-num {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.fsh-card-num strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.fsh-card-icon {
+  font-size: 0.95rem;
+  color: var(--c);
+  line-height: 1;
+}
+
+.fsh-card-stars {
+  color: var(--gold);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  margin-bottom: 0.6rem;
+}
+
+.fsh-card-title {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2.1vw, 1.75rem);
+  line-height: 1.16;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.fsh-card-desc {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.62;
+  color: var(--ink-soft);
+}
+
+.fsh-card-cite {
+  display: block;
+  margin-top: 0.85rem;
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.fsh-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.fsh-ticks {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+
+.fsh-tick {
+  position: relative;
+  height: 2px;
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(38, 26, 18, 0.13);
+  overflow: hidden;
+}
+
+.fsh-tick > span {
+  position: absolute;
+  inset: 0;
+  background: var(--c);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.fsh-card-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------
+   Progress + loader
+   ------------------------------------------------------------------------- */
+.fsh-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(38, 26, 18, 0.08);
+  z-index: 20;
+}
+
+.fsh-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--ember);
+}
+
+.fsh-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  background: var(--bone);
+  transition: opacity 620ms var(--ease-out), visibility 620ms;
+}
+
+.fsh-loader-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fsh-loader-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.fsh-loader-track {
+  width: min(230px, 50vw);
+  height: 2px;
+  background: rgba(38, 26, 18, 0.1);
+  overflow: hidden;
+}
+
+.fsh-loader-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--ember);
+  transition: width 200ms linear;
+}
+
+/* -------------------------------------------------------------------------
+   Responsive — on narrow screens the card moves under the plate rather
+   than beside it, and the plate shrinks to make room.
+   ------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .fsh-canvas-wrap {
+    padding: clamp(8rem, 22vh, 12rem) 1.25rem 19rem;
+    place-items: start center;
+  }
+
+  .fsh-canvas { width: min(80vw, 38vh, 420px); transform: none; }
+
+  .fsh-cards {
+    left: 1.25rem;
+    right: 1.25rem;
+    width: auto;
+    bottom: 2.25rem;
+    min-height: 0;
+  }
+
+  .fsh-card-inner { padding: 1.3rem 1.35rem 1.15rem; }
+
+  .fsh-nav-links { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fsh-card,
+  .fsh-sub,
+  .fsh-loader,
+  .fsh-tick > span {
+    transition: none !important;
+  }
+}
