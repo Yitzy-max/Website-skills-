@@ -14,6 +14,12 @@ html, body {
   --silver: #e0e0e0;
   --accent: #ff3c00;
   --grain-opacity: 0.15;
+
+  /* The floating object — the platter photo, background and all. Served
+     from Higgsfield's CDN for now. To make the site self-contained, save
+     the photo to tapas/images/platter.png and change this one line to:
+     url('../images/platter.png') */
+  --platter: url('https://d2ol7oe51mr4n9.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/7647ca7b-05b7-460a-8eca-72b935f5e485.png');
 }
 
 .halide-body {
@@ -44,11 +50,15 @@ html, body {
   overflow: hidden;
 }
 
-/* Square instead of 800x500 — the floating object is a round platter, and
-   the component's rotateX tilt turns a square into the ellipse we want. */
+/* Square rather than the component's 800x500 — the photo is square, so a
+   square plate shows the whole platter instead of cropping the board. */
 .canvas-3d {
   position: relative;
-  width: min(760px, 78vw); height: min(760px, 78vw);
+  width: min(720px, 76vw); height: min(720px, 76vw);
+  /* Nudged right of centre: the headline is left-anchored, and at dead
+     centre the words sat on top of the busiest part of the food. Set this
+     to 0 to put the platter back in the middle. */
+  margin-left: 13vw;
   transform-style: preserve-3d;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -56,32 +66,30 @@ html, body {
 .layer {
   position: absolute;
   inset: 0;
+  border: 1px solid rgba(224, 224, 224, 0.1);
   background-size: cover;
   background-position: center;
   transition: transform 0.5s ease;
 }
 
-/* 1 — the table the platter sits on: a soft pool of light, kept dark and
-   desaturated exactly like the component's base plate. */
+/* 1 — the base plate, the component's dark desaturated ground layer. */
 .layer-1 {
-  border-radius: 50%;
-  background-image: radial-gradient(circle at 50% 50%, rgba(255, 236, 210, 0.10) 0%, rgba(255, 120, 40, 0.05) 45%, transparent 72%);
-  filter: grayscale(0.6) contrast(1.2) brightness(0.8);
+  background-image: var(--platter);
+  filter: grayscale(1) contrast(1.2) brightness(0.45);
 }
 
-/* 2 — the platter itself. This is the floating object, so it keeps its
-   colour; a drop shadow lifts it off the plane. */
+/* 2 — the platter itself, in colour. This is the one you actually read;
+   food in greyscale doesn't sell food. */
 .layer-2 {
-  background-image: url('../images/platter.png'), url('../images/platter-standin.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  filter: contrast(1.05) saturate(1.05) drop-shadow(0 40px 60px rgba(0, 0, 0, 0.75));
+  background-image: var(--platter);
+  filter: contrast(1.06) saturate(1.12) brightness(0.88)
+          drop-shadow(0 40px 70px rgba(0, 0, 0, 0.8));
 }
 
-/* 3 — highlight pass, the component's third blended layer. */
+/* 3 — the component's blended top pass: a soft light bloom over the board. */
 .layer-3 {
-  background-image: radial-gradient(circle at 38% 32%, rgba(255, 240, 220, 0.22) 0%, transparent 55%);
-  opacity: 0.5;
+  background-image: radial-gradient(circle at 42% 34%, rgba(255, 238, 214, 0.30) 0%, transparent 58%);
+  opacity: 0.55;
   mix-blend-mode: screen;
   pointer-events: none;
 }
@@ -104,6 +112,13 @@ html, body {
   grid-template-rows: auto 1fr auto;
   z-index: 10;
   pointer-events: none;
+}
+
+.readout {
+  text-align: right;
+  font-family: monospace;
+  color: var(--accent);
+  font-size: 0.7rem;
 }
 
 .hero-title {
@@ -148,6 +163,21 @@ html, body {
   51% { transform: scaleY(1); transform-origin: bottom; }
 }
 
+@media (max-width: 900px) {
+  .canvas-3d { margin-left: 0; }
+}
+
 @media (max-width: 680px) {
   .interface-grid { padding: 1.75rem; }
+  .readout {
+  text-align: right;
+  font-family: monospace;
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+.hero-title { align-self: end; padding-bottom: 12vh; }
+  /* the hint line runs straight through the footer text at this width */
+  .scroll-hint { display: none; }
+  .readout { font-size: 0.55rem; letter-spacing: -0.02em; }
 }
