@@ -1,0 +1,413 @@
+/* =========================================================================
+   There's Always Something Good in Tapas — scroll-scrubbed frame hero
+   Ported 1:1 from the MacBook Neo `FrameSequenceHero`: same scroll->frame
+   mapping, same RAF lerp, same step ranges, same card/tick behaviour.
+   Only the visual skin and the copy changed. Class names are kept identical
+   (fsh-*) so the React version in /components/ui shares this exact stylesheet.
+
+   Type: Cormorant Garamond (display) + Hanken Grotesk (everything else).
+   ========================================================================= */
+
+:root {
+  /* warm ivory studio backdrop — the plate is the only saturated thing on screen */
+  --fsh-paper:      #FBF8F3;
+  --fsh-paper-deep: #F2EBE0;
+  --fsh-ink:        #23201C;
+  --fsh-ink-soft:   #6B6155;
+  --fsh-ink-faint:  #A2988A;
+  --fsh-line:       rgba(35, 32, 28, 0.12);
+  --fsh-gold:       #B08948;
+
+  --fsh-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --fsh-body:    "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --fsh-ease:    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* -------------------------------------------------------------------------
+   Root + scroll spacer
+   The spacer owns the hero's scroll distance (600vh by default) and the stage
+   sticks inside it, so the hero releases the page the moment progress hits 1.
+   This is the one deliberate change from the original (which pinned the stage
+   with position:fixed) — required to keep the hero isolated from the sections
+   that follow it. The progress math is untouched.
+   ------------------------------------------------------------------------- */
+.fsh-root {
+  position: relative;
+  background: var(--fsh-paper);
+  color: var(--fsh-ink);
+  font-family: var(--fsh-body);
+}
+
+.fsh-spacer { position: relative; }
+
+.fsh-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--fsh-paper);
+}
+
+/* --- the scrubbed frame itself --- */
+.fsh-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 0;
+}
+.fsh-canvas {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* -------------------------------------------------------------------------
+   Loader
+   ------------------------------------------------------------------------- */
+.fsh-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  background: var(--fsh-paper);
+  transition: opacity 700ms var(--fsh-ease), visibility 700ms;
+}
+.fsh-loader-done { opacity: 0; visibility: hidden; pointer-events: none; }
+.fsh-loader-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fsh-ink-faint);
+}
+.fsh-loader-track {
+  width: min(220px, 42vw);
+  height: 1px;
+  background: var(--fsh-line);
+  overflow: hidden;
+}
+.fsh-loader-fill {
+  display: block;
+  height: 100%;
+  background: var(--fsh-gold);
+  transition: width 200ms linear;
+}
+
+/* -------------------------------------------------------------------------
+   Nav
+   ------------------------------------------------------------------------- */
+.fsh-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.15rem clamp(1.25rem, 4vw, 3rem);
+  transition: background 400ms var(--fsh-ease), border-color 400ms var(--fsh-ease),
+              backdrop-filter 400ms var(--fsh-ease);
+  border-bottom: 1px solid transparent;
+}
+.fsh-nav-scrolled {
+  background: rgba(251, 248, 243, 0.82);
+  backdrop-filter: saturate(140%) blur(14px);
+  border-bottom-color: var(--fsh-line);
+}
+.fsh-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--fsh-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+  color: var(--fsh-ink);
+  text-decoration: none;
+}
+.fsh-brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fsh-gold);
+}
+.fsh-nav-links {
+  display: flex;
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+}
+.fsh-nav-links a {
+  font-size: 0.78rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--fsh-ink-soft);
+  text-decoration: none;
+  transition: color 220ms var(--fsh-ease);
+}
+.fsh-nav-links a:hover { color: var(--fsh-ink); }
+.fsh-cta {
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 0.62rem 1.15rem;
+  border: 1px solid var(--fsh-ink);
+  border-radius: 999px;
+  color: var(--fsh-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 260ms var(--fsh-ease), color 260ms var(--fsh-ease);
+}
+.fsh-cta:hover { background: var(--fsh-ink); color: var(--fsh-paper); }
+
+/* -------------------------------------------------------------------------
+   Headline
+   ------------------------------------------------------------------------- */
+.fsh-copy {
+  position: absolute;
+  top: clamp(5.5rem, 13vh, 9rem);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+  text-align: center;
+  pointer-events: none;
+}
+.fsh-title {
+  margin: 0;
+  font-family: var(--fsh-display);
+  font-weight: 300;
+  font-size: clamp(2.05rem, 5.4vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+.fsh-title-line { display: block; }
+
+/* the one sheen on the page: a slow, low-contrast gold pass over a single
+   word. Deliberately not the original rainbow — this reads as warm metal. */
+.fsh-title-accent {
+  font-style: italic;
+  background: linear-gradient(100deg, #B08948 0%, #E3C489 30%, #B08948 60%, #E3C489 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fsh-shimmer 14s linear infinite;
+}
+.fsh-sub {
+  margin: 1.1rem 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fsh-ink-faint);
+  transition: opacity 500ms var(--fsh-ease), transform 500ms var(--fsh-ease);
+}
+.fsh-sub-hidden { opacity: 0; transform: translateY(-6px); }
+
+@keyframes fsh-shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* -------------------------------------------------------------------------
+   Step cards — one visible at a time, driven by the active step index
+   ------------------------------------------------------------------------- */
+.fsh-cards {
+  position: absolute;
+  left: clamp(1.25rem, 4vw, 3rem);
+  bottom: clamp(2.75rem, 7vh, 4.5rem);
+  z-index: 3;
+  width: min(360px, 78vw);
+  height: 232px;
+}
+.fsh-card {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity 520ms var(--fsh-ease), transform 520ms var(--fsh-ease);
+}
+.fsh-card-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.fsh-card-prev   { opacity: 0; transform: translateY(-18px); }
+
+.fsh-card-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem 1.5rem;
+  background: rgba(251, 248, 243, 0.78);
+  backdrop-filter: saturate(150%) blur(16px);
+  border: 1px solid var(--fsh-line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+/* --c is set per-step from JS; the only place a step colour appears */
+.fsh-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--c, var(--fsh-gold));
+  opacity: 0.85;
+}
+.fsh-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.05rem;
+}
+.fsh-card-num {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--fsh-ink-faint);
+}
+.fsh-card-num strong { color: var(--fsh-ink); font-weight: 500; }
+.fsh-card-icon { color: var(--c, var(--fsh-gold)); font-size: 0.9rem; }
+
+.fsh-card-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--fsh-display);
+  font-weight: 400;
+  font-size: 1.62rem;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+.fsh-card-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--fsh-ink-soft);
+}
+.fsh-card-foot {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.fsh-ticks { display: flex; gap: 5px; }
+.fsh-tick {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--fsh-line);
+  overflow: hidden;
+}
+.fsh-tick span {
+  display: block;
+  height: 100%;
+  background: var(--c, var(--fsh-gold));
+  transform-origin: left center;
+}
+.fsh-card-label {
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fsh-ink-faint);
+}
+
+/* -------------------------------------------------------------------------
+   Review — the small supporting block that rides alongside the first dish,
+   in the same slot the original used for its secondary spec copy
+   ------------------------------------------------------------------------- */
+.fsh-review {
+  position: absolute;
+  right: clamp(1.25rem, 4vw, 3rem);
+  bottom: clamp(2.75rem, 7vh, 4.5rem);
+  z-index: 3;
+  width: min(300px, 74vw);
+  text-align: right;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity 620ms var(--fsh-ease), transform 620ms var(--fsh-ease);
+}
+.fsh-review-show { opacity: 1; transform: translateY(0); }
+.fsh-review-stars {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.26em;
+  color: var(--fsh-gold);
+  margin-bottom: 0.7rem;
+}
+.fsh-review-quote {
+  margin: 0 0 0.75rem;
+  font-family: var(--fsh-display);
+  font-size: 1.14rem;
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--fsh-ink);
+}
+.fsh-review-attr {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fsh-ink-faint);
+}
+
+/* -------------------------------------------------------------------------
+   Progress hairline
+   ------------------------------------------------------------------------- */
+.fsh-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  height: 2px;
+  background: var(--fsh-line);
+}
+.fsh-progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--fsh-ink);
+}
+
+/* -------------------------------------------------------------------------
+   Small screens — cards drop to a full-width strip, review sits above them
+   ------------------------------------------------------------------------- */
+@media (max-width: 780px) {
+  .fsh-nav-links { display: none; }
+  .fsh-cards {
+    left: 1.25rem;
+    right: 1.25rem;
+    width: auto;
+    height: 214px;
+    bottom: 1.75rem;
+  }
+  /* on a phone the review would otherwise sit straight on top of the plate,
+     so it gets the same panel treatment as the cards */
+  .fsh-review {
+    left: 1.25rem;
+    right: 1.25rem;
+    width: auto;
+    bottom: calc(214px + 1.5rem);
+    text-align: left;
+    padding: 1.1rem 1.25rem;
+    background: rgba(251, 248, 243, 0.82);
+    backdrop-filter: saturate(150%) blur(16px);
+    border: 1px solid var(--fsh-line);
+    border-radius: 4px;
+  }
+  .fsh-review-quote { font-size: 1rem; }
+  /* lift the frame clear of the card stack */
+  .fsh-canvas { height: 74%; transform: translateY(-11%); }
+}
+
+/* Reduced motion: keep the scrub (it's user-driven), drop the ambient sheen */
+@media (prefers-reduced-motion: reduce) {
+  .fsh-title-accent { animation: none; }
+  .fsh-card, .fsh-review, .fsh-sub { transition-duration: 1ms; }
+}

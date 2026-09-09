@@ -1,0 +1,52 @@
+/* =========================================================================
+   Everything after the hero. Kept deliberately plain — this is the normal
+   restaurant site the hero hands off to, not part of the animation.
+   ========================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: #FBF8F3;
+  color: #23201C;
+  font-family: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section {
+  padding: clamp(4.5rem, 11vh, 8rem) clamp(1.25rem, 6vw, 5rem);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.section-alt { background: #F2EBE0; max-width: none; }
+.section-alt > * { max-width: 1180px; margin-left: auto; margin-right: auto; }
+
+.kicker {
+  margin: 0 0 1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #B08948;
+}
+.section-title {
+  margin: 0 0 1rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+.section-lede {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #6B6155;
+}
+
+.site-footer {
+  padding: 3rem clamp(1.25rem, 6vw, 5rem);
+  border-top: 1px solid rgba(35, 32, 28, 0.12);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.15rem;
+  color: #6B6155;
+}

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>There's Always Something Good in Tapas</title>
+<meta name="description" content="Small plates, long nights. A tapas kitchen where the food does the talking." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/hero.css" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+
+<!-- =========================================================================
+     HERO — scroll-scrubbed frame sequence.
+     Self-contained: everything inside .fsh-root is the hero, and it releases
+     the page the moment its spacer scrolls out. Nothing below depends on it.
+     ========================================================================= -->
+<div class="fsh-root">
+
+  <div aria-hidden="true" class="fsh-loader">
+    <div class="fsh-loader-text">Loading · 0%</div>
+    <div class="fsh-loader-track"><span class="fsh-loader-fill" style="width:0%"></span></div>
+  </div>
+
+  <nav class="fsh-nav">
+    <!-- wordmark is the short form of the full name in the headline -->
+    <a class="fsh-brand" href="#top"><span class="fsh-brand-dot"></span>Tapas</a>
+    <div class="fsh-nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#room">The room</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a class="fsh-cta" href="#visit">Book a table</a>
+  </nav>
+
+  <!-- 600vh of scroll distance; the stage sticks inside it -->
+  <div class="fsh-spacer" style="height:600vh">
+    <div class="fsh-stage">
+
+      <div class="fsh-canvas-wrap">
+        <img class="fsh-canvas" src="" alt="" draggable="false" />
+      </div>
+
+      <div class="fsh-copy">
+        <h1 class="fsh-title">
+          <span class="fsh-title-line">There's Always Something <em class="fsh-title-accent">Good</em></span>
+          <span class="fsh-title-line">in Tapas</span>
+        </h1>
+        <p class="fsh-sub">Scroll to explore</p>
+      </div>
+
+      <!-- step cards are built from the `steps` array in js/hero.js -->
+      <div class="fsh-cards"></div>
+
+      <!-- supporting review, tied to the first dish -->
+      <aside class="fsh-review">
+        <span class="fsh-review-stars" aria-label="Five out of five stars">★★★★★</span>
+        <p class="fsh-review-quote">"The food, the atmosphere and the service were incredible. We came in for one drink and stayed three hours."</p>
+        <p class="fsh-review-attr">Google review · placeholder</p>
+      </aside>
+
+      <div class="fsh-progress"><span class="fsh-progress-fill" style="width:0%"></span></div>
+
+    </div>
+  </div>
+</div>
+<!-- ================= END HERO — normal site continues below ================ -->
+
+<main id="top">
+
+  <section class="section" id="menu">
+    <p class="kicker">The menu</p>
+    <h2 class="section-title">Eight or nine things, shared.</h2>
+    <p class="section-lede">The kitchen keeps it short on purpose. What's good that week is what's on, and the rest of the list stays where it's been for years.</p>
+  </section>
+
+  <section class="section section-alt" id="room">
+    <p class="kicker">The room</p>
+    <h2 class="section-title">Loud in the good way.</h2>
+    <p class="section-lede">Twelve tables, a bar you can eat at, and a kitchen you can hear. Come early for a quiet one, come late for the other kind.</p>
+  </section>
+
+  <section class="section" id="reviews">
+    <p class="kicker">Reviews</p>
+    <h2 class="section-title">What people say.</h2>
+    <p class="section-lede">Pulled from the restaurant's Google page — swap these for the real ones.</p>
+  </section>
+
+  <section class="section section-alt" id="visit">
+    <p class="kicker">Visit</p>
+    <h2 class="section-title">Book a table.</h2>
+    <p class="section-lede">Walk-ins at the bar, reservations for everything else.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>There's Always Something Good in Tapas</p>
+</footer>
+
+<script src="js/hero.js"></script>
+</body>
+</html>
