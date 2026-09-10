@@ -19,11 +19,13 @@ A glatt-kosher small-plates restaurant on Route 9 (KCL supervision, BYOB, 4.8★
 Dark, cinematic, scroll-driven single page.
 
 - Static HTML/CSS/JS, no build step. Open `tapas/index.html` directly.
-- **Palette**: char and ember (`#0B0906` / `#D2541E`) taken off the seared edge
-  of the food, deliberately not the black-and-champagne-gold every fine-dining
-  template ships. **Type**: Bodoni Moda at display scale over Archivo.
-- **Motion**: a hero plate sequence, then one authored handoff where the hero
-  contracts and rounds as the small-plates panel rises over it. GSAP
+- **Palette**: warm sand and burnt sienna (`#E9E0D1` / `#9A3B10`). The only dark
+  objects are the plate cards, so the food is the subject and the room is light.
+  **Type**: Bodoni Moda over Archivo, held well below poster scale.
+- **Sections**: hero, spotlight (statement, three plates, full menu behind a
+  disclosure button), reviews, closing.
+- **Motion**: a hero plate sequence that dissolves into the page ground, a slow
+  scroll push-in, and a closing table that fills one setting at a time. GSAP
   ScrollTrigger + Lenis, both **vendored** in `tapas/js/vendor/` — no CDN, so it
   works off a USB stick. Fonts self-hosted in `tapas/fonts/` for the same reason.
 - **3D coverflow carousel** ported from React/shadcn to vanilla JS with identical

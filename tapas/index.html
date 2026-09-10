@@ -5,15 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tapas — Glatt Kosher Small Plates, Toms River NJ</title>
 <meta name="description" content="Tapas — a glatt kosher small-plates kitchen on Route 9 in Toms River, New Jersey. Short rib cigars, brisket flatbread, grilled skewers. KCL supervision. BYOB. Open daily 5–10pm." />
-<meta name="theme-color" content="#0B0906" />
+<meta name="theme-color" content="#E9E0D1" />
 
 <meta property="og:type" content="restaurant" />
 <meta property="og:title" content="Tapas — Glatt Kosher Small Plates, Toms River NJ" />
 <meta property="og:description" content="Small plates, seriously done. Glatt kosher under KCL. BYOB. Open daily 5–10pm on Route 9." />
 
-<!-- Bodoni Moda for display: a didone with real contrast, cut for large sizes.
-     Archivo carries everything else. Both self-hosted: no third-party request,
-     and the page renders the same offline. -->
+<!-- Bodoni Moda for display, Archivo for everything else. Both self-hosted:
+     no third-party request, and the page renders the same offline. -->
 <link rel="preload" href="fonts/bodonimoda-f4316098.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/archivo-20ba07dc.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="css/fonts.css" />
@@ -37,98 +36,71 @@
 <main id="main">
   <span id="top"></span>
 
-  <!-- ============ HERO — one plate at a time ============ -->
-  <div class="hero-wrap" id="heroWrap">
-    <section class="hero" id="hero" aria-label="Tapas — introduction">
-
-      <div class="hero-media" id="heroMedia">
-        <!-- Each plate keeps a designed ground beneath its photo. Drop the real
-             file in and it takes over; leave it out and the ground stands in. -->
-        <div class="plate is-active" data-plate="0">
-          <img src="images/hero-1-brisket-nachos.jpg" alt="BBQ brisket nachos, plated" fetchpriority="high" decoding="async" />
-        </div>
-        <div class="plate" data-plate="1">
-          <img src="images/hero-2-honey-buffalo-poppers.jpg" alt="Honey buffalo chicken poppers with slaw" loading="eager" decoding="async" />
-        </div>
-        <div class="plate" data-plate="2">
-          <img src="images/hero-3-brisket-tacos.jpg" alt="BBQ brisket tacos on a serving rack" loading="eager" decoding="async" />
-        </div>
-        <div class="plate" data-plate="3">
-          <img src="images/hero-4-tapas-burgers.jpg" alt="Tapas burgers with fries" loading="eager" decoding="async" />
-        </div>
-        <div class="plate" data-plate="4">
-          <img src="images/hero-5-nachos-guacamole.jpg" alt="Brisket nachos with guacamole and jalapeño" loading="eager" decoding="async" />
-        </div>
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero" aria-label="Tapas — introduction">
+    <div class="hero-media" id="heroMedia">
+      <!-- The generated hero film leads once it exists; until then the plate
+           stills carry it. Anything missing drops out of the rotation. -->
+      <div class="plate" data-plate="film">
+        <video src="videos/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
       </div>
+      <div class="plate is-active" data-plate="0">
+        <img src="images/hero-1-brisket-nachos.jpg" alt="BBQ brisket nachos, plated" fetchpriority="high" decoding="async" />
+      </div>
+      <div class="plate" data-plate="1">
+        <img src="images/hero-2-honey-buffalo-poppers.jpg" alt="Honey buffalo chicken poppers with slaw" loading="eager" decoding="async" />
+      </div>
+      <div class="plate" data-plate="2">
+        <img src="images/hero-3-brisket-tacos.jpg" alt="BBQ brisket tacos on a serving rack" loading="eager" decoding="async" />
+      </div>
+      <div class="plate" data-plate="3">
+        <img src="images/hero-4-tapas-burgers.jpg" alt="Tapas burgers with fries" loading="eager" decoding="async" />
+      </div>
+    </div>
 
-      <div class="hero-inner">
-        <h1 class="display hero-title">
-          <span>There's always</span>
-          <span>something good</span>
-          <span class="line-3"><em>in Tapas</em></span>
-        </h1>
+    <div class="hero-inner">
+      <h1 class="display hero-title">
+        <span>There's always</span>
+        <span>something good</span>
+        <span class="line-3"><em>in Tapas</em></span>
+      </h1>
 
-        <ul class="hero-facts">
-          <li><span class="kosher">Glatt Kosher · KCL</span></li>
-          <li><span>BYOB</span></li>
-          <li><span>Small plates</span></li>
-          <li><span>Route 9, Toms River</span></li>
-        </ul>
+      <ul class="hero-facts">
+        <li><span class="kosher">Glatt Kosher · KCL</span></li>
+        <li><span>BYOB</span></li>
+        <li><span>Small plates</span></li>
+        <li><span>Route 9, Toms River</span></li>
+      </ul>
 
+      <div class="hero-foot">
         <div class="hero-cta">
           <a class="btn" href="tel:+17326601700">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
             <span>(732) 660-1700</span>
           </a>
-          <a class="btn btn-ghost" href="#menu"><span>See the plates</span></a>
+          <a class="btn btn-ghost" href="#spotlight"><span>See the plates</span></a>
         </div>
-      </div>
 
-      <div class="plate-nav" id="plateNav" role="tablist" aria-label="Featured plates"></div>
-
-      <div class="scroll-cue" aria-hidden="true">
-        <span>Scroll</span>
-        <i></i>
-      </div>
-    </section>
-  </div>
-
-  <!-- ============ THESIS — the small-plates idea ============ -->
-  <section class="section thesis" id="thesis">
-    <div class="thesis-grid">
-      <div class="reveal">
-        <p class="thesis-count">Mostly appetizers. That's the point.</p>
-        <h2 class="section-head">A table that keeps<br />filling up.</h2>
-      </div>
-      <div class="reveal">
-        <span class="rule-em"></span>
-        <p class="lede">
-          Nobody orders one thing here. You order six, they land one at a time, and
-          the table rearranges itself around whatever just showed up. It's the kind
-          of meal that runs long on purpose. Brisket, short rib, skewers off the
-          grill, all of it meant to be reached across for.
-        </p>
-        <p class="lede" style="margin-top:1.25rem;">
-          Glatt kosher under KCL supervision, and BYOB, so bring the bottle you
-          actually want to drink.
-        </p>
+        <div class="plate-nav" id="plateNav" role="tablist" aria-label="Featured plates"></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ SIGNATURE PLATES — coverflow ============ -->
-  <section class="coverflow" id="plates" aria-label="Signature plates" aria-roledescription="carousel">
-    <div class="cf-ambience" aria-hidden="true">
-      <div class="cf-amb-layer" id="cfAmb"></div>
+  <!-- ============ SPOTLIGHT ============ -->
+  <section class="section spotlight" id="spotlight">
+    <div class="wrap">
+      <div class="spot-head">
+        <h2 class="display spot-statement reveal">When it comes to tapas, we don't believe in small portions.</h2>
+        <div class="spot-aside reveal">
+          <p class="label">In the spotlight</p>
+          <span class="rule-em"></span>
+          <p class="lede">Three dishes guests keep coming back for, pulled straight from what
+            regulars actually order.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="cf-inner">
-      <div class="cf-head reveal">
-        <h2 class="section-head">The ones people<br />come back for.</h2>
-        <p class="lede">Ten or so plates rotate through the kitchen. These are the ones that
-          leave the pass fastest.</p>
-      </div>
-
+    <div class="coverflow" aria-label="Signature plates" aria-roledescription="carousel">
       <div class="cf-stage" id="cfStage"></div>
 
       <button class="cf-arrow cf-prev" id="cfPrev" type="button" aria-label="Previous plate" aria-controls="cfStage">
@@ -141,168 +113,149 @@
       <div class="cf-dots" id="cfDots" role="tablist" aria-label="Choose a plate"></div>
       <p class="visually-hidden" aria-live="polite" id="cfLive"></p>
     </div>
-  </section>
 
-  <!-- ============ MENU ============ -->
-  <section class="section section-raise" id="menu">
-    <div class="menu-head reveal">
-      <h2 class="section-head">The plates.</h2>
-      <p class="lede">Everything is glatt kosher, meat, and made to share. The kitchen runs
-        daily from five.</p>
+    <div class="menu-toggle-row">
+      <button class="btn btn-ghost" id="menuToggle" type="button" aria-expanded="false" aria-controls="menuPanel">
+        <span id="menuToggleLabel">See the full menu</span>
+      </button>
     </div>
 
-    <div class="menu-list">
-      <article class="menu-row reveal">
-        <span class="menu-idx">01</span>
-        <h3 class="menu-name">Short Rib Cigars</h3>
-        <p class="menu-desc">Shredded beef short rib rolled tight in a crisp wrapper, fried to order, roasted garlic aioli.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">02</span>
-        <h3 class="menu-name">Tapas Flatbread</h3>
-        <p class="menu-desc">BBQ brisket over crisp in-house flatbread, fresh arugula, chipotle aioli.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">03</span>
-        <h3 class="menu-name">BBQ Brisket Nachos</h3>
-        <p class="menu-desc">Slow-cooked brisket piled over corn chips with pico de gallo, guacamole and chipotle crema.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">04</span>
-        <h3 class="menu-name">Mango Habanero Poppers</h3>
-        <p class="menu-desc">Chicken poppers in a mango habanero glaze. Sweet first, heat after.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">05</span>
-        <h3 class="menu-name">Honey Buffalo Poppers</h3>
-        <p class="menu-desc">The same poppers under honey buffalo, with slaw on the side to cool it down.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">06</span>
-        <h3 class="menu-name">BBQ Brisket Tacos</h3>
-        <p class="menu-desc">Three to an order. Brisket, shredded lettuce, pico, chipotle crema.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">07</span>
-        <h3 class="menu-name">Grilled Steak Skewer</h3>
-        <p class="menu-desc">Marinated in house sauce, off the grill, served with a fresh salad.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">08</span>
-        <h3 class="menu-name">Tapas Burger</h3>
-        <p class="menu-desc">Griddled burgers on soft buns, tomato and lettuce, fries alongside.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">09</span>
-        <h3 class="menu-name">Mango Chicken</h3>
-        <p class="menu-desc">A house favorite. Reviewers call it out by name.</p>
-      </article>
-      <article class="menu-row reveal">
-        <span class="menu-idx">10</span>
-        <h3 class="menu-name">Cornflake Chicken Fingers</h3>
-        <p class="menu-desc">Crunchy cornflake crust, cut for sharing. The table's easiest yes.</p>
-      </article>
-    </div>
-
-    <p class="menu-note reveal">The full menu runs longer than this and changes with the kitchen. Call for
-      tonight's board, or ask about anything you don't see.</p>
-  </section>
-
-  <!-- ============ ATMOSPHERE ============ -->
-  <section class="section" id="room">
-    <div class="atmos-grid">
-      <div class="atmos-copy reveal">
-        <h2 class="section-head">The room.</h2>
-        <span class="rule-em"></span>
-        <p class="lede">A dark, quiet dining room off Route 9, with enough space between tables that
-          you can hear each other, and a kitchen that keeps sending things out
-          while you talk.</p>
-        <p class="lede">Weekends fill up. Call ahead and the table will be waiting.</p>
-
-        <ul class="atmos-facts">
-          <li><span class="k">Supervision</span><span class="v"><strong>KCL</strong> (Kehillos Chareidim of Lakewood &amp; Central Jersey)</span></li>
-          <li><span class="k">Kashrus</span><span class="v">Glatt kosher, meat</span></li>
-          <li><span class="k">Drinks</span><span class="v"><strong>BYOB</strong> (no corkage listed)</span></li>
-          <li><span class="k">Parking</span><span class="v">On-site, fills up at peak</span></li>
-          <li><span class="k">Best for</span><span class="v">Groups who want to share, long weeknight dinners</span></li>
-        </ul>
+    <div class="menu-panel" id="menuPanel" hidden>
+      <div class="menu-inner">
+        <div class="menu-grid">
+          <article class="menu-row">
+            <h3 class="menu-name">Short Rib Cigars</h3>
+            <p class="menu-desc">Shredded beef short rib rolled tight in a crisp wrapper, fried to order, roasted garlic aioli.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Tapas Flatbread</h3>
+            <p class="menu-desc">BBQ brisket over crisp in-house flatbread, fresh arugula, chipotle aioli.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">BBQ Brisket Nachos</h3>
+            <p class="menu-desc">Slow-cooked brisket piled over corn chips with pico de gallo, guacamole and chipotle crema.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Mango Habanero Poppers</h3>
+            <p class="menu-desc">Chicken poppers in a mango habanero glaze. Sweet first, heat after.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Honey Buffalo Poppers</h3>
+            <p class="menu-desc">The same poppers under honey buffalo, with slaw on the side to cool it down.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">BBQ Brisket Tacos</h3>
+            <p class="menu-desc">Three to an order. Brisket, shredded lettuce, pico, chipotle crema.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Grilled Steak Skewer</h3>
+            <p class="menu-desc">Marinated in house sauce, off the grill, served with a fresh salad.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Tapas Burger</h3>
+            <p class="menu-desc">Griddled burgers on soft buns, tomato and lettuce, fries alongside.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Mango Chicken</h3>
+            <p class="menu-desc">A house favorite. Reviewers call it out by name.</p>
+          </article>
+          <article class="menu-row">
+            <h3 class="menu-name">Cornflake Chicken Fingers</h3>
+            <p class="menu-desc">Crunchy cornflake crust, cut for sharing. The table's easiest yes.</p>
+          </article>
+        </div>
+        <p class="menu-note">The full menu runs longer than this and changes with the kitchen. Call for
+          tonight's board, or ask about anything you don't see.</p>
       </div>
-
-      <figure class="atmos-figure reveal" id="atmosFigure">
-        <img src="images/room.jpg" alt="The dining room at Tapas" loading="lazy" decoding="async" />
-        <figcaption>1580 Lakewood Rd · Toms River</figcaption>
-      </figure>
     </div>
   </section>
 
   <!-- ============ REVIEWS ============ -->
-  <section class="section section-raise" id="reviews">
-    <div class="reviews-head reveal">
-      <h2 class="section-head">What people say.</h2>
-      <div class="rating">
-        <span class="rating-score">4.8</span>
-        <span class="rating-meta">Google rating<br />Toms River, NJ</span>
+  <section class="section reviews" id="reviews">
+    <div class="wrap">
+      <div class="reviews-head reveal">
+        <h2 class="section-head">What people say.</h2>
+        <div class="rating">
+          <span class="rating-score">4.8</span>
+          <span class="rating-meta">
+            <span class="stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </span>
+            Google rating · Toms River, NJ
+          </span>
+        </div>
       </div>
-    </div>
 
-    <div class="reviews-grid">
-      <figure class="review reveal">
-        <blockquote>“Love that this place is mostly appetizers — great concept.”</blockquote>
-        <figcaption>Google review</figcaption>
-      </figure>
-      <figure class="review reveal">
-        <blockquote>“Had a great time, our waiter Gio really took care of us.”</blockquote>
-        <figcaption>Google review</figcaption>
-      </figure>
-      <figure class="review reveal">
-        <blockquote>Reviewers keep landing on the same three things: the portions, the service, and how many plates they got to try.</blockquote>
-        <figcaption>Across recent reviews</figcaption>
-      </figure>
+      <div class="reviews-grid">
+        <figure class="review reveal">
+          <span class="stars" aria-label="Five stars">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <blockquote>“Love that this place is mostly appetizers — great concept.”</blockquote>
+          <figcaption>Google review</figcaption>
+        </figure>
+
+        <figure class="review reveal">
+          <span class="stars" aria-label="Five stars">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <blockquote>“Had a great time, our waiter Gio really took care of us.”</blockquote>
+          <figcaption>Google review</figcaption>
+        </figure>
+
+        <figure class="review reveal">
+          <span class="stars" aria-label="Five stars">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <blockquote>Reviewers keep landing on the same three things: the portions, the service, and how many plates they got to try.</blockquote>
+          <figcaption>Across recent reviews</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <!-- ============ RESERVE ============ -->
-  <section class="section reserve" id="visit">
-    <div class="reserve-inner">
-      <div class="reveal">
-        <h2 class="display reserve-title">Book a<br />table.</h2>
-        <p class="lede" style="margin-top:1.5rem;">Reservations by phone. Weekends go quickly, so a day
-          or two ahead is usually enough.</p>
-        <div class="reserve-cta">
-          <a class="btn" href="tel:+17326601700">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
-            <span>Call (732) 660-1700</span>
-          </a>
-          <a class="btn btn-ghost" href="https://maps.google.com/?q=1580+Lakewood+Rd,+Toms+River,+NJ+08755" target="_blank" rel="noopener">
-            <span>Directions</span>
-          </a>
-        </div>
+  <!-- ============ CLOSING ============ -->
+  <section class="section closing" id="visit">
+    <div class="wrap">
+      <!-- Five settings arrive along the cloth, then the table clears and fills again. -->
+      <svg class="table-anim" viewBox="0 0 420 54" role="img" aria-label="A table filling with plates">
+        <line class="cloth" x1="6" y1="40" x2="414" y2="40" />
+        <g class="setting s1"><circle class="core" cx="54"  cy="27" r="11" /><circle class="rim" cx="54"  cy="27" r="14" /></g>
+        <g class="setting s2"><circle class="core" cx="132" cy="27" r="11" /><circle class="rim" cx="132" cy="27" r="14" /></g>
+        <g class="setting s3"><circle class="core" cx="210" cy="27" r="11" /><circle class="rim" cx="210" cy="27" r="14" /></g>
+        <g class="setting s4"><circle class="core" cx="288" cy="27" r="11" /><circle class="rim" cx="288" cy="27" r="14" /></g>
+        <g class="setting s5"><circle class="core" cx="366" cy="27" r="11" /><circle class="rim" cx="366" cy="27" r="14" /></g>
+      </svg>
+
+      <h2 class="display closing-title">Pull up a chair.<br /><em>The table is better full.</em></h2>
+
+      <div class="closing-cta">
+        <a class="btn" href="tel:+17326601700">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
+          <span>Call to book · (732) 660-1700</span>
+        </a>
+        <a class="btn btn-ghost" href="https://www.grubhub.com/restaurant/tapas-1580-us-9-toms-river/1218552" target="_blank" rel="noopener">
+          <span>Order pickup online</span>
+        </a>
       </div>
 
-      <dl class="info-list reveal">
-        <div>
-          <dt>Address</dt>
-          <dd><a href="https://maps.google.com/?q=1580+Lakewood+Rd,+Toms+River,+NJ+08755" target="_blank" rel="noopener">1580 Lakewood Rd (Route 9)<br />Toms River, NJ 08755</a></dd>
-        </div>
-        <div>
-          <dt>Phone</dt>
-          <dd><a href="tel:+17326601700">(732) 660-1700</a></dd>
-        </div>
-        <div>
-          <dt>Hours</dt>
-          <dd>Open daily 5:00–10:00pm
-            <span class="hours-note">Kitchen closes at 10.</span>
-          </dd>
-        </div>
-        <div>
-          <dt>Kashrus</dt>
-          <dd>Glatt kosher, meat, under KCL supervision</dd>
-        </div>
-        <div>
-          <dt>Drinks</dt>
-          <dd>BYOB</dd>
-        </div>
-      </dl>
+      <p class="closing-note">1580 Lakewood Rd (Route 9), Toms River · Open daily 5–10pm · BYOB</p>
     </div>
   </section>
 </main>
@@ -339,11 +292,7 @@
     "opens": "17:00",
     "closes": "22:00"
   }],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "bestRating": "5"
-  }
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "bestRating": "5" }
 }
 </script>
 

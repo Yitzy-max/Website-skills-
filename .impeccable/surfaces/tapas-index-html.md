@@ -6,6 +6,8 @@ related_targets: []
 ---
 
 Scope: `tapas/index.html`, a single-page speculative demo for Tapas (Toms River, NJ).
+Sections, in order: hero, spotlight (statement + three plates + menu behind a button),
+reviews, closing. The thesis, full-menu and room sections were cut by the client.
 Visitor mode: Persuade. Audience: local diners deciding where to eat tonight, mostly
 on a phone, plus the owner seeing the demo cold. Action: call (732) 660-1700.
 Proof: real menu items, real hours, 4.8 rating, KCL supervision, BYOB.
@@ -18,18 +20,18 @@ THESIS: A meal here is many small plates arriving one at a time, so the page arr
 that way too — one plate at a time, full-bleed, never a grid of equal cards. Refuses
 the black-and-champagne-gold fine-dining template the category ships by default.
 
-OWN-WORLD: Char, not gold. Warm near-black (#0B0906) ground, bone type (#F2EDE4),
-one committed ember accent (#D2541E) taken from the food's own seared edge. Bodoni
-Moda at display scale against Archivo for everything else. Hairline ember rules;
-no cards with borders; plates are the only round shapes on the page.
+OWN-WORLD: Warm sand ground (#E9E0D1), deep-brown ink (#241C14), one burnt-sienna
+accent (#9A3B10) off the char on the grill. Bodoni Moda against Archivo, both held
+well below display-poster scale. The only dark objects on the page are the plate
+cards, so the food reads as the subject and the room reads as light.
 
 STORY: This is a real kosher kitchen doing small plates seriously — see the food,
 learn it's KCL and BYOB, call.
 
-FIRST VIEWPORT: One plate photo full-bleed and slowly drifting, graded to the ember
-world. Headline lower-left at display scale, three lines, last line italic. A single
-hairline row of certification facts beneath it. Call button sits inline with the
-headline, not floating. Plate sequence indicators bottom-right.
+FIRST VIEWPORT: A full-bleed media panel across the top that dissolves into the sand
+ground rather than ending at a seam. Headline below it, lower-left, three lines, last
+line italic in the accent. Hairline row of certification facts, then the call button
+inline with it; plate indicators sit at the far right of that same row.
 
 FORM: Cinematic plate sequence. Brief-pinned direction (user specified dark,
 cinematic, minimalist-luxury, large type, and supplied the coverflow component), so
