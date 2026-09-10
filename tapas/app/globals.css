@@ -754,3 +754,43 @@
   outline: 2px solid #241c16;
   outline-offset: 3px;
 }
+
+/* ---------- Footer ---------- */
+.site-foot {
+  position: relative;
+  z-index: 2;
+  padding: clamp(32px, 5vw, 52px) clamp(20px, 5vw, 40px)
+    calc(clamp(32px, 5vw, 52px) + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(36, 28, 22, 0.12);
+  background: #e7dcc8;
+  color: #6b5f52;
+  text-align: center;
+}
+
+.foot-brand {
+  margin: 0 0 10px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.25rem;
+  color: #241c16;
+}
+
+.foot-line {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.foot-line a {
+  color: #241c16;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(36, 28, 22, 0.3);
+}
+
+.foot-line a:hover {
+  border-bottom-color: #241c16;
+}
+
+.foot-line a:focus-visible {
+  outline: 2px solid #241c16;
+  outline-offset: 3px;
+}

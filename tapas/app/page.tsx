@@ -89,6 +89,16 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      <footer className="site-foot">
+        <p className="foot-brand">Tapas</p>
+        <p className="foot-line">
+          128 Main Street · <a href="tel:+15551234567">(555) 123-4567</a>
+        </p>
+        <p className="foot-line">
+          Mon–Wed 4–11pm · Thu–Sat 4pm–1am · Sun 2–10pm
+        </p>
+      </footer>
     </>
   );
 }
