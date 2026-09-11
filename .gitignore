@@ -1,2 +1,4 @@
 node_modules/
 .impeccable/build/
+_*.mjs
+tapas/videos/_verify*.webm

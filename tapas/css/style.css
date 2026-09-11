@@ -135,12 +135,27 @@ button { font: inherit; color: inherit; }
   position: fixed; inset: 0 0 auto 0; z-index: 90;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: clamp(0.85rem, 1.8vw, 1.25rem) var(--gutter);
-  background: rgba(233, 224, 209, 0.92);
+  background: transparent;
+  transition: background 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+}
+.site-header::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(20,14,9,0.5) 0%, rgba(20,14,9,0) 100%);
+  transition: opacity 400ms var(--ease-out);
+}
+/* Over the footage the wordmark is light; once the page scrolls onto sand the
+   bar becomes sand and the wordmark goes back to ink. */
+.site-header .wordmark { color: var(--sand-2); }
+.site-header.is-stuck {
+  background: rgba(233, 224, 209, 0.94);
   backdrop-filter: blur(14px) saturate(1.15);
   -webkit-backdrop-filter: blur(14px) saturate(1.15);
-  transition: box-shadow 400ms var(--ease-out);
+  box-shadow: 0 1px 0 var(--line);
 }
-.site-header.is-stuck { box-shadow: 0 1px 0 var(--line); }
+.site-header.is-stuck::before { opacity: 0; }
+.site-header.is-stuck .wordmark { color: var(--ink); }
+.site-header.is-stuck .header-hours { color: var(--ink-2); }
 
 .wordmark {
   font-family: var(--display);
@@ -219,7 +234,7 @@ button { font: inherit; color: inherit; }
   content: "";
   position: absolute; inset: 0;
   background:
-    radial-gradient(115% 90% at 50% 32%, #F3EDE2 0%, #E4D8C4 42%, #D2C3A9 78%, #C6B69A 100%);
+    radial-gradient(115% 90% at 50% 34%, #3A2A1C 0%, #241A12 46%, #14100B 82%);
 }
 .plate img, .plate video {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -236,33 +251,17 @@ button { font: inherit; color: inherit; }
   .plate-film::before { background-image: url("../videos/hero-poster-mobile.jpg"); }
 }
 
-/* The video dissolves into the page ground so the copy below it has a
-   surface to sit on, instead of fighting a bright tablecloth. */
+/* No beige bleeding into the footage. The hero is the video, full stop.
+   The copy sits on top of it, so it gets its own shadow-side scrim: a dark
+   wash anchored to the bottom-left corner where the text actually is,
+   leaving the rest of the frame untouched. */
 .hero-media::after {
   content: "";
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background: linear-gradient(180deg,
-    rgba(233,224,209,0) 46%,
-    rgba(233,224,209,0.40) 62%,
-    rgba(233,224,209,0.90) 79%,
-    var(--sand) 92%);
-}
-
-/* A phone viewport is far taller than it is wide, so the copy sits much deeper
-   into the frame — and lands on the dark plates. The scrim has to start
-   higher there or the headline disappears into a black dish. */
-@media (max-width: 900px) {
-  /* The media is its own panel, near enough the 4:5 of the phone cut that
-     almost nothing is cropped; the copy lives below it on the sand. */
-  .hero-media { bottom: auto; height: 64%; }
-  .hero-media::after {
-    background: linear-gradient(180deg,
-      rgba(233,224,209,0) 68%,
-      rgba(233,224,209,0.72) 88%,
-      var(--sand) 100%);
-  }
-  .hero { align-items: flex-end; }
-  .hero-inner { padding-bottom: clamp(1.5rem, 4vh, 2.5rem); }
+  background:
+    linear-gradient(180deg, rgba(20,14,9,0.38) 0%, rgba(20,14,9,0) 26%),
+    linear-gradient(0deg, rgba(20,14,9,0.82) 0%, rgba(20,14,9,0.55) 22%,
+                          rgba(20,14,9,0.18) 42%, rgba(20,14,9,0) 58%);
 }
 
 .hero-inner {
@@ -280,23 +279,30 @@ button { font: inherit; color: inherit; }
 .hero-title {
   font-size: clamp(2rem, 4.6vw, 4rem);
   max-width: 16ch;
-  color: var(--ink);
+  color: var(--sand-2);
+  text-shadow: 0 2px 22px rgba(20, 14, 9, 0.5);
 }
 .hero-title span { display: block; }
-.hero-title .line-3 { font-style: italic; color: var(--ember); }
+.hero-title .line-3 { font-style: italic; color: #F0A579; }
 
 .hero-facts {
   display: flex; flex-wrap: wrap; align-items: center;
   gap: 0.5rem clamp(0.85rem, 1.8vw, 1.4rem);
   margin: 0; padding: 0; list-style: none;
   font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-2);
+  color: rgba(242, 235, 223, 0.88);
+  text-shadow: 0 1px 12px rgba(20, 14, 9, 0.6);
 }
 .hero-facts li { display: flex; align-items: center; gap: clamp(0.85rem, 1.8vw, 1.4rem); }
-.hero-facts li:not(:last-child)::after { content: ""; width: 1px; height: 11px; background: var(--line); }
-.hero-facts .kosher { color: var(--ember); font-weight: 600; }
+.hero-facts li:not(:last-child)::after { content: ""; width: 1px; height: 11px; background: rgba(242,235,223,0.32); }
+.hero-facts .kosher { color: #F0A579; font-weight: 600; }
 
 .hero-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
+.hero-cta .btn-ghost { color: var(--sand-2); border-color: rgba(242, 235, 223, 0.45); }
+.hero-cta .btn-ghost:hover {
+  background: rgba(242, 235, 223, 0.14);
+  border-color: var(--sand-2); color: var(--sand-2);
+}
 
 .scroll-cue {
   position: absolute;
@@ -305,12 +311,13 @@ button { font: inherit; color: inherit; }
   z-index: 4;
   display: grid; justify-items: center; gap: 0.5rem;
   font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--ink-2);
+  color: rgba(242, 235, 223, 0.8);
+  text-shadow: 0 1px 10px rgba(20, 14, 9, 0.6);
   pointer-events: none;
 }
 .scroll-cue i {
   display: block; width: 1px; height: 30px;
-  background: linear-gradient(180deg, var(--ember) 0%, rgba(154,59,16,0) 100%);
+  background: linear-gradient(180deg, #F0A579 0%, rgba(240,165,121,0) 100%);
   transform-origin: top;
   animation: cue 2.6s var(--ease-io) infinite;
 }

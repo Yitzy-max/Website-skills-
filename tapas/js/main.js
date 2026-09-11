@@ -31,9 +31,13 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 (function header() {
   const el = document.getElementById("siteHeader");
   if (!el) return;
+  const hero = document.getElementById("heroScroll");
   let ticking = false;
   const update = () => {
-    el.classList.toggle("is-stuck", window.scrollY > window.innerHeight * 0.55);
+    // Stay transparent for the whole hero, however long the scrub makes it,
+    // and only take the sand bar once the page is actually on sand.
+    const edge = hero ? hero.offsetHeight - 80 : window.innerHeight * 0.55;
+    el.classList.toggle("is-stuck", window.scrollY > edge);
     ticking = false;
   };
   window.addEventListener("scroll", () => {
