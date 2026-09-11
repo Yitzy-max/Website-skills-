@@ -4,10 +4,17 @@
 
 | File | Size | Used for |
 |---|---|---|
-| `hero.mp4` | 2.4 MB | Screens wider than 900px |
-| `hero-mobile.mp4` | 1.1 MB | Phones and small tablets |
-| `hero-poster.jpg` | 119 KB | The finished table: shown whenever the scrub is off |
-| `hero-poster-mobile.jpg` | 65 KB | Same, on small screens |
+| `hero.mp4` | 2.3 MB | 16:9, screens wider than 900px |
+| `hero-mobile.mp4` | 1.0 MB | **4:5 portrait crop**, phones |
+| `hero-poster.jpg` | 106 KB | The finished table: shown whenever the scrub is off |
+| `hero-poster-mobile.jpg` | 45 KB | Same, portrait |
+
+**The phone file is a different crop, not a smaller copy.** A 16:9 frame
+cover-cropped into a 9:19.5 phone screen shows a narrow vertical sliver —
+mostly empty tablecloth with the plates sliced off, and you cannot tell what
+the food is. `hero-mobile.mp4` is cropped to 4:5 off the middle of the table
+(`crop=576:720:352:0`) and sits in a panel of matching shape, so almost
+nothing is lost.
 
 The mp4s are larger than a plain autoplay cut would be because they carry a
 keyframe every 8 frames (`-g 8`). Dense keyframes are what make seeking feel
@@ -30,6 +37,14 @@ food texture every frame, so on an autoplaying loop the food appears to crawl.
 Scrubbed, the visitor is looking at a single held frame whenever they are not
 actively scrolling, so it sits still. A temporal denoise pass
 (`atadenoise`, ~30% less frame-to-frame churn) takes the edge off the rest.
+
+A colour grade helps too: generated food comes out oversaturated and
+plastic-smooth. The encode pulls saturation to 0.85, softens the micro-detail
+slightly, and the page lays a fixed film-grain field over the footage in CSS.
+Grain is what makes it read as photographed rather than rendered — and doing
+it in CSS rather than baking it into the video matters, because baked-in grain
+pushed the desktop file from 2.3 MB to 4.1 MB. The grain is static, never
+animated: nothing in this hero moves unless the visitor scrolls.
 
 Stronger denoising was tried and rejected: `s=49` plus `vaguedenoiser` ghosted
 the moving plates, which is worse than the shimmer. Stabilizing out the camera

@@ -199,6 +199,19 @@ button { font: inherit; color: inherit; }
 
 .hero-media { position: absolute; inset: 0; }
 
+/* A fixed grain field over the footage. Static, not animated: the whole point
+   is that nothing in this hero moves unless the visitor scrolls. */
+.hero-grain {
+  position: absolute; inset: 0; z-index: 1;   /* under the scrim: texture the
+                                                 footage, not the flat sand */
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.38'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+
 .plate { position: absolute; inset: 0; opacity: 0; transition: opacity 1200ms var(--ease-io); }
 .plate.is-active { opacity: 1; }
 /* Standing in for a photo: warm room light, not a dark hole. */
@@ -227,25 +240,29 @@ button { font: inherit; color: inherit; }
    surface to sit on, instead of fighting a bright tablecloth. */
 .hero-media::after {
   content: "";
-  position: absolute; inset: 0; pointer-events: none;
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background: linear-gradient(180deg,
-    rgba(233,224,209,0) 50%,
-    rgba(233,224,209,0.42) 64%,
-    rgba(233,224,209,0.88) 76%,
-    var(--sand) 86%);
+    rgba(233,224,209,0) 46%,
+    rgba(233,224,209,0.40) 62%,
+    rgba(233,224,209,0.90) 79%,
+    var(--sand) 92%);
 }
 
 /* A phone viewport is far taller than it is wide, so the copy sits much deeper
    into the frame — and lands on the dark plates. The scrim has to start
    higher there or the headline disappears into a black dish. */
 @media (max-width: 900px) {
+  /* The media is its own panel, near enough the 4:5 of the phone cut that
+     almost nothing is cropped; the copy lives below it on the sand. */
+  .hero-media { bottom: auto; height: 64%; }
   .hero-media::after {
     background: linear-gradient(180deg,
-      rgba(233,224,209,0) 26%,
-      rgba(233,224,209,0.55) 44%,
-      rgba(233,224,209,0.94) 58%,
-      var(--sand) 68%);
+      rgba(233,224,209,0) 68%,
+      rgba(233,224,209,0.72) 88%,
+      var(--sand) 100%);
   }
+  .hero { align-items: flex-end; }
+  .hero-inner { padding-bottom: clamp(1.5rem, 4vh, 2.5rem); }
 }
 
 .hero-inner {
@@ -618,11 +635,25 @@ button { font: inherit; color: inherit; }
 }
 
 /* ==========================================================================
+   MOBILE — touch targets
+
+   Everything tappable clears 44px on a phone. These are all comfortably big
+   enough with a mouse and were all a few pixels short of it with a thumb.
+   ========================================================================== */
+@media (pointer: coarse), (max-width: 900px) {
+  .btn { padding-block: 0.85rem; }
+  .wordmark { padding-block: 0.85rem; }
+  .cf-arrow { width: 46px; height: 46px; }
+  .cf-dot { height: 44px; width: 26px; }
+  .footer-meta a, .info-list dd a { display: inline-block; padding-block: 0.6rem; }
+}
+
+/* ==========================================================================
    MOBILE
    ========================================================================== */
 @media (max-width: 720px) {
   .header-hours { display: none; }
-  .site-header .btn { padding: 0.65rem 1rem; font-size: 0.72rem; letter-spacing: 0.09em; }
+  .site-header .btn { padding: 0.8rem 1.05rem; font-size: 0.72rem; letter-spacing: 0.09em; }
   .wordmark { font-size: 1.1rem; letter-spacing: 0.2em; }
   .hero-facts { gap: 0.45rem 1.1rem; }
   .hero-facts li:not(:last-child)::after { display: none; }
