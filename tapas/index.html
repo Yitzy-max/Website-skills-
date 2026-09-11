@@ -13,6 +13,8 @@
 
 <!-- Bodoni Moda for display, Archivo for everything else. Both self-hosted:
      no third-party request, and the page renders the same offline. -->
+<link rel="preload" href="videos/hero-poster-mobile.jpg" as="image" media="(max-width: 900px)" />
+<link rel="preload" href="videos/hero-poster.jpg" as="image" media="(min-width: 901px)" />
 <link rel="preload" href="fonts/bodonimoda-f4316098.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/archivo-20ba07dc.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="css/fonts.css" />
@@ -39,23 +41,19 @@
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero" aria-label="Tapas — introduction">
     <div class="hero-media" id="heroMedia">
-      <!-- The generated hero film leads once it exists; until then the plate
-           stills carry it. Anything missing drops out of the rotation. -->
-      <div class="plate" data-plate="film">
-        <video src="videos/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <!-- The poster is painted by CSS underneath, so something real is always
+           on screen: no JS, data saver on, or autoplay blocked all still show
+           the full table. The source is chosen at runtime by screen size. -->
+      <div class="plate plate-film" data-plate="film">
+        <video id="heroVideo" muted loop playsinline preload="none"
+               data-src="videos/hero.mp4"
+               data-src-mobile="videos/hero-mobile.mp4"
+               aria-hidden="true"></video>
       </div>
-      <div class="plate is-active" data-plate="0">
-        <img src="images/hero-1-brisket-nachos.jpg" alt="BBQ brisket nachos, plated" fetchpriority="high" decoding="async" />
-      </div>
-      <div class="plate" data-plate="1">
-        <img src="images/hero-2-honey-buffalo-poppers.jpg" alt="Honey buffalo chicken poppers with slaw" loading="eager" decoding="async" />
-      </div>
-      <div class="plate" data-plate="2">
-        <img src="images/hero-3-brisket-tacos.jpg" alt="BBQ brisket tacos on a serving rack" loading="eager" decoding="async" />
-      </div>
-      <div class="plate" data-plate="3">
-        <img src="images/hero-4-tapas-burgers.jpg" alt="Tapas burgers with fries" loading="eager" decoding="async" />
-      </div>
+      <div class="plate is-active" data-plate="0" data-img="images/hero-1-brisket-nachos.jpg" data-alt="BBQ brisket nachos, plated"></div>
+      <div class="plate" data-plate="1" data-img="images/hero-2-honey-buffalo-poppers.jpg" data-alt="Honey buffalo chicken poppers with slaw"></div>
+      <div class="plate" data-plate="2" data-img="images/hero-3-brisket-tacos.jpg" data-alt="BBQ brisket tacos on a serving rack"></div>
+      <div class="plate" data-plate="3" data-img="images/hero-4-tapas-burgers.jpg" data-alt="Tapas burgers with fries"></div>
     </div>
 
     <div class="hero-inner">

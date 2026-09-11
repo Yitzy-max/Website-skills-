@@ -1,10 +1,47 @@
 # Hero video
 
-The hero (`index.html` → the `.plate[data-plate="film"]` slot) expects:
+**Installed.** The files in this folder are live on the page.
+
+| File | Size | Used for |
+|---|---|---|
+| `hero.mp4` | 1.6 MB | Screens wider than 900px |
+| `hero-mobile.mp4` | 536 KB | Phones and small tablets |
+| `hero-poster.jpg` | 127 KB | First paint / autoplay blocked / data saver |
+| `hero-poster-mobile.jpg` | 68 KB | Same, on small screens |
+
+The raw Higgsfield render was **18.9 MB at 18.8 Mbps** — an absurd bitrate for
+720p and completely unusable on cell data. It is re-encoded above at a sane
+bitrate with no visible quality loss, and dropped from the working tree (git
+history still has it; so does Higgsfield).
+
+## How the hero decides what to show
+
+1. Data saver on, or a 2g connection → no video at all, the poster stands in.
+2. Screen ≤900px → `hero-mobile.mp4`.
+3. Otherwise → `hero.mp4`.
+
+The poster is painted by CSS *underneath* the video, so the frame is never
+empty: not while the video downloads, not if autoplay is blocked, not with
+JavaScript off. The video also pauses whenever it scrolls out of view or the
+tab is hidden, so it isn't burning a phone battery in the background.
+
+`reduce motion` skips the video and shows the poster.
+
+## Re-encoding, if the render is ever replaced
 
 ```
-tapas/videos/hero.mp4
+ffmpeg -i RAW.mp4 -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 26 \
+  -preset slow -movflags +faststart -an hero.mp4
+ffmpeg -i RAW.mp4 -vf scale=854:480 -c:v libx264 -profile:v main \
+  -pix_fmt yuv420p -crf 28 -preset slow -movflags +faststart -an hero-mobile.mp4
+ffmpeg -ss 7.7 -i RAW.mp4 -frames:v 1 -vf scale=1280:-2 -q:v 4 hero-poster.jpg
+ffmpeg -ss 7.7 -i RAW.mp4 -frames:v 1 -vf scale=900:-2  -q:v 5 hero-poster-mobile.jpg
 ```
+
+`-movflags +faststart` is the important one: it moves the index to the front of
+the file so playback can start before the whole thing has downloaded.
+
+## Original slot notes
 
 **When that file exists it becomes the hero outright** — the rotating plate
 stills are removed and the film plays on its own, muted and looping. If the

@@ -13,14 +13,20 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 (function retireBrokenImages() {
   document.querySelectorAll("img").forEach((img) => {
     const drop = () => img.remove();
+    // An <img> still holding its URL in data-src has no src yet, and a
+    // src-less image reports complete with zero width. Leave those alone.
+    if (!img.getAttribute("src")) {
+      img.addEventListener("error", drop, { once: true });
+      return;
+    }
     if (img.complete && img.naturalWidth === 0) drop();
     else img.addEventListener("error", drop, { once: true });
   });
 })();
 
 /* -------------------------------------------------------------------------
-   Header — the hero behind it is dark, so the wordmark flips to the light
-   side of the palette until the header sticks over the sand.
+   Header — a solid sand bar throughout; this only adds the hairline rule
+   once you have scrolled off the hero.
    ------------------------------------------------------------------------- */
 (function header() {
   const el = document.getElementById("siteHeader");
@@ -39,24 +45,53 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 /* -------------------------------------------------------------------------
    HERO
 
-   If the generated film is present it *is* the hero. Otherwise the plate
-   stills rotate, and any still whose file is missing drops out entirely so
-   there is never an empty slide.
+   If the film should play, it IS the hero and the stills are removed. The
+   poster is painted by CSS underneath either way, so the frame is never blank
+   while the video loads, and never blank if it never loads.
    ------------------------------------------------------------------------- */
-function mediaSettled(root, cap = 3000) {
-  const nodes = [...root.querySelectorAll("img, video")];
-  const pending = nodes.filter((n) =>
-    n.tagName === "VIDEO" ? n.readyState < 2 : !n.complete);
-  if (!pending.length) return Promise.resolve();
 
+/* Phones on cell data should not be handed a 1.6MB autoplaying video. */
+function videoBudget() {
+  const c = navigator.connection || {};
+  if (c.saveData === true) return "none";
+  if (/(^|-)2g$/.test(c.effectiveType || "")) return "none";
+  return window.matchMedia("(max-width: 900px)").matches ? "mobile" : "full";
+}
+
+function imagesSettled(root, cap = 2500) {
+  const imgs = [...root.querySelectorAll("img")].filter((i) => !i.complete);
+  if (!imgs.length) return Promise.resolve();
   return Promise.race([
-    Promise.all(pending.map((n) => new Promise((res) => {
-      const done = () => res();
-      n.addEventListener(n.tagName === "VIDEO" ? "loadeddata" : "load", done, { once: true });
-      n.addEventListener("error", done, { once: true });
+    Promise.all(imgs.map((i) => new Promise((res) => {
+      i.addEventListener("load", res, { once: true });
+      i.addEventListener("error", res, { once: true });
     }))),
     new Promise((res) => setTimeout(res, cap)),
   ]);
+}
+
+function startHeroFilm(video) {
+  const budget = videoBudget();
+  if (budget === "none") return false;      // poster carries it
+
+  video.src = budget === "mobile" ? video.dataset.srcMobile : video.dataset.src;
+  video.preload = "auto";
+  video.load();
+
+  const tryPlay = () => video.play().catch(() => {});   // blocked autoplay is fine, poster shows
+  tryPlay();
+  video.addEventListener("loadeddata", tryPlay, { once: true });
+
+  // Don't burn battery decoding a loop nobody is looking at.
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((e) => {
+      if (e[0].isIntersecting && !document.hidden) tryPlay(); else video.pause();
+    }, { threshold: 0.1 }).observe(video);
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) video.pause(); else tryPlay();
+  });
+  return true;
 }
 
 async function heroPlates() {
@@ -64,27 +99,38 @@ async function heroPlates() {
   const nav = document.getElementById("plateNav");
   if (!media) return;
 
-  await mediaSettled(media);
-
   const all = [...media.querySelectorAll(".plate")];
-  const ok = (p) => {
-    const v = p.querySelector("video");
-    if (v) return v.readyState >= 2 && v.videoWidth > 0;
-    const i = p.querySelector("img");
-    return !!i && i.naturalWidth > 0;
-  };
+  const filmPlate = media.querySelector('[data-plate="film"]');
+  const video = filmPlate?.querySelector("video");
 
-  const film = all.find((p) => p.dataset.plate === "film" && ok(p));
-  const stills = all.filter((p) => p.dataset.plate !== "film" && ok(p));
+  // Decided up front, not after a load race: the film either is the hero or isn't.
+  if (video && !REDUCED.matches && startHeroFilm(video)) {
+    all.forEach((p) => { if (p !== filmPlate) p.remove(); });
+    filmPlate.classList.add("is-active");
+    return;
+  }
+  filmPlate?.remove();
 
-  // The film wins outright when it exists.
-  let plates = film ? [film] : (stills.length ? stills : all.slice(0, 1).filter(p => p.dataset.plate !== "film"));
-  if (!plates.length) plates = [all.find((p) => p.dataset.plate !== "film")].filter(Boolean);
+  // Only now do the stills get to cost anything: the <img> elements are
+  // created here rather than sitting src-less in the markup.
+  media.querySelectorAll(".plate[data-img]").forEach((plate) => {
+    const img = document.createElement("img");
+    img.alt = plate.dataset.alt || "";
+    img.decoding = "async";
+    img.addEventListener("error", () => img.remove(), { once: true });
+    img.src = plate.dataset.img;
+    plate.appendChild(img);
+  });
+  await imagesSettled(media);
 
-  all.forEach((p) => { if (!plates.includes(p)) p.remove(); });
+  const stills = [...media.querySelectorAll(".plate")];
+  const ok = (p) => { const i = p.querySelector("img"); return !!i && i.naturalWidth > 0; };
+  const withPhoto = stills.filter(ok);
+  const plates = withPhoto.length ? withPhoto : stills.slice(0, 1);
+  stills.forEach((p) => { if (!plates.includes(p)) p.remove(); });
   plates.forEach((p, i) => p.classList.toggle("is-active", i === 0));
 
-  if (plates.length < 2) return;   // nothing to rotate, no indicators needed
+  if (plates.length < 2) return;
 
   const HOLD = 5000;
   let index = 0, timer = null, visible = true;
@@ -362,7 +408,7 @@ function loadScript(src) {
   gsap.registerPlugin(ScrollTrigger);
 
   if (window.Lenis) {
-    const lenis = new Lenis({ duration: 1.1, smoothWheel: true, touchMultiplier: 1.6 });
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true, syncTouch: false });
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -371,7 +417,9 @@ function loadScript(src) {
   const hero = document.getElementById("hero");
   const heroMedia = document.getElementById("heroMedia");
 
-  if (hero && heroMedia) {
+  const coarse = window.matchMedia("(max-width: 900px)").matches;
+
+  if (hero && heroMedia && !coarse) {
     // A slow push in on whatever is showing. The media already dissolves into
     // the page ground, so this is the whole handoff: no scale-and-round.
     gsap.fromTo(heroMedia, { scale: 1 }, {

@@ -215,6 +215,17 @@ button { font: inherit; color: inherit; }
   object-fit: cover; object-position: center 45%;
 }
 
+/* The film plate paints its own poster, so the frame is never empty while the
+   video is still arriving — or if it never arrives at all. */
+.plate-film::before {
+  background-image: url("../videos/hero-poster.jpg");
+  background-size: cover;
+  background-position: center 45%;
+}
+@media (max-width: 900px) {
+  .plate-film::before { background-image: url("../videos/hero-poster-mobile.jpg"); }
+}
+
 .hero-inner {
   padding-inline: var(--gutter);
   display: grid;
