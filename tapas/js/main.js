@@ -393,12 +393,18 @@ function loadScript(src) {
     });
     tl.fromTo(stages[0], { opacity: 0, y: 18 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.13 }, 0.15)
       .fromTo(stages[1], { opacity: 0, y: 18 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.13 }, 0.40)
-      .to({}, { duration: 0.47 });
+      // Clear the copy just before the pin releases, so it never rides up
+      // into the header on its way out.
+      .to(stages, { opacity: 0, y: -14, ease: "power1.in", duration: 0.09 }, 0.91);
 
     if (cue) {
       gsap.to(cue, {
         opacity: 0, ease: "none",
-        scrollTrigger: { trigger: wrap, start: "top top", end: "12% bottom", scrub: true },
+        scrollTrigger: {
+          trigger: wrap, start: "top top",
+          end: () => "+=" + window.innerHeight * 0.5,
+          scrub: true,
+        },
       });
     }
   } else if (cue) {
