@@ -45,12 +45,15 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 /* -------------------------------------------------------------------------
    HERO
 
-   If the film should play, it IS the hero and the stills are removed. The
-   poster is painted by CSS underneath either way, so the frame is never blank
-   while the video loads, and never blank if it never loads.
+   The video never plays on its own — scroll position is its transport. That
+   is the point: at rest you are looking at a single held frame, so the food
+   sits still instead of simmering the way generated video does on a loop.
+
+   The scrub is set up in the motion block below, once GSAP is available.
+   Here we only decide whether to use the film at all, and get it buffered.
    ------------------------------------------------------------------------- */
 
-/* Phones on cell data should not be handed a 1.6MB autoplaying video. */
+/* Phones on cell data should not be handed a multi-megabyte video. */
 function videoBudget() {
   const c = navigator.connection || {};
   if (c.saveData === true) return "none";
@@ -58,118 +61,47 @@ function videoBudget() {
   return window.matchMedia("(max-width: 900px)").matches ? "mobile" : "full";
 }
 
-function imagesSettled(root, cap = 2500) {
-  const imgs = [...root.querySelectorAll("img")].filter((i) => !i.complete);
-  if (!imgs.length) return Promise.resolve();
-  return Promise.race([
-    Promise.all(imgs.map((i) => new Promise((res) => {
-      i.addEventListener("load", res, { once: true });
-      i.addEventListener("error", res, { once: true });
-    }))),
-    new Promise((res) => setTimeout(res, cap)),
-  ]);
-}
-
-function startHeroFilm(video) {
+/* Resolves once the video can be seeked, or gives up. */
+function primeHeroFilm(video) {
   const budget = videoBudget();
-  if (budget === "none") return false;      // poster carries it
+  if (budget === "none") return Promise.resolve(false);
 
   video.src = budget === "mobile" ? video.dataset.srcMobile : video.dataset.src;
-  video.preload = "auto";
   video.load();
 
-  const tryPlay = () => video.play().catch(() => {});   // blocked autoplay is fine, poster shows
-  tryPlay();
-  video.addEventListener("loadeddata", tryPlay, { once: true });
+  // Safari will not decode or seek until the element has been played once,
+  // so start it and immediately stop: scroll owns the timeline from here.
+  const kick = video.play();
+  if (kick && kick.then) kick.then(() => video.pause()).catch(() => {});
 
-  // Don't burn battery decoding a loop nobody is looking at.
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver((e) => {
-      if (e[0].isIntersecting && !document.hidden) tryPlay(); else video.pause();
-    }, { threshold: 0.1 }).observe(video);
-  }
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) video.pause(); else tryPlay();
+  return new Promise((resolve) => {
+    let settled = false;
+    const done = (ok) => { if (!settled) { settled = true; resolve(ok); } };
+
+    // Scrubbing is seeking, and seeking needs the host to answer HTTP Range
+    // requests. Some don't. Prove a seek actually lands before betting the
+    // whole hero on it, or the page sits frozen on an empty table.
+    const proveSeekable = () => {
+      video.pause();
+      const target = Math.min(1, (video.duration || 2) / 2);
+      if (!isFinite(target) || target <= 0) return done(false);
+      const ok = () => done(Math.abs(video.currentTime - target) < 0.5);
+      video.addEventListener("seeked", ok, { once: true });
+      setTimeout(ok, 3000);
+      try { video.currentTime = target; } catch { done(false); }
+    };
+
+    if (video.readyState >= 2) proveSeekable();
+    else video.addEventListener("loadeddata", proveSeekable, { once: true });
+    video.addEventListener("error", () => done(false), { once: true });
+    setTimeout(() => done(false), 8000);
   });
-  return true;
 }
-
-async function heroPlates() {
-  const media = document.getElementById("heroMedia");
-  const nav = document.getElementById("plateNav");
-  if (!media) return;
-
-  const all = [...media.querySelectorAll(".plate")];
-  const filmPlate = media.querySelector('[data-plate="film"]');
-  const video = filmPlate?.querySelector("video");
-
-  // Decided up front, not after a load race: the film either is the hero or isn't.
-  if (video && !REDUCED.matches && startHeroFilm(video)) {
-    all.forEach((p) => { if (p !== filmPlate) p.remove(); });
-    filmPlate.classList.add("is-active");
-    return;
-  }
-  filmPlate?.remove();
-
-  // Only now do the stills get to cost anything: the <img> elements are
-  // created here rather than sitting src-less in the markup.
-  media.querySelectorAll(".plate[data-img]").forEach((plate) => {
-    const img = document.createElement("img");
-    img.alt = plate.dataset.alt || "";
-    img.decoding = "async";
-    img.addEventListener("error", () => img.remove(), { once: true });
-    img.src = plate.dataset.img;
-    plate.appendChild(img);
-  });
-  await imagesSettled(media);
-
-  const stills = [...media.querySelectorAll(".plate")];
-  const ok = (p) => { const i = p.querySelector("img"); return !!i && i.naturalWidth > 0; };
-  const withPhoto = stills.filter(ok);
-  const plates = withPhoto.length ? withPhoto : stills.slice(0, 1);
-  stills.forEach((p) => { if (!plates.includes(p)) p.remove(); });
-  plates.forEach((p, i) => p.classList.toggle("is-active", i === 0));
-
-  if (plates.length < 2) return;
-
-  const HOLD = 5000;
-  let index = 0, timer = null, visible = true;
-
-  const dots = plates.map((_, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "plate-dot";
-    b.setAttribute("role", "tab");
-    b.setAttribute("aria-label", `Plate ${i + 1} of ${plates.length}`);
-    b.appendChild(document.createElement("span"));
-    b.addEventListener("click", () => { go(i); restart(); });
-    nav.appendChild(b);
-    return b;
-  });
-
-  function go(next) {
-    index = (next + plates.length) % plates.length;
-    plates.forEach((p, i) => p.classList.toggle("is-active", i === index));
-    dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
-  }
-  function restart() {
-    clearInterval(timer);
-    if (visible && !REDUCED.matches) timer = setInterval(() => go(index + 1), HOLD);
-  }
-
-  go(0);
-  restart();
-
-  document.addEventListener("visibilitychange", () => { visible = !document.hidden; restart(); });
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver((e) => {
-      visible = e[0].isIntersecting && !document.hidden;
-      restart();
-    }, { threshold: 0.05 }).observe(media);
-  }
-  REDUCED.addEventListener?.("change", restart);
-}
-heroPlates();
+const heroFilmReady = (() => {
+  const v = document.getElementById("heroVideo");
+  if (!v || REDUCED.matches) return Promise.resolve(false);
+  return primeHeroFilm(v);
+})();
 
 /* -------------------------------------------------------------------------
    SPOTLIGHT COVERFLOW
@@ -414,18 +346,60 @@ function loadScript(src) {
     gsap.ticker.lagSmoothing(0);
   }
 
-  const hero = document.getElementById("hero");
-  const heroMedia = document.getElementById("heroMedia");
+  /* ---- The hero: scroll is the video transport ---- */
+  const wrap = document.getElementById("heroScroll");
+  const video = document.getElementById("heroVideo");
+  const stages = [...document.querySelectorAll(".hero-stage")];
+  const cue = document.getElementById("scrollCue");
 
-  const coarse = window.matchMedia("(max-width: 900px)").matches;
+  const filmOk = await heroFilmReady;
 
-  if (hero && heroMedia && !coarse) {
-    // A slow push in on whatever is showing. The media already dissolves into
-    // the page ground, so this is the whole handoff: no scale-and-round.
-    gsap.fromTo(heroMedia, { scale: 1 }, {
-      scale: 1.08, ease: "none",
-      scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.8 },
+  if (wrap && video && filmOk && video.duration) {
+    wrap.classList.add("is-scrub");
+    video.pause();
+
+    const dur = video.duration;
+    let wanted = 0;
+
+    // Seek on a frame tick rather than on every scroll event: piling seeks
+    // onto a decoder is what makes scrubbed video stutter. The gate is the
+    // element's own `seeking` flag, which the browser clears itself — a
+    // hand-rolled one stays stuck if a `seeked` event never arrives.
+    const pump = () => {
+      if (video.seeking) return;
+      if (Math.abs(video.currentTime - wanted) < 0.03) return;
+      video.currentTime = wanted;
+    };
+
+    ScrollTrigger.create({
+      trigger: wrap,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        wanted = Math.min(dur - 0.03, Math.max(0, self.progress * dur));
+      },
     });
+    gsap.ticker.add(pump);
+
+    // The copy arrives with the plates: the headline once the first plate has
+    // landed, then everything a visitor needs to act on once the second does.
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: wrap, start: "top top", end: "bottom bottom", scrub: 0.6 },
+    });
+    tl.fromTo(stages[0], { opacity: 0, y: 18 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.13 }, 0.15)
+      .fromTo(stages[1], { opacity: 0, y: 18 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.13 }, 0.40)
+      .to({}, { duration: 0.47 });
+
+    if (cue) {
+      gsap.to(cue, {
+        opacity: 0, ease: "none",
+        scrollTrigger: { trigger: wrap, start: "top top", end: "12% bottom", scrub: true },
+      });
+    }
+  } else if (cue) {
+    // No scrub: the hero is one static screen, so the cue has nothing to promise.
+    cue.style.display = "none";
   }
 
   ScrollTrigger.refresh();

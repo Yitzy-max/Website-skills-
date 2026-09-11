@@ -4,15 +4,49 @@
 
 | File | Size | Used for |
 |---|---|---|
-| `hero.mp4` | 1.6 MB | Screens wider than 900px |
-| `hero-mobile.mp4` | 536 KB | Phones and small tablets |
-| `hero-poster.jpg` | 127 KB | First paint / autoplay blocked / data saver |
-| `hero-poster-mobile.jpg` | 68 KB | Same, on small screens |
+| `hero.mp4` | 2.4 MB | Screens wider than 900px |
+| `hero-mobile.mp4` | 1.1 MB | Phones and small tablets |
+| `hero-poster.jpg` | 119 KB | The finished table: shown whenever the scrub is off |
+| `hero-poster-mobile.jpg` | 65 KB | Same, on small screens |
+
+The mp4s are larger than a plain autoplay cut would be because they carry a
+keyframe every 8 frames (`-g 8`). Dense keyframes are what make seeking feel
+instant; with the default spacing, scrubbing stutters.
 
 The raw Higgsfield render was **18.9 MB at 18.8 Mbps** — an absurd bitrate for
 720p and completely unusable on cell data. It is re-encoded above at a sane
 bitrate with no visible quality loss, and dropped from the working tree (git
 history still has it; so does Higgsfield).
+
+## Scroll is the transport
+
+The hero video **never plays on its own**. Scroll position drives
+`currentTime`, so each plate lands as the visitor scrolls, and the copy
+arrives with it: the headline once the first plate is down, then the kosher /
+BYOB / Route 9 line and the call button once the second is.
+
+That is also the fix for the food shimmering. Generated video regenerates the
+food texture every frame, so on an autoplaying loop the food appears to crawl.
+Scrubbed, the visitor is looking at a single held frame whenever they are not
+actively scrolling, so it sits still. A temporal denoise pass
+(`atadenoise`, ~30% less frame-to-frame churn) takes the edge off the rest.
+
+Stronger denoising was tried and rejected: `s=49` plus `vaguedenoiser` ghosted
+the moving plates, which is worse than the shimmer. Stabilizing out the camera
+push-in was also tried and made churn worse, not better.
+
+### This needs HTTP Range support
+
+Scrubbing means seeking, and seeking needs the host to answer range requests.
+GitHub Pages, Netlify, Vercel, S3 and every normal static host do.
+`python -m http.server` does **not** — it ignores `Range` and returns the whole
+file, so seeking silently fails there.
+
+The page handles that itself: it performs a test seek before committing to the
+scrub, and if the seek does not land it drops to a plain one-screen hero
+showing the finished table with all the copy already visible. Nothing looks
+broken; you just lose the scroll effect. So if the scroll animation is missing
+on a given host, that host is not serving ranges.
 
 ## How the hero decides what to show
 

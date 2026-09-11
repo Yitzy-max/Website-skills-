@@ -178,30 +178,28 @@ button { font: inherit; color: inherit; }
 .btn svg { width: 13px; height: 13px; flex: none; }
 
 /* ==========================================================================
-   HERO — a light room. The media panel dissolves into the page ground
-   instead of sitting in a dark box on top of it.
+   HERO — the video is the whole first screen, and scroll drives it.
+   Default (no JS / reduced motion) is a normal one-screen hero showing the
+   full table with all the text already there. The scrub is added on top.
    ========================================================================== */
+.hero-scroll { position: relative; }
+.hero-scroll.is-scrub { height: 350vh; }
+@media (max-width: 900px) { .hero-scroll.is-scrub { height: 300vh; } }
+
 .hero {
-  background: var(--sand);
-  overflow: clip;              /* the scroll push-in must not widen the page */
-  display: grid;
-  gap: clamp(1.4rem, 3.5vh, 2.4rem);
-  padding-top: clamp(4rem, 8vh, 5.5rem);      /* clears the fixed header */
-  padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
-}
-
-.hero-media {
   position: relative;
-  width: 100%;
-  height: clamp(280px, 54vh, 600px);
-  overflow: hidden;
-  transform-origin: 50% 45%;
-  /* The bottom edge is a dissolve, not a seam. */
-  -webkit-mask-image: linear-gradient(180deg, #000 68%, rgba(0,0,0,0) 100%);
-          mask-image: linear-gradient(180deg, #000 68%, rgba(0,0,0,0) 100%);
+  height: 100svh;
+  min-height: 520px;
+  overflow: clip;
+  background: var(--sand);
+  display: flex;
+  align-items: flex-end;
 }
+.hero-scroll.is-scrub .hero { position: sticky; top: 0; }
 
-.plate { position: absolute; inset: 0; opacity: 0; transition: opacity 1500ms var(--ease-io); }
+.hero-media { position: absolute; inset: 0; }
+
+.plate { position: absolute; inset: 0; opacity: 0; transition: opacity 1200ms var(--ease-io); }
 .plate.is-active { opacity: 1; }
 /* Standing in for a photo: warm room light, not a dark hole. */
 .plate::before {
@@ -212,28 +210,58 @@ button { font: inherit; color: inherit; }
 }
 .plate img, .plate video {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center 45%;
+  object-fit: cover; object-position: center 42%;
 }
 
-/* The film plate paints its own poster, so the frame is never empty while the
-   video is still arriving — or if it never arrives at all. */
+/* The film plate paints the finished table, so the frame is never empty. */
 .plate-film::before {
   background-image: url("../videos/hero-poster.jpg");
   background-size: cover;
-  background-position: center 45%;
+  background-position: center 42%;
 }
 @media (max-width: 900px) {
   .plate-film::before { background-image: url("../videos/hero-poster-mobile.jpg"); }
 }
 
+/* The video dissolves into the page ground so the copy below it has a
+   surface to sit on, instead of fighting a bright tablecloth. */
+.hero-media::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(233,224,209,0) 50%,
+    rgba(233,224,209,0.42) 64%,
+    rgba(233,224,209,0.88) 76%,
+    var(--sand) 86%);
+}
+
+/* A phone viewport is far taller than it is wide, so the copy sits much deeper
+   into the frame — and lands on the dark plates. The scrim has to start
+   higher there or the headline disappears into a black dish. */
+@media (max-width: 900px) {
+  .hero-media::after {
+    background: linear-gradient(180deg,
+      rgba(233,224,209,0) 26%,
+      rgba(233,224,209,0.55) 44%,
+      rgba(233,224,209,0.94) 58%,
+      var(--sand) 68%);
+  }
+}
+
 .hero-inner {
-  padding-inline: var(--gutter);
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 0 var(--gutter) clamp(2rem, 5vh, 3.25rem);
   display: grid;
   gap: clamp(0.9rem, 2vh, 1.4rem);
 }
+.hero-stage { display: grid; gap: clamp(0.9rem, 2vh, 1.4rem); }
+/* Hidden only once we know the scrub will bring them back. */
+.hero-scroll.is-scrub .hero-stage { opacity: 0; }
 
 .hero-title {
-  font-size: clamp(2rem, 4.6vw, 4rem);   /* ~66px desktop, was ~132px */
+  font-size: clamp(2rem, 4.6vw, 4rem);
   max-width: 16ch;
   color: var(--ink);
 }
@@ -251,26 +279,30 @@ button { font: inherit; color: inherit; }
 .hero-facts li:not(:last-child)::after { content: ""; width: 1px; height: 11px; background: var(--line); }
 .hero-facts .kosher { color: var(--ember); font-weight: 600; }
 
-.hero-foot {
-  display: flex; flex-wrap: wrap; align-items: center;
-  justify-content: space-between; gap: 1rem;
-  margin-top: 0.35rem;
-}
 .hero-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
 
-.plate-nav { display: flex; gap: 0; align-items: center; }
-.plate-dot {
-  width: 20px; height: 24px; padding: 0; border: 0; background: none;
-  display: grid; place-items: center; cursor: pointer;
+.scroll-cue {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(2rem, 5vh, 3.25rem);
+  z-index: 4;
+  display: grid; justify-items: center; gap: 0.5rem;
+  font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--ink-2);
+  pointer-events: none;
 }
-.plate-dot span {
-  display: block; width: 24px; height: 6px; border-radius: 50%;
-  background: rgba(36, 28, 20, 0.22);
-  transform: scaleX(0.25);
-  transition: transform 400ms var(--ease-out), background 400ms var(--ease-out);
+.scroll-cue i {
+  display: block; width: 1px; height: 30px;
+  background: linear-gradient(180deg, var(--ember) 0%, rgba(154,59,16,0) 100%);
+  transform-origin: top;
+  animation: cue 2.6s var(--ease-io) infinite;
 }
-.plate-dot[aria-current="true"] span { transform: scaleX(1); background: var(--ember); }
-.plate-dot:hover span { background: var(--ember); }
+@keyframes cue {
+  0%        { transform: scaleY(0); opacity: 0; }
+  35%       { transform: scaleY(1); opacity: 1; }
+  70%, 100% { transform: scaleY(1); opacity: 0; }
+}
+@media (max-width: 700px) { .scroll-cue { display: none; } }
 
 /* ==========================================================================
    SECTION SHELL
@@ -594,6 +626,7 @@ button { font: inherit; color: inherit; }
   .wordmark { font-size: 1.1rem; letter-spacing: 0.2em; }
   .hero-facts { gap: 0.45rem 1.1rem; }
   .hero-facts li:not(:last-child)::after { display: none; }
+  .hero-title { font-size: clamp(1.85rem, 8.5vw, 2.6rem); }
 }
 
 /* ==========================================================================
@@ -603,7 +636,11 @@ button { font: inherit; color: inherit; }
   html { scroll-behavior: auto; }
   .plate { transition: opacity 300ms linear; }
   .cf-card { transition: opacity 250ms linear, filter 250ms linear; }
-  .plate-dot span, .cf-dot span { transition: background 200ms linear; }
+  .cf-dot span { transition: background 200ms linear; }
+  .hero-scroll.is-scrub { height: auto; }
+  .hero-scroll.is-scrub .hero { position: relative; }
+  .hero-scroll.is-scrub .hero-stage { opacity: 1; }
+  .scroll-cue i { animation: none; opacity: 1; }
   .js .reveal { opacity: 1; transform: none; }
   .js .reveal.is-in { transition: none; }
   /* The settings stay laid out instead of arriving */
@@ -613,7 +650,7 @@ button { font: inherit; color: inherit; }
 }
 
 @media print {
-  .hero-media, .coverflow, .site-header, .closing { display: none; }
+  .hero-scroll, .coverflow, .site-header, .closing { display: none; }
   body { background: #fff; color: #000; }
   .menu-panel { max-height: none !important; }
 }
