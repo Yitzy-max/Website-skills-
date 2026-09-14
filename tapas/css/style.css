@@ -208,7 +208,7 @@ button { font: inherit; color: inherit; }
   height: 100svh;
   min-height: 520px;
   overflow: clip;
-  background: var(--sand);
+  background: var(--char);   /* the film's own ground, never beige */
   display: flex;
   align-items: flex-end;
 }
@@ -264,6 +264,20 @@ button { font: inherit; color: inherit; }
     linear-gradient(180deg, rgba(20,14,9,0.38) 0%, rgba(20,14,9,0) 26%),
     linear-gradient(0deg, rgba(20,14,9,0.82) 0%, rgba(20,14,9,0.55) 22%,
                           rgba(20,14,9,0.18) 42%, rgba(20,14,9,0) 58%);
+}
+
+/* A phone screen is 9:19.5 and the film is 16:9. Cropping it to fill blows the
+   plates up and slices the sides off - and the plates enter from the sides, so
+   a crop loses the whole point of the shot. On phones the frame is shown whole
+   instead: smaller plates, entire composition, nothing cut. */
+@media (max-width: 900px) {
+  /* Size the box to the film's own ratio so there is no letterbox dead space
+     to explain away - the frame simply sits in the screen at its true shape. */
+  .hero-media { inset: 22% 0 auto 0; height: auto; aspect-ratio: 16 / 9; }
+  .plate video, .plate img { object-fit: contain; object-position: center; }
+  .plate::before,
+  .plate-film::before { background: none; }   /* nothing behind a letterbox */
+  .hero-media::after { background: none; }
 }
 
 .hero-inner {
