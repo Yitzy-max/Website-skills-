@@ -39,9 +39,16 @@ system → build → motion → critique → verify) and which skill owns each s
 automatically in every Claude Code session in this repo, so the skills below actually get
 used instead of sitting on disk.
 
-Two project commands:
+[`prompts/website-brief.md`](prompts/website-brief.md) is the universal intake template —
+works for any industry and any site type. Fill the seven slots (business, site type, the one
+action, proof, content status, direction, motion tier); the constraint, anti-slop, and process
+blocks below them stay fixed every job.
 
-- **`/website <client brief>`** — runs the whole pipeline end to end for a client site.
+Three project commands:
+
+- **`/website <anything>`** — takes a full filled-in brief *or* a one-line description, asks for
+  whatever's missing in one batch, then runs the whole pipeline.
+- **`/brief`** — prints the blank template to fill in.
 - **`/skills-check`** — verifies every plugin, skill, and MCP server resolves.
 
 ## The skill stack

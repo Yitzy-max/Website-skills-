@@ -1,35 +1,51 @@
 ---
-description: Build or redesign a client website end to end, running the full design/motion/review skill pipeline.
-argument-hint: [client name or brief, e.g. "Bella Nails, nail salon in Toms River"]
+description: Build or redesign any website end to end - gap-fills the brief, then runs the full design/motion/review pipeline.
+argument-hint: [anything from one line to a full filled-in brief]
 ---
 
-Build a client website for: **$ARGUMENTS**
+Build a website. Here's what the user gave you:
 
-Follow the pipeline in `CLAUDE.md` in full. Do not skip steps and do not substitute your own
-judgment for the skills — they are installed for exactly this.
+**$ARGUMENTS**
 
-Work in this order, and say which skill you're using at each step so the work is auditable:
+## Step 0 — Gap check (do this first, always)
 
-1. **Gather.** What do you actually know about this business, and what's missing? List the unknowns
-   (address, hours, phone, services, prices, existing branding, photos) and ask for them in one
-   batch before building. Don't invent business facts.
+Read `prompts/website-brief.md`. That's the canonical brief. Map whatever the user wrote above
+onto its blocks 1-7.
 
-2. **Direction.** Use `design-taste-frontend` to commit to a design direction from the brief.
-   Pull the palette, font pairing, and UI style from `ui-ux-pro-max`. Show the direction — a short
-   written brief plus the concrete tokens — and confirm before writing a full page.
+The user may have pasted the whole filled-in template, or they may have typed one line like
+`nail salon in Lakewood, tier 2, booking link`. Both are fine. Your job is to figure out what's
+missing and get it — in **one batch of questions, not a drip**.
 
-3. **System.** Lock tokens with `design-system` / `theme-factory`.
+Ask only for what you genuinely can't proceed without:
 
-4. **Build.** `ui-styling` for styling, `21st-ui` plus the shadcn and Magic UI MCP servers for real
-   components, `writing-guidelines` for every line of visitor-facing copy.
+- **Always required:** business name, trade, location, the ONE primary action + its real
+  destination (phone number / booking URL / form target), and the site type.
+- **Required unless DEMO MODE:** real hours, real services, real prices if prices are shown,
+  and any proof claims (rating, review count, years, licenses). Never invent these.
+- **Ask if unclear, but offer a default:** direction/feeling (propose one from the trade and
+  say why), motion tier (propose one — Tier 1 for most client work, Tier 2 for demos and
+  portfolio-led sites), palette and type (offer to pick from `ui-ux-pro-max`).
 
-5. **Motion.** `web3d-integration-patterns` to decide how far to go, then the GSAP / Motion /
-   scroll skills. Everything degrades to a fully readable static page if it fails to load.
+Make the questions easy to answer — numbered, with your recommended default already filled in,
+so they can reply "yeah, 3 change to X" instead of writing an essay.
 
-6. **Critique.** Run `/impeccable critique` and `/impeccable audit` on the result and fix what they
-   find. If this is a redesign, run `redesign-existing-projects` first.
+If the user wrote `DEMO MODE` anywhere, skip asking for real business facts. Invent a plausible
+business for the trade and area, and record every invented fact in `DEMO-CONTENT.md`.
 
-7. **Verify.** `webapp-testing` in a real browser. Phone width. Form submits. Phone number and
-   address correct and tappable. `vercel-optimize` for load speed.
+## Step 1-7 — Run the pipeline
 
-Deliver a page that is ready to show a client as a paid demo — not a draft.
+Once the gaps are filled, follow `prompts/website-brief.md` section 10 (PROCESS) exactly, under
+the constraints in sections 8 (CONSTRAINTS) and 9 (BANNED), and the pipeline in `CLAUDE.md`.
+
+Two things that are not optional:
+
+- **Stop after the direction.** Show the design direction and the locked tokens — palette, type
+  pairing, scale, spacing — as a short written brief. Wait for a yes before building the page.
+  Do not write a full page on an unconfirmed direction.
+- **Motion is scroll-linked, not entrance-triggered.** At Tier 1 and above, use
+  `gsap-scrolltrigger` with `scrub: true` so scroll position drives the animation directly.
+  Entrance fade-ins are not the deliverable.
+
+Announce which skill you're using at each step so the work is auditable.
+
+Deliver something ready to put in front of a paying client — not a draft.

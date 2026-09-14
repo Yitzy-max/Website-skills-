@@ -14,6 +14,12 @@ Any time the task is building, redesigning, or polishing a website — a new cli
 a landing page, a section, even a single hero — run the pipeline below. Do not freelance it.
 The skills are installed for this; use them.
 
+**The brief comes first.** [`prompts/website-brief.md`](prompts/website-brief.md) is the
+universal intake template — business, site type, the one action, proof, content status,
+direction, motion tier, then fixed constraint/process blocks. Run `/website` with whatever the
+user has (a full filled-in brief or a single line) and gap-fill the rest in one batch of
+questions before building. `/brief` prints the blank template.
+
 ## The pipeline
 
 **1. Direction, before any code.**
