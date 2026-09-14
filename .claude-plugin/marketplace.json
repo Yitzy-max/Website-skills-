@@ -1,10 +1,12 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "website-skills",
   "owner": {
     "name": "Yitzy-max"
   },
   "metadata": {
-    "description": "Local marketplace vendoring the design/frontend skills used to build this site."
+    "description": "Local marketplace vendoring the design, motion, component, and build skills used to ship client websites from this repo.",
+    "version": "2.0.0"
   },
   "plugins": [
     {
@@ -24,6 +26,180 @@
       "source": "./skills/frontend-design",
       "description": "Anthropic's official skill for creating distinctive, production-grade frontend interfaces that avoid generic AI aesthetics.",
       "category": "design"
+    },
+    {
+      "name": "taste-skill",
+      "source": "./skills/taste-skill",
+      "description": "Anti-slop frontend taste: design-taste-frontend, brutalist, minimalist, high-end agency visuals, redesign audits, image-to-code, brandkit, and design-reference image generation.",
+      "category": "design"
+    },
+    {
+      "name": "anthropic-design",
+      "source": "./skills/anthropic-skills",
+      "strict": false,
+      "description": "Anthropic design and web skills: canvas design, brand guidelines, theme factory, web artifact building, webapp browser testing, and algorithmic art.",
+      "category": "design",
+      "skills": [
+        "./skills/canvas-design",
+        "./skills/brand-guidelines",
+        "./skills/theme-factory",
+        "./skills/web-artifacts-builder",
+        "./skills/webapp-testing",
+        "./skills/algorithmic-art"
+      ]
+    },
+    {
+      "name": "anthropic-documents",
+      "source": "./skills/anthropic-skills",
+      "strict": false,
+      "description": "Document generation for client-facing work: Word, PowerPoint, Excel, and PDF (proposals, invoices, contracts, one-pagers).",
+      "category": "documents",
+      "skills": [
+        "./skills/docx",
+        "./skills/pptx",
+        "./skills/xlsx",
+        "./skills/pdf"
+      ]
+    },
+    {
+      "name": "anthropic-builder",
+      "source": "./skills/anthropic-skills",
+      "strict": false,
+      "description": "Tooling for building your own automation: skill authoring, MCP server building, Claude API reference, and document co-authoring.",
+      "category": "tooling",
+      "skills": [
+        "./skills/skill-creator",
+        "./skills/mcp-builder",
+        "./skills/claude-api",
+        "./skills/doc-coauthoring"
+      ]
+    },
+    {
+      "name": "anthropic-extras",
+      "source": "./skills/anthropic-skills",
+      "strict": false,
+      "description": "Remaining Anthropic example skills: internal comms, Claude Academy guide, discernment nudge, and Slack GIF creator. Off by default - not website work.",
+      "category": "misc",
+      "skills": [
+        "./skills/internal-comms",
+        "./skills/academy-guide",
+        "./skills/discernment-nudge",
+        "./skills/slack-gif-creator"
+      ]
+    },
+    {
+      "name": "vercel-web",
+      "source": "./skills/vercel-agent-skills",
+      "strict": false,
+      "description": "Vercel's web craft skills: web design guidelines, React best practices, composition patterns, view transitions, and writing guidelines for UI copy.",
+      "category": "frontend",
+      "skills": [
+        "./skills/web-design-guidelines",
+        "./skills/react-best-practices",
+        "./skills/composition-patterns",
+        "./skills/react-view-transitions",
+        "./skills/writing-guidelines"
+      ]
+    },
+    {
+      "name": "vercel-deploy",
+      "source": "./skills/vercel-agent-skills",
+      "strict": false,
+      "description": "Shipping and performance: deploy to Vercel, Vercel CLI with tokens, and Core Web Vitals / bundle optimization.",
+      "category": "deploy",
+      "skills": [
+        "./skills/deploy-to-vercel",
+        "./skills/vercel-cli-with-tokens",
+        "./skills/vercel-optimize"
+      ]
+    },
+    {
+      "name": "vercel-react-native",
+      "source": "./skills/vercel-agent-skills",
+      "strict": false,
+      "description": "React Native / Expo mobile skills. Off by default - not website work.",
+      "category": "mobile",
+      "skills": [
+        "./skills/react-native-skills"
+      ]
+    },
+    {
+      "name": "web-motion-core",
+      "source": "./skills/claude-design-skillstack/plugins/bundles/core-3d-animation",
+      "description": "Core motion stack: Three.js/WebGL, GSAP ScrollTrigger, React Three Fiber, Framer Motion, Babylon.js.",
+      "category": "animation"
+    },
+    {
+      "name": "web-motion-components",
+      "source": "./skills/claude-design-skillstack/plugins/bundles/animation-components",
+      "description": "Animated component libraries (Magic UI, React Bits), Anime.js, Lottie, React Spring, and scroll-reveal libraries.",
+      "category": "animation"
+    },
+    {
+      "name": "web-motion-scroll",
+      "source": "./skills/claude-design-skillstack/plugins/bundles/extended-3d-scroll",
+      "description": "Scroll and lightweight 3D: Locomotive Scroll, Barba.js page transitions, PixiJS, PlayCanvas, A-Frame WebXR, lightweight 3D effects.",
+      "category": "animation"
+    },
+    {
+      "name": "web-motion-meta",
+      "source": "./skills/claude-design-skillstack/plugins/bundles/meta-skills",
+      "description": "Modern web design principles and web3D integration patterns - picks the right motion/3D approach for the job.",
+      "category": "animation"
+    },
+    {
+      "name": "web-motion-authoring",
+      "source": "./skills/claude-design-skillstack/plugins/bundles/authoring-motion",
+      "description": "Heavy 3D authoring pipelines: Blender to web, Rive, Spline, Substance 3D texturing. Off by default - turn on for 3D-heavy builds.",
+      "category": "animation"
+    },
+    {
+      "name": "21st",
+      "source": "./skills/magic-21st",
+      "description": "21st.dev (formerly Magic MCP): search and install real UI components, logos as SVG, and AI UI generation. Needs API_KEY_21ST.",
+      "category": "design"
+    },
+    {
+      "name": "convex-backend",
+      "source": "./skills/convex-agent-skills",
+      "strict": false,
+      "description": "33 Convex backend skills: schema design, auth, crons, migrations, deploy guards, cost/monitoring. Off by default - only for app builds with a Convex backend.",
+      "category": "backend",
+      "skills": [
+        "./skills/convex",
+        "./skills/convex-add",
+        "./skills/convex-advisor",
+        "./skills/convex-agent",
+        "./skills/convex-auth",
+        "./skills/convex-authz",
+        "./skills/convex-backup",
+        "./skills/convex-billing",
+        "./skills/convex-cost",
+        "./skills/convex-create-component",
+        "./skills/convex-crons",
+        "./skills/convex-deploy-guard",
+        "./skills/convex-design",
+        "./skills/convex-docs",
+        "./skills/convex-domains",
+        "./skills/convex-env",
+        "./skills/convex-expert",
+        "./skills/convex-explain-app",
+        "./skills/convex-improve-convex-plugin",
+        "./skills/convex-insights",
+        "./skills/convex-launch-readiness",
+        "./skills/convex-migrate",
+        "./skills/convex-migrate-rehearse",
+        "./skills/convex-monitor",
+        "./skills/convex-optimize",
+        "./skills/convex-quickstart",
+        "./skills/convex-reviewer",
+        "./skills/convex-seed",
+        "./skills/convex-self-heal",
+        "./skills/convex-sentinel",
+        "./skills/convex-suggest",
+        "./skills/convex-test",
+        "./skills/convex-verify"
+      ]
     }
   ]
 }

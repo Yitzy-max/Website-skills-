@@ -1,10 +1,10 @@
 # Website Skills
 
-The codebase for a website, built with Claude Code. Three design skills are wired up
-as **always-on plugins** for this project (see [Auto-activation](#auto-activation)
-below), plus two MCP servers for pulling in ready-made UI components — so every
-Claude Code session opened in this repo automatically has UI/UX pattern databases,
-design-critique commands, and component registries available while coding.
+The website shop. 105 skills across 18 plugins are wired up as **always-on plugins**
+for this project (see [How auto-activation works](#how-auto-activation-works) below),
+plus three MCP servers for pulling in real UI components — so every Claude Code session
+opened in this repo has design taste, UI/UX pattern databases, motion and 3D libraries,
+design-critique commands, and component registries available while building.
 
 ## The site
 
@@ -32,82 +32,124 @@ in this repo, using the skills and MCP tooling above.
   moment a real photo is dropped in — see [`images/README.md`](images/README.md) for
   the exact filenames expected.
 
-## Skills
+## Building a website here
 
-### [`skills/ui-ux-pro-max-skill/`](skills/ui-ux-pro-max-skill)
-**UI/UX Pro Max** — by [nextlevelbuilder](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+[`CLAUDE.md`](CLAUDE.md) is the build playbook — the ordered pipeline (direction → design
+system → build → motion → critique → verify) and which skill owns each step. It loads
+automatically in every Claude Code session in this repo, so the skills below actually get
+used instead of sitting on disk.
 
-AI-powered design intelligence with 84 UI styles, 192 color palettes, 74 font pairings,
-98 UX guidelines, and 25 chart types across 22 tech stacks. Includes Claude skills for
-UI styling, design systems, branding, banner design, and slides.
+Two project commands:
 
-- Source: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
-- License: MIT
+- **`/website <client brief>`** — runs the whole pipeline end to end for a client site.
+- **`/skills-check`** — verifies every plugin, skill, and MCP server resolves.
 
-### [`skills/impeccable/`](skills/impeccable)
-**Impeccable** — by [Paul Bakaus](https://github.com/pbakaus/impeccable)
+## The skill stack
 
-Design fluency for frontend development: 1 skill with 23 commands
-(`/impeccable polish`, `/impeccable audit`, `/impeccable critique`, etc.) plus
-curated anti-pattern detection for impeccable frontend design.
+105 skills across 18 plugins, vendored into [`skills/`](skills) and registered as real
+Claude Code plugins through the local `website-skills` marketplace. 63 are enabled by
+default; the rest are installed but switched off so they don't crowd out website work.
 
-- Source: https://github.com/pbakaus/impeccable
-- Homepage: https://impeccable.style
+### Design & taste
 
-### [`skills/frontend-design/`](skills/frontend-design)
-**Frontend Design** — by Anthropic
+| Plugin | Skills | Source |
+| --- | --- | --- |
+| `ui-ux-pro-max` | 7 — 84 UI styles, 192 palettes, 74 font pairings, 98 UX guidelines | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT) |
+| `taste-skill` | 13 — anti-slop frontend taste, brutalist / minimalist / high-end directions, redesign audits, image-to-code, brandkit | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) (MIT) |
+| `impeccable` | 1 skill, 23 commands — `polish`, `audit`, `critique`, anti-pattern detection | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) |
+| `frontend-design` | 1 — distinctive, production-grade interfaces that avoid generic AI aesthetics | [anthropics/skills](https://github.com/anthropics/skills) |
+| `anthropic-design` | 6 — canvas design, brand guidelines, theme factory, web artifacts, webapp testing, algorithmic art | [anthropics/skills](https://github.com/anthropics/skills) |
+| `21st` | 1 skill + MCP — search and install real components, logos as SVG, AI UI generation | [21st-dev/magic-mcp](https://github.com/21st-dev/magic-mcp) (ISC) |
 
-Official Claude Code plugin for creating distinctive, production-grade frontend
-interfaces that avoid generic AI aesthetics, with guidance on bold design choices,
-typography, animation, and visual detail. Auto-invoked for frontend work.
+### Motion & 3D
 
-- Source: https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design
-- Also listed at: https://claude.com/plugins/frontend-design
+From [freshtechbro/claudedesignskills](https://github.com/freshtechbro/claudedesignskills) (Apache-2.0),
+vendored as its five category bundles:
 
-## Resources
+| Plugin | Skills |
+| --- | --- |
+| `web-motion-core` | Three.js/WebGL, GSAP ScrollTrigger, React Three Fiber, Framer Motion, Babylon.js |
+| `web-motion-components` | Magic UI / React Bits libraries, Anime.js, Lottie, React Spring, scroll-reveal |
+| `web-motion-scroll` | Locomotive Scroll, Barba.js, PixiJS, PlayCanvas, A-Frame WebXR, lightweight 3D |
+| `web-motion-meta` | Modern web design principles, web3D integration patterns |
+| `web-motion-authoring` | Blender→web, Rive, Spline, Substance 3D — *off by default* |
 
-### [`resources/magic-ui-mcp.md`](resources/magic-ui-mcp.md)
-**Magic UI MCP Server** — setup notes for Magic UI's [Model Context Protocol](https://modelcontextprotocol.com/)
-server, which gives an AI-assisted IDE (or Claude) direct access to all Magic UI
-components for accurate, low-error code generation.
+### Frontend craft & shipping
 
-- Source: https://magicui.design/docs/mcp
+From [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills):
 
-### [`resources/react-bits-mcp.md`](resources/react-bits-mcp.md)
-**React Bits MCP (via shadcn)** — setup notes for pulling [React Bits](https://reactbits.dev/)
-components directly into a project through shadcn's registry/MCP tooling.
+| Plugin | Skills |
+| --- | --- |
+| `vercel-web` | web design guidelines, React best practices, composition patterns, view transitions, writing guidelines |
+| `vercel-deploy` | deploy to Vercel, Vercel CLI with tokens, Core Web Vitals / bundle optimization |
+| `vercel-react-native` | React Native / Expo — *off by default* |
 
-- Source: https://reactbits.dev/
+### Client paperwork & internal tooling
 
-## Auto-activation
+From [anthropics/skills](https://github.com/anthropics/skills):
 
-The three skills above are registered as real Claude Code **plugins** (not just files
-sitting in a folder) via a local marketplace, so they load automatically in every
-Claude Code session opened in this repo — no manual install step:
+| Plugin | Skills |
+| --- | --- |
+| `anthropic-documents` | docx, pptx, xlsx, pdf — proposals, invoices, one-pagers |
+| `anthropic-builder` | skill-creator, mcp-builder, claude-api, doc-coauthoring |
+| `anthropic-extras` | internal comms, academy guide, discernment nudge, Slack GIFs — *off by default* |
 
-- [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) — declares the
-  local marketplace `website-skills`, pointing at the three vendored plugin sources.
+### Backend (off by default)
+
+| Plugin | Skills |
+| --- | --- |
+| `convex-backend` | 33 — schema design, auth, authz, crons, migrations, deploy guards, cost and monitoring. [get-convex/agent-skills](https://github.com/get-convex/agent-skills) |
+
+Turn any disabled plugin on by flipping it to `true` in
+[`.claude/settings.json`](.claude/settings.json).
+
+## How auto-activation works
+
+The skills are registered as real Claude Code **plugins** (not just files in a folder) via a
+local marketplace, so they load in every session opened in this repo with no install step:
+
+- [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) — declares the local
+  marketplace `website-skills` and every vendored plugin source.
 - [`.claude/settings.json`](.claude/settings.json) — registers that marketplace
-  (`extraKnownMarketplaces`) and enables all three plugins by default
-  (`enabledPlugins`), checked into git so it applies for every contributor. This also
-  makes `impeccable`'s agents and hooks work correctly (its hooks reference
-  `${CLAUDE_PLUGIN_ROOT}`, which only resolves for a properly installed plugin, not a
-  bare copied file).
+  (`extraKnownMarketplaces`) and sets which plugins are on (`enabledPlugins`), checked into
+  git so it applies for every contributor. This is also what makes `impeccable`'s agents and
+  hooks work — its hooks reference `${CLAUDE_PLUGIN_ROOT}`, which only resolves for a properly
+  installed plugin, not a bare copied file.
+- [`CLAUDE.md`](CLAUDE.md) — the playbook that names which skill to use at each step, so the
+  right ones fire on a real build instead of relying on description matching alone.
 
-Verify anytime with `claude plugin list` (should show all three as `enabled`,
-`Scope: project`) or `claude plugin details <name>@website-skills` for a full
-component breakdown (skills/agents/hooks).
+Verify with `bash scripts/check-skills.sh` (or `/skills-check`), which walks the marketplace,
+resolves every skill path, checks for duplicate skill names across enabled plugins, and lists
+the MCP servers. `claude plugin list` shows the same set as `enabled`, `Scope: project`.
 
-### MCP servers
+## MCP servers
 
-[`.mcp.json`](.mcp.json) registers two MCP servers, auto-approved for this project via
-`enableAllProjectMcpServers` in `.claude/settings.json`:
+Three, auto-approved for this project via `enableAllProjectMcpServers`:
 
-- **`shadcn`** — `npx shadcn@latest mcp`, used together with
-  [`components.json`](components.json)'s `@react-bits` registry entry to pull
-  [React Bits](https://reactbits.dev/) components on request.
-- **`magicuidesign-mcp`** — `npx @magicuidesign/mcp@latest`, for pulling
-  [Magic UI](https://magicui.design/) components on request.
+- **`shadcn`** — `npx shadcn@latest mcp`, used with [`components.json`](components.json)'s
+  `@react-bits` registry entry to pull [React Bits](https://reactbits.dev/) components.
+- **`magicuidesign-mcp`** — `npx @magicuidesign/mcp@latest`, for [Magic UI](https://magicui.design/)
+  components.
+- **`21st`** — `https://21st.dev/api/mcp`, registered by the `21st` plugin
+  ([`skills/magic-21st/.mcp.json`](skills/magic-21st/.mcp.json)). Component and theme search,
+  paid code retrieval, logo search, and AI UI generation.
 
-`package.json` here just pins the `shadcn` CLI as a dev dependency so the `shadcn` MCP
-server starts quickly; it isn't the site's own framework/dependency list.
+  **Setup required:** the 21st MCP needs an API key. Get a free one at
+  [21st.dev/mcp](https://21st.dev/mcp), then `export API_KEY_21ST=...` in your shell profile.
+  Without it the server connects but returns no tools. The old Magic MCP keys were reset
+  upstream and no longer work anywhere — generate a fresh one.
+
+`package.json` pins the `shadcn` CLI as a dev dependency so its MCP server starts quickly; it
+isn't the site's own dependency list.
+
+## Vendoring notes
+
+Sources are copied in rather than submoduled, so a clone works offline with no init step. Two
+upstream repos ship the same skills several times over and were trimmed to one copy each:
+
+- `claudedesignskills` ships its 23 skills four times (`.claude/`, `.factory/`,
+  `plugins/individual/`, `plugins/bundles/`); only `plugins/bundles/` is vendored.
+- `vercel-labs/agent-skills` — only `skills/` is vendored, not the `packages/` build tooling
+  or the per-skill `.zip` archives.
+
+Everything else is upstream-intact, licenses included.

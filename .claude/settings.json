@@ -3,7 +3,23 @@
   "enabledPlugins": {
     "ui-ux-pro-max@website-skills": true,
     "impeccable@website-skills": true,
-    "frontend-design@website-skills": true
+    "frontend-design@website-skills": true,
+    "taste-skill@website-skills": true,
+    "anthropic-design@website-skills": true,
+    "anthropic-documents@website-skills": true,
+    "anthropic-builder@website-skills": true,
+    "vercel-web@website-skills": true,
+    "vercel-deploy@website-skills": true,
+    "web-motion-core@website-skills": true,
+    "web-motion-components@website-skills": true,
+    "web-motion-scroll@website-skills": true,
+    "web-motion-meta@website-skills": true,
+    "21st@website-skills": true,
+
+    "anthropic-extras@website-skills": false,
+    "vercel-react-native@website-skills": false,
+    "web-motion-authoring@website-skills": false,
+    "convex-backend@website-skills": false
   },
   "extraKnownMarketplaces": {
     "website-skills": {
