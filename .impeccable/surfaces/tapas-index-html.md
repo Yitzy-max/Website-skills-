@@ -28,10 +28,17 @@ cards, so the food reads as the subject and the room reads as light.
 STORY: This is a real kosher kitchen doing small plates seriously — see the food,
 learn it's KCL and BYOB, call.
 
-FIRST VIEWPORT: A full-bleed media panel across the top that dissolves into the sand
-ground rather than ending at a seam. Headline below it, lower-left, three lines, last
-line italic in the accent. Hairline row of certification facts, then the call button
-inline with it; plate indicators sit at the far right of that same row.
+FIRST VIEWPORT: The film is the whole first screen. No sand touches it — the landing
+page is footage, edge to edge, and the ground only arrives at the spotlight statement.
+The headline sits lower-left over the footage, three lines, last line italic in the
+accent, on a scrim anchored to the bottom of the frame. A hairline row of
+certification facts and the call button stage in under it as the second plate lands.
+
+MOBILE: the frame is shown whole in a 16:9 band under the header rather than
+cover-cropped, because the dishes enter from the sides; the rest of the screen is the
+same frame thrown out of focus. Every text block centres on its own axis below 720px
+— hero copy, spotlight statement and aside, plate cards, menu rows, reviews, footer.
+A left rag needs width to read as a spine; at 390px it just reads as fallen over.
 
 FORM: Cinematic plate sequence. Brief-pinned direction (user specified dark,
 cinematic, minimalist-luxury, large type, and supplied the coverflow component), so

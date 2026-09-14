@@ -149,6 +149,7 @@ button { font: inherit; color: inherit; }
 /* Over the footage the wordmark is light; once the page scrolls onto sand the
    bar becomes sand and the wordmark goes back to ink. */
 .site-header .wordmark { color: var(--sand-2); }
+.site-header .header-hours { color: rgba(242, 235, 223, 0.80); }
 .site-header.is-stuck {
   background: rgba(233, 224, 209, 0.94);
   backdrop-filter: blur(14px) saturate(1.15);
@@ -262,8 +263,9 @@ button { font: inherit; color: inherit; }
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background:
     linear-gradient(180deg, rgba(20,14,9,0.38) 0%, rgba(20,14,9,0) 26%),
-    linear-gradient(0deg, rgba(20,14,9,0.82) 0%, rgba(20,14,9,0.55) 22%,
-                          rgba(20,14,9,0.18) 42%, rgba(20,14,9,0) 58%);
+    linear-gradient(0deg, rgba(20,14,9,0.88) 0%, rgba(20,14,9,0.74) 22%,
+                          rgba(20,14,9,0.48) 42%, rgba(20,14,9,0.14) 62%,
+                          rgba(20,14,9,0) 76%);
 }
 
 /* A phone screen is 9:19.5 and the film is 16:9. Cropping it to fill blows the
@@ -272,12 +274,30 @@ button { font: inherit; color: inherit; }
    instead: smaller plates, entire composition, nothing cut. */
 @media (max-width: 900px) {
   /* Size the box to the film's own ratio so there is no letterbox dead space
-     to explain away - the frame simply sits in the screen at its true shape. */
-  .hero-media { inset: 22% 0 auto 0; height: auto; aspect-ratio: 16 / 9; }
+     to explain away - the frame simply sits in the screen at its true shape.
+     16:9 is 56.25vw tall, which is what the copy below is positioned against. */
+  .hero-media { inset: 14% 0 auto 0; height: auto; aspect-ratio: 16 / 9; }
   .plate video, .plate img { object-fit: contain; object-position: center; }
-  .plate::before,
-  .plate-film::before { background: none; }   /* nothing behind a letterbox */
+  .plate::before { background: none; }        /* nothing behind a letterbox */
+  .plate-film::before {                       /* except the poster, which is
+                                                 the same 16:9 as the box */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
   .hero-media::after { background: none; }
+
+  /* Whatever the letterbox does not cover is not flat black: it is the same
+     frame, thrown far out of focus and pulled right down. The sharp 16:9 band
+     then reads as a frame set into a field, instead of a video sitting in a
+     hole - and when the hero scrolls away there is no dead panel behind it. */
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0; z-index: 0;
+    background: url("../videos/hero-poster-mobile.jpg") center / cover no-repeat;
+    filter: blur(38px) saturate(0.62) brightness(0.36);
+    transform: scale(1.18);
+  }
 }
 
 .hero-inner {
@@ -318,6 +338,20 @@ button { font: inherit; color: inherit; }
 .hero-cta .btn-ghost:hover {
   background: rgba(242, 235, 223, 0.14);
   border-color: var(--sand-2); color: var(--sand-2);
+}
+
+/* On a phone the copy takes the whole band under the film and centres in it,
+   rather than sitting on the floor of the screen with dead black in between.
+   14% is where the film starts; 56.25vw is how tall 16:9 is at full width. */
+@media (max-width: 900px) {
+  .hero-inner {
+    position: absolute;
+    left: 0; right: 0;
+    top: calc(14% + 56.25vw);
+    bottom: 0;
+    align-content: center;
+    padding: clamp(1rem, 3vh, 2rem) var(--gutter);
+  }
 }
 
 .scroll-cue {
@@ -646,7 +680,6 @@ button { font: inherit; color: inherit; }
 .footer-meta { font-size: 0.8rem; color: var(--ink-2); line-height: 1.85; text-align: right; }
 .footer-meta a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
 .footer-meta a:hover { color: var(--ember); border-color: var(--ember); }
-@media (max-width: 700px) { .footer-meta { text-align: left; } }
 
 /* ==========================================================================
    REVEALS — default visible; JS only hides once it can un-hide
@@ -668,7 +701,13 @@ button { font: inherit; color: inherit; }
   .wordmark { padding-block: 0.85rem; }
   .cf-arrow { width: 46px; height: 46px; }
   .cf-dot { height: 44px; width: 26px; }
-  .footer-meta a, .info-list dd a { display: inline-block; padding-block: 0.6rem; }
+  .footer-meta a, .info-list dd a {
+    display: inline-block; padding-block: 0.6rem;
+    border-bottom: 0;                     /* padding would strand the rule */
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 0.22em;
+  }
 }
 
 /* ==========================================================================
@@ -681,6 +720,57 @@ button { font: inherit; color: inherit; }
   .hero-facts { gap: 0.45rem 1.1rem; }
   .hero-facts li:not(:last-child)::after { display: none; }
   .hero-title { font-size: clamp(1.85rem, 8.5vw, 2.6rem); }
+}
+
+/* ==========================================================================
+   MOBILE — everything centers
+
+   On a wide screen a left rag gives the eye a spine to run down. A phone is
+   too narrow for that to read as intentional: the ragged right edge just
+   looks like the text fell over. So on phones every block centers on its own
+   axis - headline, facts, buttons, card copy, reviews, footer.
+   ========================================================================== */
+@media (max-width: 720px) {
+  /* Hero */
+  .hero-inner { text-align: center; justify-items: center; }
+  .hero-title { max-width: 18ch; margin-inline: auto; }
+  .hero-facts { justify-content: center; }
+  .hero-cta { justify-content: center; }
+
+  /* Spotlight statement + aside */
+  .spot-head { text-align: center; }
+  .spot-statement { max-width: 20ch; margin-inline: auto; }
+  .spot-aside { justify-items: center; }
+  .spot-aside .lede { margin-inline: auto; }
+
+  /* Plate cards */
+  .cf-body { align-items: center; text-align: center; }
+  .cf-desc { margin-inline: auto; }
+
+  /* Full menu */
+  .menu-row { justify-items: center; text-align: center; }
+  .menu-desc { margin-inline: auto; }
+  .menu-note { text-align: center; }
+
+  /* Reviews */
+  .reviews-head { justify-content: center; text-align: center; }
+  .rating { justify-content: center; }
+  .review { justify-items: center; text-align: center; }
+  .review .stars { justify-content: center; }
+  .review figcaption { justify-content: center; }
+
+  /* The score reads as a heading over its own caption, not beside it */
+  .rating { flex-direction: column; gap: 0.3rem; }
+  .rating-meta { text-align: center; }
+  .rating-meta .stars { justify-content: center; margin-bottom: 0.25rem; }
+
+  /* Long italic line; give it room off both edges */
+  .closing-title { font-size: clamp(1.6rem, 7vw, 2.3rem); }
+
+  /* Footer */
+  .footer-inner { justify-content: center; text-align: center; }
+  .footer-mark { width: 100%; }
+  .footer-meta { text-align: center; width: 100%; }
 }
 
 /* ==========================================================================
