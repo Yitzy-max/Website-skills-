@@ -44,10 +44,37 @@ Prompt: van rolls forward along a North Jersey street, turns left into a private
 driveway beside a two-family house, stops. Livery strings written into the prompt.
 https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260915_171203_f7d71348-a1b8-4661-8200-af10c986dbe3.mp4
 
+**Take 3** — `wan3_0`, 3s, 16:9, 480p, silent, thinking on, start frame = the
+GRADED hero still (`images/van-still.jpg`), so the video matches the poster
+frame-for-frame and there is no jump when it takes over. A near-imperceptible
+push-in with a fuller, sunnier, greener version of the same scene. Chosen
+because tiny motion in a short clip is where a cheap model looks its best, and
+because 480p softness is largely hidden behind the hero veil with type over it.
+Job `4c86c7c5-cc94-4752-85ca-71072b4adacf`.
+
+## Make the loop seamless
+
+A 3s push-in snaps on loop. Turn it into a palindrome — forward then reversed —
+for a seamless 6s cycle, and re-encode to a web-friendly MP4 while you're there:
+
+```
+ffmpeg -i take3.mp4 -filter_complex \
+  "[0:v]split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1[v]" \
+  -map "[v]" -an -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p \
+  -movflags +faststart videos/van-arrival.mp4
+```
+
+Then, optionally, a WebM for smaller delivery:
+
+```
+ffmpeg -i videos/van-arrival.mp4 -c:v libvpx-vp9 -crf 36 -b:v 0 -an videos/van-arrival.webm
+```
+
 ## Credits
 
-Starter plan, 15.06 at the start of this work. Take 1 and take 2 cost 6 each,
-leaving ~3.06 — not enough for another 6s render. Pricing checked at the time:
+Starter plan, 15.06 at the start of this work. Takes 1 and 2 cost 6 each and
+take 3 cost 3, leaving 0.06 — spent out. Take 3 was capped at 3s/480p purely
+by what 3.06 credits could buy, not by choice. Pricing checked at the time:
 veo3_1_lite 6s = 6, kling3_0_turbo 5s/1080p = 10, minimax_h3_max 5s = 12.5,
 happy_horse 5s/1080p = 22.5, seedance_2_5 5s/720p = 32.5.
 
