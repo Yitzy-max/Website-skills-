@@ -60,37 +60,46 @@
 <main id="main">
 
   <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
-  <section class="hero" id="hero">
-    <div class="hero__media" aria-hidden="true">
-      <!-- Poster renders first and always. The video is progressive
-           enhancement: absent file, slow connection or reduced-motion all
-           fall back to the still with nothing broken. -->
-      <picture>
-        <source type="image/webp" sizes="100vw"
-                srcset="images/van-still-640.webp 640w, images/van-still-960.webp 960w, images/van-still-1344.webp 1344w">
-        <img class="hero__still" src="images/van-still-960.jpg" alt="" width="1344" height="768"
-             fetchpriority="high" sizes="100vw"
-             srcset="images/van-still-640.jpg 640w, images/van-still-960.jpg 960w, images/van-still-1344.jpg 1344w"
-             onerror="this.style.display='none'">
-      </picture>
-      <!-- No poster attribute: the <img> above is the poster, and a poster here
-           would download the full-size JPEG a second time on every load. -->
-      <video class="hero__video" playsinline muted loop preload="none" aria-hidden="true"></video>
-      <span class="hero__veil"></span>
-    </div>
+  <!-- Scroll-DRIVEN, not autoplaying. The section is tall; the inner panel
+       sticks to the viewport and scroll position sets video.currentTime
+       directly, so the van moves exactly as fast as the visitor scrolls and
+       runs backwards when they scroll up.
 
-    <div class="hero__body">
-      <p class="eyebrow">Fairview, NJ &nbsp;·&nbsp; Bergen County</p>
-      <h1 class="hero__h">Everything on the&nbsp;outside of your&nbsp;house.</h1>
-      <p class="hero__sub">Chimney, roofing, siding, gutters, masonry. One crew, one number — and the estimate doesn't cost you anything.</p>
-      <div class="hero__acts">
-        <a class="btn btn--go" href="tel:+15512225512" data-magnetic>
-          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
-          Call 551-222-5512
-        </a>
-        <a class="btn btn--quiet" href="#work">See what we handle</a>
+       Without JS the tall height and the sticky are never applied (both hang
+       off a .js class added only once GSAP has loaded), the video never gets
+       a source, and the poster + all text render as an ordinary hero. -->
+  <section class="hero" id="hero">
+    <div class="hero__sticky">
+      <div class="hero__media" aria-hidden="true">
+        <picture>
+          <source type="image/webp" sizes="100vw"
+                  srcset="images/hero-poster-640.webp 640w, images/hero-poster-960.webp 960w, images/hero-poster-1344.webp 1344w">
+          <img class="hero__still" src="images/hero-poster-960.jpg" alt="" width="1344" height="736"
+               fetchpriority="high" sizes="100vw"
+               srcset="images/hero-poster-640.jpg 640w, images/hero-poster-960.jpg 960w, images/hero-poster-1344.jpg 1344w"
+               onerror="this.style.display='none'">
+        </picture>
+        <!-- src is set by JS per breakpoint. No poster attribute: the <img>
+             above already is the poster and a poster would re-download it. -->
+        <video class="hero__video" playsinline muted preload="none" aria-hidden="true"></video>
+        <span class="hero__veil"></span>
       </div>
-      <p class="hero__note">Free estimate · Fully insured · NJ Lic. 13VH12012200</p>
+
+      <div class="hero__body">
+        <p class="eyebrow" data-hero="0">Fairview, NJ &nbsp;·&nbsp; Bergen County</p>
+        <h1 class="hero__h" data-hero="0">Everything on the&nbsp;outside of your&nbsp;house.</h1>
+        <p class="hero__sub" data-hero="1">Chimney, roofing, siding, gutters, masonry. One crew, one number — and the estimate doesn't cost you anything.</p>
+        <div class="hero__acts" data-hero="2">
+          <a class="btn btn--go" href="tel:+15512225512" data-magnetic>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
+            Call 551-222-5512
+          </a>
+          <a class="btn btn--quiet" href="#work">See what we handle</a>
+        </div>
+        <p class="hero__note" data-hero="3">Free estimate · Fully insured · NJ Lic. 13VH12012200</p>
+      </div>
+
+      <span class="hero__edge" aria-hidden="true"></span>
     </div>
   </section>
 

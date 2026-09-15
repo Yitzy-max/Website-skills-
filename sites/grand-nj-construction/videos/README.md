@@ -1,84 +1,91 @@
-# Hero video — Grand NJ Construction
+# Hero video
 
-The hero sequence is three beats:
+The hero is **scroll-driven**. It never autoplays. `.hero` is a tall scroll
+track, `.hero__sticky` pins to the viewport, and scroll progress is mapped
+straight onto `video.currentTime` — so the van moves exactly as fast as the
+visitor scrolls and runs backwards when they scroll up. Hero text slides in
+against it on the same scroll.
 
-1. **Van pulls up** — generated (Higgsfield), anchored to the client's own van photo
-2. **Camera rises up a ladder to the roof edge** — generated, no text and no people in
-   frame, so nothing for the model to get wrong. NOT YET GENERATED (out of credits).
-3. **Roof work** — the client's own footage. BLOCKED: ownership unconfirmed, and there
-   is an identifiable worker in frame. Do not ship until that's cleared.
+| File | Size | Used on |
+|---|---|---|
+| `hero-desk.mp4` | 1.43 MB | ≥900px, full-bleed |
+| `hero-mob.mp4` | 0.44 MB | <900px, as a band |
 
-Expected local filenames (the page falls back cleanly to a static hero if absent):
+Poster frames are `images/hero-poster-{640,960,1344}.{jpg,webp}`, taken from
+frame 0 of the video itself so there is no jump when the video takes over.
 
-```
-videos/van-arrival.mp4
-videos/ladder-rise.mp4
-videos/roof-work.mp4
-```
+## Encoding: why all-intra
 
-## Why the van is generated from a photo rather than described
+Scrubbing means seeking on every frame. With a normal GOP the browser must
+decode from the last keyframe on each seek and the picture stalls, so every
+frame is a keyframe (`-g 1`).
 
-AI video models redraw every frame from scratch and cannot hold legible text. The van
-carries the company name, the phone number (551-222-5512) and the NJ HIC license
-(13VH12012200) — a render that garbles any of those is worse than no video at all.
-So the real photograph is fed in as an anchor frame rather than describing the van in
-words. Take 1 used it as the END frame, take 2 as the START frame.
+Measured on this footage at 768x420, all-intra is also *smaller* than a short
+GOP, because B-frames and reference overhead cost more than they save at this
+length:
 
-If both takes still mangle the lettering, the fix is NOT another generation — it's
-compositing: the real photo, cut out and animated over a plate, which keeps the
-lettering pixel-exact because it *is* the photograph. Zero credits, and it scroll-links
-more precisely than video can.
+| GOP | CRF | Size |
+|---|---|---|
+| 1 | 32 | 747 KB |
+| **1** | **36** | **451 KB** ← shipped |
+| 2 | 32 | 885 KB |
+| 3 | 32 | 700 KB |
+| 5 | 32 | 568 KB |
 
-## Renders
-
-This environment's egress policy blocks the Higgsfield CDN, so these were generated
-but never viewed here — they need downloading and reviewing by hand.
-
-**Take 1** — `veo3_1_lite`, 6s, 16:9, 720p, silent, seed 110777, photo as END frame.
-Prompt: slow tracking shot, van rolls down a residential street and settles at the
-curb, resolving onto the real photograph.
-https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260915_162152_b201f2b6-6207-413d-b016-978aaaa2c6fd.mp4
-
-**Take 2** — `veo3_1_lite`, 6s, 16:9, 720p, silent, seed 543015, photo as START frame.
-Prompt: van rolls forward along a North Jersey street, turns left into a private
-driveway beside a two-family house, stops. Livery strings written into the prompt.
-https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260915_171203_f7d71348-a1b8-4661-8200-af10c986dbe3.mp4
-
-**Take 3** — `wan3_0`, 3s, 16:9, 480p, silent, thinking on, start frame = the
-GRADED hero still (`images/van-still.jpg`), so the video matches the poster
-frame-for-frame and there is no jump when it takes over. A near-imperceptible
-push-in with a fuller, sunnier, greener version of the same scene. Chosen
-because tiny motion in a short clip is where a cheap model looks its best, and
-because 480p softness is largely hidden behind the hero veil with type over it.
-https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260915_193915_4c86c7c5-cc94-4752-85ca-71072b4adacf.mp4
-
-## Make the loop seamless
-
-A 3s push-in snaps on loop. Turn it into a palindrome — forward then reversed —
-for a seamless 6s cycle, and re-encode to a web-friendly MP4 while you're there:
+15 fps, not 24: playback position comes from scroll, so the extra frames buy
+nothing and cost a third of the file.
 
 ```
-ffmpeg -i take3.mp4 -filter_complex \
-  "[0:v]split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1[v]" \
-  -map "[v]" -an -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p \
-  -movflags +faststart videos/van-arrival.mp4
+ffmpeg -i source.mp4 -an -vf "scale=768:420:flags=lanczos,fps=15" \
+  -c:v libx264 -profile:v main -pix_fmt yuv420p \
+  -g 1 -keyint_min 1 -sc_threshold 0 -crf 36 -preset slow \
+  -movflags +faststart hero-mob.mp4
 ```
 
-Then, optionally, a WebM for smaller delivery:
+Desktop is the same recipe at `scale=1280:700` and `-crf 33`.
 
-```
-ffmpeg -i videos/van-arrival.mp4 -c:v libvpx-vp9 -crf 36 -b:v 0 -an videos/van-arrival.webm
-```
+**No WebM.** VP9 all-intra came out at 7.8 MB against H.264's 2 MB on the same
+footage — the codec is poor at this job. Every browser plays H.264.
 
-## Credits
+## Three things that will break this
 
-Starter plan, 15.06 at the start of this work. Takes 1 and 2 cost 6 each and
-take 3 cost 3, leaving 0.06 — spent out. Take 3 was capped at 3s/480p purely
-by what 3.06 credits could buy, not by choice. Pricing checked at the time:
-veo3_1_lite 6s = 6, kling3_0_turbo 5s/1080p = 10, minimax_h3_max 5s = 12.5,
-happy_horse 5s/1080p = 22.5, seedance_2_5 5s/720p = 32.5.
+**The host must serve HTTP Range requests.** Without them `video.seekable.end(0)`
+is 0, every seek silently lands on frame 0, and the hero looks frozen while
+everything else works. This cost real debugging time here — Python's
+`http.server` does not support ranges. Netlify, Cloudflare Pages, Vercel and
+S3 all do.
 
-## Mobile
+**Seeks must be throttled through rAF.** Writing `currentTime` on every scroll
+event floods the decoder and the picture stalls. `js/main.js` keeps a target
+time and applies at most one seek per animation frame, only when it moved.
 
-Video is desktop-only. Phones get a still frame — the locked design budgets motion at
-near-zero on mobile and the page must stay fast on mobile data.
+**iOS needs the video primed.** Safari will not decode or seek a video that has
+never been told to play. The code calls `play()` then immediately `pause()`,
+which unlocks seeking without the video ever running.
+
+## Mobile is a band, not full-bleed
+
+The footage is 1.83:1; a phone viewport is about 0.46:1. `object-fit: cover`
+scales it 2x and crops away roughly three quarters of the width — the van
+drives out of the visible frame entirely. Below 900px the video therefore sits
+in its own band at native aspect (390x213 on a 390px phone), whole shot
+visible, no upscaling, with the text below it on solid ground.
+
+## Degradation
+
+- **No JS** — the tall track and the sticky are both behind a `.js` class that
+  is only added once GSAP has loaded. The video never gets a `src`. The page
+  renders as an ordinary poster hero with all text visible.
+- **prefers-reduced-motion** — video hidden, hero height reset to auto, all
+  text at full opacity.
+- **Save-Data** — same as reduced motion.
+- **GSAP CDN unreachable** — falls back to `js/vendor/`, which is how this was
+  tested, since cdnjs is blocked from the build environment.
+- **Video 404 or decode failure** — the element removes itself and the poster
+  stands.
+
+## Superseded
+
+Three earlier generated takes (Higgsfield, veo3_1_lite and wan3_0) are no
+longer used; the client supplied real footage instead. Their prompts and job
+IDs are in the git history of this file if they are ever wanted again.

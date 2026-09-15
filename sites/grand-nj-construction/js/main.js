@@ -9,8 +9,9 @@
       stranding content at opacity:0.
    2. Motion is scroll-LINKED (scrub), not entrance-triggered. Scroll
       position drives it and it rewinds on the way back up.
-   3. Mobile motion budget is ~zero. Below 900px nothing is fetched at all:
-      no GSAP, no Lenis, no video.
+   3. The scroll-driven hero runs on phones too, with a 747 KB video instead
+      of 2 MB and the call buttons never hidden. Lenis and the magnetic
+      button stay desktop-only.
    4. prefers-reduced-motion and Save-Data both opt out completely.
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -27,27 +28,68 @@
   var fine    = window.matchMedia('(pointer: fine)').matches;
   var thrifty = (navigator.connection && navigator.connection.saveData) === true;
 
-  if (reduced || !big || thrifty) return;   // static page, and that's fine
+  // Reduced motion and Save-Data opt out completely. Small screens do NOT:
+  // the scroll-driven hero is the centrepiece and it is built to run there,
+  // just with a smaller video and less text movement.
+  if (reduced || thrifty) return;   // static page, and that's fine
 
   /* ── hero video ──────────────────────────────────────────────────────
-     Progressive enhancement only. Missing file or decode error just
-     leaves the poster still in place. */
+     Never plays on its own. Scroll sets currentTime; see the ScrollTrigger
+     below. A missing file or a decode failure just leaves the poster. */
   var vid = document.querySelector('.hero__video');
+  var vidReady = false;
+
   if (vid) {
-    vid.addEventListener('error', function () { vid.remove(); }, { once: true });
-    vid.addEventListener('canplay', function () {
+    vid.addEventListener('error', function () { vid.remove(); vid = null; }, { once: true });
+    vid.addEventListener('loadeddata', function () {
+      vidReady = true;
       vid.classList.add('is-on');
-      var p = vid.play();
-      if (p && p.catch) p.catch(function () { /* autoplay refused — poster stands */ });
+      // Priming: iOS will not decode or seek a video that has never been
+      // told to play. play() then immediate pause() unlocks seeking without
+      // the video ever actually running.
+      var pr = vid.play();
+      if (pr && pr.then) pr.then(function () { vid.pause(); }).catch(function () {});
+      else { try { vid.pause(); } catch (e) {} }
+      try { vid.currentTime = 0; } catch (e) {}
     }, { once: true });
-    vid.preload = 'auto';
-    vid.src = 'videos/van-arrival.mp4';
+
+    // Deferred: the poster is already on screen and carries the hero, so the
+    // video must not compete with first paint. On a phone this keeps the
+    // initial view around 190 KB instead of 930 KB.
+    var started = false;
+    function startVideo() {
+      if (started || !vid) return;
+      started = true;
+      vid.preload = 'auto';
+      vid.src = big ? 'videos/hero-desk.mp4' : 'videos/hero-mob.mp4';
+      vid.load();
+    }
+    if (document.readyState === 'complete') setTimeout(startVideo, 120);
+    else window.addEventListener('load', function () { setTimeout(startVideo, 120); }, { once: true });
+    // whichever comes first — a visitor who scrolls immediately gets it now
+    window.addEventListener('scroll', startVideo, { once: true, passive: true });
   }
+
+  /* Seeking is throttled through rAF. Writing currentTime on every scroll
+     event floods the decoder and the picture stalls; one seek per frame,
+     only when the target actually moved, stays smooth. */
+  var wantTime = 0, haveTime = -1;
+  function pumpSeek() {
+    if (vid && vidReady && Math.abs(wantTime - haveTime) > 0.008) {
+      haveTime = wantTime;
+      try {
+        if (vid.fastSeek) vid.fastSeek(wantTime);
+        else vid.currentTime = wantTime;
+      } catch (e) {}
+    }
+    requestAnimationFrame(pumpSeek);
+  }
+  requestAnimationFrame(pumpSeek);
 
   /* ── magnetic primary button ─────────────────────────────────────────
      Pointer-precision devices only. Transform-only, so it never triggers
      layout. */
-  if (fine) {
+  if (fine && big) {
     Array.prototype.forEach.call(document.querySelectorAll('[data-magnetic]'), function (el) {
       var raf = 0;
       function move(e) {
@@ -83,11 +125,22 @@
 
   var CDN = 'https://cdnjs.cloudflare.com/ajax/libs/';
 
-  Promise.all([
-    load(CDN + 'gsap/3.12.5/gsap.min.js'),
-    load(CDN + 'gsap/3.12.5/ScrollTrigger.min.js')
-  ]).then(function (ok) {
-    if (!ok[0] || !ok[1] || !window.gsap || !window.ScrollTrigger) return;
+  // CDN first (likely already cached for the visitor), vendored copy second.
+  // The hero is the whole point of this page, so it must not hinge on a
+  // third-party host being reachable.
+  function loadWithFallback(cdnUrl, localUrl, globalName) {
+    return load(cdnUrl).then(function (ok) {
+      if (ok && window[globalName]) return true;
+      return load(localUrl);
+    });
+  }
+
+  loadWithFallback(CDN + 'gsap/3.12.5/gsap.min.js', 'js/vendor/gsap.min.js', 'gsap')
+    .then(function () {
+      return loadWithFallback(CDN + 'gsap/3.12.5/ScrollTrigger.min.js', 'js/vendor/ScrollTrigger.min.js', 'ScrollTrigger');
+    })
+    .then(function () {
+    if (!window.gsap || !window.ScrollTrigger) return;
 
     var gsap = window.gsap;
     gsap.registerPlugin(window.ScrollTrigger);
@@ -96,32 +149,63 @@
     doc.classList.add('js');
 
     /* ── momentum scroll, desktop only ─────────────────────────────── */
-    load('https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js').then(function (okL) {
+    if (big) loadWithFallback(CDN + 'lenis/1.1.13/lenis.min.js', 'js/vendor/lenis.min.js', 'Lenis').then(function () {
       var L = window.Lenis || (window.lenis && window.lenis.Lenis);
-      if (!okL || !L) return;
+      if (!L) return;
       var lenis = new L({ duration: 1.05, smoothWheel: true });
       lenis.on('scroll', window.ScrollTrigger.update);
       gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
       gsap.ticker.lagSmoothing(0);
     });
 
-    /* ── THE SIGNATURE: scrub-linked hero ───────────────────────────
-       Media and headline travel at different rates as you scroll, and
-       the sky lifts. Driven by scroll position, reverses on scroll-up. */
-    var media = document.querySelector('.hero__media');
-    var body  = document.querySelector('.hero__body');
+    /* ── THE SIGNATURE: the visitor drives the van ───────────────────
+       Scroll position maps straight onto video.currentTime. The van moves
+       exactly as fast as they scroll and reverses when they scroll back.
+       Text slides in against it, staggered across the same scroll. */
+    var heroEl = document.querySelector('.hero');
 
-    if (media && body) {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
+    if (heroEl) {
+      window.ScrollTrigger.create({
+        trigger: heroEl,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        onUpdate: function (self) {
+          if (!vid || !vidReady) return;
+          var d = vid.duration;
+          if (!d || !isFinite(d)) return;
+          // last frame held slightly short of the end: seeking exactly to
+          // duration can bounce back to 0 in some browsers
+          wantTime = Math.min(self.progress * d, d - 0.05);
         }
-      })
-      .to(media, { y: '18%', scale: 1.08, ease: 'none' }, 0)
-      .to(body,  { y: '-12%', opacity: .25, ease: 'none' }, 0);
+      });
+
+      // Text staging. Step 0 (eyebrow + headline) is never animated — it is
+      // the LCP text. Steps 1-3 slide in over the first two thirds.
+      var steps = [
+        { sel: '[data-hero="1"]', a: 0.06, b: 0.26 },
+        { sel: '[data-hero="2"]', a: 0.20, b: 0.44 },
+        { sel: '[data-hero="3"]', a: 0.36, b: 0.58 }
+      ];
+      steps.forEach(function (st) {
+        var el = heroEl.querySelector(st.sel);
+        if (!el) return;
+        // buttons stay put on small screens — the call must never be hidden
+        if (st.sel === '[data-hero="2"]' && !big) return;
+        // ScrollTrigger alone, no tween: a tween would fight the gsap.set
+        // below and the element would flicker between two owners.
+        window.ScrollTrigger.create({
+          trigger: heroEl,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+          onUpdate: function (self) {
+            var t = (self.progress - st.a) / (st.b - st.a);
+            t = t < 0 ? 0 : t > 1 ? 1 : t;
+            gsap.set(el, { opacity: t, y: 26 * (1 - t) });
+          }
+        });
+      });
     }
 
     /* ── coursing rows: staggered, scrubbed ─────────────────────────── */
