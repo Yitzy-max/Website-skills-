@@ -37,6 +37,7 @@
      Never plays on its own. Scroll sets currentTime; see the ScrollTrigger
      below. A missing file or a decode failure just leaves the poster. */
   var vid = document.querySelector('.hero__video');
+  var still = document.querySelector('.hero__still');
   var vidReady = false;
 
   if (vid) {

@@ -61,15 +61,16 @@ a{ color:var(--clay-700); }
    at 390px. Clipping takes it out of layout entirely. */
 .skip{
   position:absolute; top:0; left:0; z-index:99;
-  width:1px; height:1px; overflow:hidden;
+  width:1px; height:1px; overflow:hidden; padding:0;
   clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
   background:var(--slate-900); color:var(--mortar);
-  padding:var(--s3) var(--s5); font-family:var(--f-cond);
+  font-family:var(--f-cond);
   text-transform:uppercase; letter-spacing:.12em; text-decoration:none;
 }
 .skip:focus{
   width:auto; height:auto; min-height:44px; overflow:visible;
   display:inline-flex; align-items:center;
+  padding:var(--s3) var(--s5);
   clip:auto; clip-path:none;
 }
 
@@ -445,27 +446,53 @@ a{ color:var(--clay-700); }
 @media (min-width:900px){ .dock{ display:none; } }
 @media (max-width:899px){ body{ padding-bottom:76px; } }
 
-/* ─── mobile hero: video as a band, not full-bleed ──────────────────────
-   The footage is 1.83:1 and a phone viewport is about 0.46:1. object-fit
-   cover would scale it 2x and crop away three quarters of the width — the
-   van drives straight out of frame. So on small screens the video sits in
-   its own band at native aspect, whole shot visible, no upscaling, and the
-   text sits below it on solid ground (which also means no veil is needed
-   under the type). */
+/* ─── mobile hero: full-bleed, text over the video ──────────────────────
+   Text sits over the video, as on desktop. But the footage is 1.83:1 against
+   a ~0.46:1 viewport: cover would show only 25% of the width, and the van
+   drives right across the frame, so it spends much of the clip outside any
+   fixed window. Panning the crop does not save it either — the van moves
+   bottom-right, then centre, then left.
+
+   So mobile CONTAINS the video instead of cropping it: the whole shot is
+   always visible, letterboxed into the slate ground, with the type laid over
+   it. Type steps down so the block fits. */
 @media (max-width:899px){
-  .js .hero__sticky{ justify-content:flex-start; min-height:100vh; height:auto; }
-  .hero__media{
-    position:relative; inset:auto;
-    width:100%; aspect-ratio:1944/1064;
-    flex:none;
+  .js .hero__sticky{ justify-content:center; height:100vh; min-height:520px; }
+
+  /* whole frame, never cropped */
+  .hero__still,.hero__video{
+    object-fit:contain; object-position:center 32%;
+    opacity:1;
   }
-  .hero__still,.hero__video{ object-position:center; opacity:1; }
   .hero__video.is-on{ opacity:1; }
-  .hero__veil{
-    background:linear-gradient(180deg,rgba(20,24,28,0) 55%,rgba(20,24,28,.55) 82%,var(--slate-900) 100%);
+
+  .hero__h{
+    font-size:clamp(1.875rem,7.2vw,2.5rem);
+    line-height:1.0; letter-spacing:-.02em;
+    max-width:17ch;
+    margin-bottom:var(--s4);
   }
-  .hero__body{ padding-block:var(--s6) calc(var(--s7) + 52px); }
-  .hero__h{ font-size:clamp(2.25rem,8.4vw,3rem); }
+  .hero__sub{
+    font-size:1rem; line-height:1.45;
+    max-width:34ch; margin-bottom:var(--s5);
+  }
+  .hero .eyebrow{ font-size:.75rem; margin-bottom:var(--s3); }
+  .hero__acts{ gap:var(--s2); margin-bottom:var(--s4); }
+  .hero__acts .btn{ min-height:48px; font-size:.9375rem; padding-inline:var(--s5); }
+  .hero__note{ font-size:.75rem; letter-spacing:.1em; }   /* 12px floor */
+  .hero__body{ padding-block:var(--s6) calc(var(--s6) + 52px); }
+
+  /* Type lies over the letterboxed frame, so the veil still has to carry
+     contrast — but it is weighted to the lower half where the copy sits,
+     leaving the top of the shot brighter. */
+  .hero__veil{
+    background:linear-gradient(180deg,
+      rgba(20,24,28,.34) 0%,
+      rgba(20,24,28,.42) 26%,
+      rgba(20,24,28,.80) 52%,
+      rgba(20,24,28,.94) 100%);
+  }
+  .hero__body{ margin-top:auto; }
 }
 
 /* ─── hero text staging ─────────────────────────────────────────────────
