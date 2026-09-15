@@ -110,52 +110,120 @@
     </div>
   </section>
 
-  <!-- ══ TRADES ════════════════════════════════════════════════════════ -->
-  <!-- Running-bond offset: rows step by one column the way brick is laid.
-       Order is the company's own, straight off the van. -->
+  <!-- ══ TRADES — stacking cards ══════════════════════════════════════ -->
+  <!-- Ported from Khoa Phan's StackingCards (21st.dev), which is React +
+       motion/react. This page has no framework by design, so the mechanic is
+       reproduced on GSAP instead of pulling in React: each slot sticks to the
+       top of the viewport and the card inside scales down as later cards
+       stack over it. Same maths as the original —
+         scaleTo = 1 - (total - index) * 0.03
+       eased linearly across [index / total, 1] of the section's progress.
+
+       The photographs are the client's own, moved here from the old gallery.
+       Siding and gutters have no photograph yet and carry the honest
+       placeholder rather than a borrowed shot of another trade. -->
   <section class="sec sec--trades" id="work">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
       <h2 class="sec__h">Five trades. One&nbsp;phone&nbsp;call.</h2>
       <p class="sec__lede">Most of this work overlaps. A chimney leak soaks the roof deck, a bad gutter rots the siding, and settled brick cracks everything above it. Getting one crew who does all of it means nobody gets to point at somebody else.</p>
+    </div>
 
-      <ol class="course">
-        <li class="course__row" data-course>
-          <span class="course__n">01</span>
-          <div class="course__t">
-            <h3>Chimney</h3>
-            <p>Crowns, caps, loose or missing brick, water finding its way down the flue. The thing most people only look at once it's already staining a ceiling.</p>
-          </div>
-        </li>
-        <li class="course__row" data-course>
-          <span class="course__n">02</span>
-          <div class="course__t">
-            <h3>Roofing</h3>
-            <p>Full replacements and repairs. Shingles, flashing, valleys, the places water actually gets in — which is almost never where the stain shows up inside.</p>
-          </div>
-        </li>
-        <li class="course__row" data-course>
-          <span class="course__n">03</span>
-          <div class="course__t">
-            <h3>Siding</h3>
-            <p>Vinyl and aluminum, whole houses or the one wall the weather has been working on for a decade.</p>
-          </div>
-        </li>
-        <li class="course__row" data-course>
-          <span class="course__n">04</span>
-          <div class="course__t">
-            <h3>Gutters</h3>
-            <p>New runs, repairs, leaders and downspouts. Cheap to fix, expensive to ignore — overflow goes straight into the fascia and then the foundation.</p>
-          </div>
-        </li>
-        <li class="course__row" data-course>
-          <span class="course__n">05</span>
-          <div class="course__t">
-            <h3>Masonry</h3>
-            <p>Steps, stoops, walls, repointing. Brick and block work that has to match what's already there, which is most of the job.</p>
-          </div>
-        </li>
-      </ol>
+    <div class="stack" data-stack>
+      <div class="stack__slot">
+        <div class="stack__lift" data-card="0">
+          <article class="stack__card">
+            <div class="stack__text">
+              <p class="stack__n">01</p>
+              <h3>Chimney</h3>
+              <p>Crowns, caps, loose or missing brick, water finding its way down the flue. The thing most people only look at once it's already staining a ceiling.</p>
+            </div>
+            <div class="stack__shot">
+              <picture>
+              <source type="image/webp" sizes="(min-width: 900px) 46vw, calc(100vw - 72px)"
+                      srcset="images/job-01-480.webp 480w, images/job-01-800.webp 800w">
+              <img src="images/job-01-800.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width: 900px) 46vw, calc(100vw - 72px)"
+                   srcset="images/job-01-480.jpg 480w, images/job-01-800.jpg 800w"
+                   alt="New galvanised chimney liner and cap set through fresh roof decking"
+                   onload="this.closest('.stack__shot').classList.remove('is-empty')">
+            </picture>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="stack__slot">
+        <div class="stack__lift" data-card="1">
+          <article class="stack__card">
+            <div class="stack__text">
+              <p class="stack__n">02</p>
+              <h3>Roofing</h3>
+              <p>Full replacements and repairs. Shingles, flashing, valleys, the places water actually gets in — which is almost never where the stain shows up inside.</p>
+            </div>
+            <div class="stack__shot">
+              <picture>
+              <source type="image/webp" sizes="(min-width: 900px) 46vw, calc(100vw - 72px)"
+                      srcset="images/job-02-480.webp 480w, images/job-02-800.webp 800w">
+              <img src="images/job-02-800.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width: 900px) 46vw, calc(100vw - 72px)"
+                   srcset="images/job-02-480.jpg 480w, images/job-02-800.jpg 800w"
+                   alt="Grand NJ Construction crew stripping and replacing the roof on a two-storey colonial"
+                   onload="this.closest('.stack__shot').classList.remove('is-empty')">
+            </picture>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="stack__slot">
+        <div class="stack__lift" data-card="2">
+          <article class="stack__card">
+            <div class="stack__text">
+              <p class="stack__n">03</p>
+              <h3>Siding</h3>
+              <p>Vinyl and aluminum, whole houses or the one wall the weather has been working on for a decade.</p>
+            </div>
+            <div class="stack__shot is-empty">
+              
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="stack__slot">
+        <div class="stack__lift" data-card="3">
+          <article class="stack__card">
+            <div class="stack__text">
+              <p class="stack__n">04</p>
+              <h3>Gutters</h3>
+              <p>New runs, repairs, leaders and downspouts. Cheap to fix, expensive to ignore — overflow goes straight into the fascia and then the foundation.</p>
+            </div>
+            <div class="stack__shot is-empty">
+              
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="stack__slot">
+        <div class="stack__lift" data-card="4">
+          <article class="stack__card">
+            <div class="stack__text">
+              <p class="stack__n">05</p>
+              <h3>Masonry</h3>
+              <p>Steps, stoops, walls, repointing. Brick and block work that has to match what's already there, which is most of the job.</p>
+            </div>
+            <div class="stack__shot">
+              <picture>
+              <source type="image/webp" sizes="(min-width: 900px) 46vw, calc(100vw - 72px)"
+                      srcset="images/job-04-480.webp 480w, images/job-04-800.webp 800w">
+              <img src="images/job-04-800.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width: 900px) 46vw, calc(100vw - 72px)"
+                   srcset="images/job-04-480.jpg 480w, images/job-04-800.jpg 800w"
+                   alt="Old concrete front steps being broken out ahead of a masonry rebuild"
+                   onload="this.closest('.stack__shot').classList.remove('is-empty')">
+            </picture>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -173,91 +241,6 @@
         <li class="steps__i" data-step><span class="steps__n">3</span><h3>You get a price</h3><p>Free, and before anything starts. If it's smaller than you feared, we'll tell you that too.</p></li>
         <li class="steps__i" data-step><span class="steps__n">4</span><h3>The work gets done</h3><p>Licensed and insured, with the licence number on the truck and at the bottom of this page.</p></li>
       </ol>
-    </div>
-  </section>
-
-  <!-- ══ GALLERY ═══════════════════════════════════════════════════════ -->
-  <!-- The client's own job photographs. Two of them show the company van,
-       same number and licence as the header — which is why these carry
-       weight that stock never could. Each keeps its native aspect ratio;
-       forcing a tall chimney shot into a 4:3 box would wreck it, and the
-       staggered heights suit the coursing idea anyway. -->
-  <section class="sec sec--shots" id="shots">
-    <div class="wrap">
-      <p class="eyebrow">The work</p>
-      <h2 class="sec__h">Bergen County and&nbsp;around.</h2>
-    </div>
-    <div class="shots" role="list">
-      <figure class="shot" role="listitem" data-par="0.10">
-        <div class="shot__f is-empty" style="aspect-ratio:4/3">
-          <picture>
-            <source type="image/webp" sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                    srcset="images/job-01-480.webp 480w, images/job-01-800.webp 800w">
-            <img src="images/job-01-800.jpg" width="800" height="600" loading="lazy" decoding="async"
-                 sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                 srcset="images/job-01-480.jpg 480w, images/job-01-800.jpg 800w"
-                 alt="New galvanised chimney liner and cap set through fresh roof decking"
-                 onload="this.closest('.shot__f').classList.remove('is-empty')">
-          </picture>
-        </div>
-        <figcaption>Chimney cap and liner</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" data-par="0.20">
-        <div class="shot__f is-empty" style="aspect-ratio:4/3">
-          <picture>
-            <source type="image/webp" sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                    srcset="images/job-02-480.webp 480w, images/job-02-800.webp 800w">
-            <img src="images/job-02-800.jpg" width="800" height="600" loading="lazy" decoding="async"
-                 sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                 srcset="images/job-02-480.jpg 480w, images/job-02-800.jpg 800w"
-                 alt="Grand NJ Construction crew stripping and replacing the roof on a two-storey colonial"
-                 onload="this.closest('.shot__f').classList.remove('is-empty')">
-          </picture>
-        </div>
-        <figcaption>Full roof replacement</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" data-par="0.14">
-        <div class="shot__f is-empty" style="aspect-ratio:4/3">
-          <picture>
-            <source type="image/webp" sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                    srcset="images/job-03-480.webp 480w, images/job-03-800.webp 800w">
-            <img src="images/job-03-800.jpg" width="800" height="600" loading="lazy" decoding="async"
-                 sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                 srcset="images/job-03-480.jpg 480w, images/job-03-800.jpg 800w"
-                 alt="Roof stripped back to bare decking, the Grand NJ Construction van parked in the driveway below"
-                 onload="this.closest('.shot__f').classList.remove('is-empty')">
-          </picture>
-        </div>
-        <figcaption>Tear-off to the deck</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" data-par="0.24">
-        <div class="shot__f is-empty" style="aspect-ratio:4/3">
-          <picture>
-            <source type="image/webp" sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                    srcset="images/job-04-480.webp 480w, images/job-04-800.webp 800w">
-            <img src="images/job-04-800.jpg" width="800" height="600" loading="lazy" decoding="async"
-                 sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                 srcset="images/job-04-480.jpg 480w, images/job-04-800.jpg 800w"
-                 alt="Old concrete front steps being broken out ahead of a masonry rebuild"
-                 onload="this.closest('.shot__f').classList.remove('is-empty')">
-          </picture>
-        </div>
-        <figcaption>Front steps, mid-rebuild</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" data-par="0.17">
-        <div class="shot__f is-empty" style="aspect-ratio:4/3">
-          <picture>
-            <source type="image/webp" sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                    srcset="images/job-05-480.webp 480w, images/job-05-800.webp 800w">
-            <img src="images/job-05-800.jpg" width="800" height="600" loading="lazy" decoding="async"
-                 sizes="(min-width: 1024px) 400px, (min-width: 640px) 46vw, calc(100vw - 40px)"
-                 srcset="images/job-05-480.jpg 480w, images/job-05-800.jpg 800w"
-                 alt="Freshly poured concrete sidewalk and curb sections, taped off while they cure"
-                 onload="this.closest('.shot__f').classList.remove('is-empty')">
-          </picture>
-        </div>
-        <figcaption>Sidewalk and curb, curing</figcaption>
-      </figure>
     </div>
   </section>
 

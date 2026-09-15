@@ -228,17 +228,44 @@
       });
     });
 
-    /* ── gallery parallax at differing rates ────────────────────────── */
-    gsap.utils.toArray('.shot').forEach(function (fig) {
-      var rate = parseFloat(fig.getAttribute('data-par')) || 0.12;
-      gsap.fromTo(fig,
-        { y: rate * 90 },
-        {
-          y: -rate * 90, ease: 'none',
-          scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true }
+    /* ── stacking cards ─────────────────────────────────────────────
+       Port of Khoa Phan's StackingCards (21st.dev). The original is React +
+       motion/react; this reproduces its maths on GSAP so the page keeps its
+       no-framework build.
+
+         scaleTo_i = 1 - (total - i) * SCALE_STEP
+         scale_i   = lerp(1 -> scaleTo_i) across [i / total, 1] of progress
+
+       Each slot is sticky, so a card holds at the top while the next rides
+       over it; the one underneath shrinks, which is what reads as a stack. */
+    var stackEl = document.querySelector('[data-stack]');
+    if (stackEl) {
+      var lifts = gsap.utils.toArray('[data-card]', stackEl);
+      var total = lifts.length;
+      var SCALE_STEP = 0.03;
+
+      lifts.forEach(function (lift, i) {
+        // the original offsets each card by 5% + 3i% so the stack fans
+        lift.style.top = (5 + i * 3) + '%';
+      });
+
+      window.ScrollTrigger.create({
+        trigger: stackEl,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        onUpdate: function (self) {
+          var pr = self.progress;
+          for (var i = 0; i < total; i++) {
+            var from = i / total;
+            var scaleTo = 1 - (total - i) * SCALE_STEP;
+            var t = pr <= from ? 0 : (pr - from) / (1 - from);
+            if (t > 1) t = 1;
+            gsap.set(lifts[i], { scale: 1 + (scaleTo - 1) * t });
+          }
         }
-      );
-    });
+      });
+    }
 
     window.ScrollTrigger.refresh();
   });

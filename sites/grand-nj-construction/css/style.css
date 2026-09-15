@@ -13,6 +13,13 @@
   --clay-600:#9E4A2C;  --clay-700:#843B21; --clay-300:#E08A5F;
   --patina:#6E8F82;
 
+  /* stacking cards — yellow on a dark card, not on a light one.
+     Safety yellow on light grey measures 1.01:1, which is invisible;
+     on slate it is 11.2:1 and reads like real site signage. */
+  --card:#1C2229;  --card-2:#232B33;
+  --card-ink:#F2F1ED;
+  --signal:#FFD400;
+
   /* space — 4px base */
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
   --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:128px;
@@ -340,50 +347,96 @@ a{ color:var(--clay-700); }
 }
 .steps__i p{ margin:0; color:var(--zinc-600); }
 
-/* ─── gallery ───────────────────────────────────────────────────────── */
+/* ─── trades: stacking cards ────────────────────────────────────────────
+   Sticky slots, one per card. Scale is applied by JS; without it the cards
+   simply stack and read normally, so the section degrades to a plain list of
+   five panels rather than collapsing. */
 
-.shots{
-  display:grid; gap:var(--s4);
-  padding-inline:var(--gut);
-  max-width:var(--maxw); margin-inline:auto;
+.stack{
+  width:100%; max-width:var(--maxw);
+  margin-inline:auto; padding-inline:var(--gut);
   margin-top:var(--s7);
 }
-@media (min-width:640px){ .shots{ grid-template-columns:repeat(2,1fr); gap:var(--s5); } }
-@media (min-width:1024px){ .shots{ grid-template-columns:repeat(3,1fr); align-items:start; } }
 
-.shot{ margin:0; }
-
-/* aspect-ratio box reserves space, so no layout shift when a real photo
-   lands — and the procedural placeholder never looks like a broken image */
-.shot__f{
-  position:relative; aspect-ratio:4/3; overflow:hidden;
-  /* inline style="aspect-ratio:W/H" per slot overrides this default */
-  background:
-    repeating-linear-gradient(135deg,rgba(78,91,102,.07) 0 10px,transparent 10px 20px),
-    linear-gradient(160deg,#D9D6CE 0%,#C9C5BB 100%);
-  border:1px solid var(--rule);
+.stack__slot{
+  position:sticky; top:0;
+  height:100svh; min-height:520px;
 }
-.shot__f picture{ display:contents; }
-/* The image must stay IN LAYOUT while it is still a placeholder. Hiding it
-   with display:none deadlocks lazy loading: a display:none image never
-   loads, so onload never fires, so the placeholder never clears. Fade it
-   in over the woven ground instead. */
-.shot__f img{
+
+.stack__lift{
+  position:relative; height:100%;
+  transform-origin:top center;
+  will-change:transform;
+}
+
+.stack__card{
+  position:relative;
+  height:76%;
+  display:flex; flex-direction:column; gap:var(--s5);
+  background:var(--card);
+  color:var(--card-ink);
+  border:1px solid var(--rule-dark);
+  border-radius:6px;
+  padding:var(--s6);
+  overflow:hidden;
+}
+
+.stack__text{ display:flex; flex-direction:column; justify-content:center; flex:1; min-height:0; }
+
+.stack__n{
+  font:700 .8125rem/1 var(--f-cond);
+  letter-spacing:.16em; color:var(--signal);
+  margin:0 0 var(--s3);
+}
+.stack__card h3{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 110,"wght" 700;
+  font-size:clamp(1.75rem,5vw,3rem);
+  line-height:1.0; letter-spacing:-.02em;
+  color:var(--signal);
+  margin:0 0 var(--s4);
+}
+.stack__card p:not(.stack__n){
+  margin:0; max-width:46ch;
+  color:var(--card-ink);
+  font-size:clamp(.9375rem,2.2vw,1.125rem);
+  line-height:1.55;
+}
+
+.stack__shot{
+  position:relative; flex:none;
+  width:100%; aspect-ratio:4/3;
+  max-height:38%;
+  overflow:hidden; border-radius:4px;
+  background:
+    repeating-linear-gradient(135deg,rgba(228,226,220,.05) 0 10px,transparent 10px 20px),
+    linear-gradient(160deg,#2A323A 0%,#1F262D 100%);
+}
+.stack__shot picture{ display:contents; }
+.stack__shot img{
   width:100%; height:100%; object-fit:cover;
   opacity:1; transition:opacity var(--d-slow) var(--e-out);
 }
-.shot__f.is-empty img{ opacity:0; }
-.shot__f.is-empty::after{
+.stack__shot.is-empty img{ opacity:0; }
+.stack__shot.is-empty::after{
   content:"Photo to come";
   position:absolute; inset:auto var(--s4) var(--s4) var(--s4);
-  font:600 .75rem/1 var(--f-cond);
-  text-transform:uppercase; letter-spacing:.14em; color:var(--zinc-600);
+  font:600 .6875rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em; color:var(--zinc-400);
 }
 
-.shot figcaption{
-  font:600 .8125rem/1 var(--f-cond);
-  text-transform:uppercase; letter-spacing:.14em;
-  color:var(--zinc-600); padding-top:var(--s3);
+@media (min-width:900px){
+  .stack__card{
+    flex-direction:row; align-items:center;
+    gap:var(--s8); padding:var(--s8);
+    height:72%;
+  }
+  .stack__text{ flex:1 1 52%; }
+  .stack__shot{
+    flex:1 1 48%; width:auto; max-height:none;
+    align-self:stretch; aspect-ratio:auto;
+    border-radius:4px;
+  }
 }
 
 /* ─── close ─────────────────────────────────────────────────────────── */
@@ -530,5 +583,9 @@ a{ color:var(--clay-700); }
   .js .hero__body [data-hero]{ opacity:1!important; transform:none!important; }
   .js .hero{ height:auto!important; }
   .js .hero__sticky{ position:relative!important; height:auto!important; }
+  .stack__slot{ position:static!important; height:auto!important; min-height:0!important;
+                margin-bottom:var(--s6); }
+  .stack__card{ height:auto!important; }
+  .stack__lift{ transform:none!important; height:auto!important; }
   .hero__video{ display:none!important; }
 }
