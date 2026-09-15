@@ -50,7 +50,7 @@ frame-for-frame and there is no jump when it takes over. A near-imperceptible
 push-in with a fuller, sunnier, greener version of the same scene. Chosen
 because tiny motion in a short clip is where a cheap model looks its best, and
 because 480p softness is largely hidden behind the hero veil with type over it.
-Job `4c86c7c5-cc94-4752-85ca-71072b4adacf`.
+https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260915_193915_4c86c7c5-cc94-4752-85ca-71072b4adacf.mp4
 
 ## Make the loop seamless
 
