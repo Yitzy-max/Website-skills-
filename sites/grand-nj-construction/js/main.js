@@ -183,10 +183,13 @@
 
       // Text staging. Step 0 (eyebrow + headline) is never animated — it is
       // the LCP text. Steps 1-3 slide in over the first two thirds.
+      // Kept early on purpose: a landing page that shows no call button for
+      // half the hero is trading conversions for an effect. The slide-in is
+      // still visible, it just resolves in the first third.
       var steps = [
-        { sel: '[data-hero="1"]', a: 0.06, b: 0.26 },
-        { sel: '[data-hero="2"]', a: 0.20, b: 0.44 },
-        { sel: '[data-hero="3"]', a: 0.36, b: 0.58 }
+        { sel: '[data-hero="1"]', a: 0.03, b: 0.15 },
+        { sel: '[data-hero="2"]', a: 0.09, b: 0.23 },
+        { sel: '[data-hero="3"]', a: 0.17, b: 0.31 }
       ];
       steps.forEach(function (st) {
         var el = heroEl.querySelector(st.sel);

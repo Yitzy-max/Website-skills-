@@ -71,10 +71,17 @@
   <section class="hero" id="hero">
     <div class="hero__sticky">
       <div class="hero__media" aria-hidden="true">
+        <!-- Two posters, because the two breakpoints play two different
+             videos. Each poster is frame 0 of the clip that breakpoint
+             actually loads, so nothing jumps when the video takes over. -->
         <picture>
+          <source media="(min-width: 900px)" type="image/webp" sizes="100vw"
+                  srcset="images/hero-desk-960.webp 960w, images/hero-desk-1344.webp 1344w, images/hero-desk-1920.webp 1920w">
+          <source media="(min-width: 900px)" sizes="100vw"
+                  srcset="images/hero-desk-960.jpg 960w, images/hero-desk-1344.jpg 1344w, images/hero-desk-1920.jpg 1920w">
           <source type="image/webp" sizes="100vw"
                   srcset="images/hero-poster-640.webp 640w, images/hero-poster-960.webp 960w, images/hero-poster-1344.webp 1344w">
-          <img class="hero__still" src="images/hero-poster-960.jpg" alt="" width="1344" height="736"
+          <img class="hero__still" src="images/hero-poster-960.jpg" alt="" width="1344" height="735"
                fetchpriority="high" sizes="100vw"
                srcset="images/hero-poster-640.jpg 640w, images/hero-poster-960.jpg 960w, images/hero-poster-1344.jpg 1344w"
                onerror="this.style.display='none'">
