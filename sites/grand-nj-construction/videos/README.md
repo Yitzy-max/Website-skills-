@@ -42,7 +42,7 @@ https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_2026091
 **Take 2** — `veo3_1_lite`, 6s, 16:9, 720p, silent, seed 543015, photo as START frame.
 Prompt: van rolls forward along a North Jersey street, turns left into a private
 driveway beside a two-family house, stops. Livery strings written into the prompt.
-Job `f7d71348-a1b8-4661-8200-af10c986dbe3`.
+https://d8j0ntlcm91z4.cloudfront.net/user_3IkRZvhQJHVYjmx5uflJWyvBjWO/hf_20260915_171203_f7d71348-a1b8-4661-8200-af10c986dbe3.mp4
 
 ## Credits
 
