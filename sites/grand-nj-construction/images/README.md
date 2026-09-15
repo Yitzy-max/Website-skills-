@@ -20,10 +20,17 @@ generator, so the video and the poster are the same image.
 | `job-04` | Front steps broken out for rebuild | Front steps, mid-rebuild | 1284×974 |
 | `job-05` | Freshly poured sidewalk and curb, taped off | Sidewalk and curb, curing | 1284×1654 |
 
-Each keeps its **native aspect ratio** — forcing the tall chimney shot into a
-4:3 box wrecked it, and the staggered heights suit the coursing idea anyway.
-The ratio is set inline per slot so the box is reserved before the image
-arrives and nothing shifts.
+All five are cropped to a **uniform 4:3** at the client's request, so every
+frame in the grid is identical (395x296 desktop, 350x263 phone). The crop
+offset is chosen per photo so the subject survives — the chimney frame starts
+at y=300 to keep the flue top and the cap, the tear-off at y=250 to keep the
+van in shot.
+
+They are also exposure-matched. Straight off the phone their mean luminance
+ran from 97 to 150, which is why they didn't read as a set; each now carries
+its own brightness offset onto a common target, then a shared grade
+(saturation 1.18, contrast 1.07) and a light unsharp pass. Spread is down from
+53 to 3.
 
 **No siding or gutters photo yet.** Both trades are described on the page but
 not shown, and that is the honest state — the gallery does not need one image
@@ -37,10 +44,10 @@ photo or show nothing.
 
 ## Sizing
 
-Two widths, 480 and 800, in WebP with JPEG fallback. There is deliberately no
-1284 variant: the slots render at ~300 CSS px on desktop and ~350 on phone, so
-800w already covers 2× everywhere and a larger file would only ever be wasted
-bytes.
+Two widths, 480x360 and 800x600, in WebP with JPEG fallback. There is
+deliberately no larger variant: the slots render at ~395 CSS px on desktop and
+~350 on phone, so 800w already covers 2x everywhere and anything bigger is
+wasted bytes.
 
 Large variants are compressed harder than small ones (webp q40 at 800 vs q56 at
 480). That looks backwards but isn't — a high-DPR screen shows those pixels
@@ -50,9 +57,12 @@ Measured payload, in a real browser:
 
 | | first view | + gallery (lazy) |
 |---|---|---|
-| desktop 1× | 121 KB | 265 KB |
-| phone 2× | **84 KB** | 426 KB |
-| phone 3× | 120 KB | 462 KB |
+| desktop 1x | 121 KB | 293 KB |
+| phone 2x | **84 KB** | 501 KB |
+| phone 3x | 120 KB | 537 KB |
+
+The gallery is five full-size job photographs and loads only once scrolled to;
+the number that matters for first impression is the 84 KB above the fold.
 
 ## Two traps worth remembering
 
@@ -78,8 +88,15 @@ single page load — 220 KB of pure waste.
 
 ```
 # gallery slot, both widths
-ffmpeg -i src.jpg -vf "scale=480:-2:flags=lanczos" -q:v 6 job-0N-480.jpg
-ffmpeg -i src.jpg -vf "scale=480:-2:flags=lanczos" -quality 56 -compression_level 6 job-0N-480.webp
-ffmpeg -i src.jpg -vf "scale=800:-2:flags=lanczos" -q:v 9 job-0N-800.jpg
-ffmpeg -i src.jpg -vf "scale=800:-2:flags=lanczos" -quality 40 -compression_level 6 job-0N-800.webp
+# 1. crop to 4:3, picking OFFSET so the subject stays in frame
+ffmpeg -i src.jpg -vf "crop=1284:963:0:OFFSET" -q:v 3 crop.jpg
+
+# 2. measure mean luminance, pick BRIGHT to land near 122 (0.1 ~= +25 levels)
+# 3. grade to match the set, then resize
+ffmpeg -i crop.jpg -vf "eq=brightness=BRIGHT:saturation=1.18:contrast=1.07:gamma=1.02,unsharp=5:5:0.75:5:5:0.0" -q:v 2 graded.jpg
+
+ffmpeg -i graded.jpg -vf "scale=480:360:flags=lanczos" -q:v 5 job-0N-480.jpg
+ffmpeg -i graded.jpg -vf "scale=480:360:flags=lanczos" -quality 62 -compression_level 6 job-0N-480.webp
+ffmpeg -i graded.jpg -vf "scale=800:600:flags=lanczos" -q:v 9 job-0N-800.jpg
+ffmpeg -i graded.jpg -vf "scale=800:600:flags=lanczos" -quality 38 -compression_level 6 job-0N-800.webp
 ```
