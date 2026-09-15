@@ -326,7 +326,7 @@ a{ color:var(--clay-700); }
   margin-top:var(--s7);
 }
 @media (min-width:640px){ .shots{ grid-template-columns:repeat(2,1fr); gap:var(--s5); } }
-@media (min-width:1024px){ .shots{ grid-template-columns:repeat(4,1fr); } }
+@media (min-width:1024px){ .shots{ grid-template-columns:repeat(4,1fr); align-items:start; } }
 
 .shot{ margin:0; }
 
@@ -334,13 +334,22 @@ a{ color:var(--clay-700); }
    lands — and the procedural placeholder never looks like a broken image */
 .shot__f{
   position:relative; aspect-ratio:4/3; overflow:hidden;
+  /* inline style="aspect-ratio:W/H" per slot overrides this default */
   background:
     repeating-linear-gradient(135deg,rgba(78,91,102,.07) 0 10px,transparent 10px 20px),
     linear-gradient(160deg,#D9D6CE 0%,#C9C5BB 100%);
   border:1px solid var(--rule);
 }
-.shot__f img{ width:100%; height:100%; object-fit:cover; }
-.shot__f.is-empty img{ display:none; }
+.shot__f picture{ display:contents; }
+/* The image must stay IN LAYOUT while it is still a placeholder. Hiding it
+   with display:none deadlocks lazy loading: a display:none image never
+   loads, so onload never fires, so the placeholder never clears. Fade it
+   in over the woven ground instead. */
+.shot__f img{
+  width:100%; height:100%; object-fit:cover;
+  opacity:1; transition:opacity var(--d-slow) var(--e-out);
+}
+.shot__f.is-empty img{ opacity:0; }
 .shot__f.is-empty::after{
   content:"Photo to come";
   position:absolute; inset:auto var(--s4) var(--s4) var(--s4);

@@ -31,7 +31,7 @@
 <meta name="theme-color" content="#14181C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..118,600..800&family=Barlow:wght@400&family=Barlow+Condensed:wght@600;700&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <script type="application/ld+json">
 {
@@ -66,11 +66,16 @@
            enhancement: absent file, slow connection or reduced-motion all
            fall back to the still with nothing broken. -->
       <picture>
-        <source srcset="images/van-still.webp" type="image/webp">
-        <img class="hero__still" src="images/van-still.jpg" alt="" width="1344" height="768" fetchpriority="high"
+        <source type="image/webp" sizes="100vw"
+                srcset="images/van-still-640.webp 640w, images/van-still-960.webp 960w, images/van-still-1344.webp 1344w">
+        <img class="hero__still" src="images/van-still-960.jpg" alt="" width="1344" height="768"
+             fetchpriority="high" sizes="100vw"
+             srcset="images/van-still-640.jpg 640w, images/van-still-960.jpg 960w, images/van-still-1344.jpg 1344w"
              onerror="this.style.display='none'">
       </picture>
-      <video class="hero__video" playsinline muted loop preload="none" poster="images/van-still.jpg" aria-hidden="true"></video>
+      <!-- No poster attribute: the <img> above is the poster, and a poster here
+           would download the full-size JPEG a second time on every load. -->
+      <video class="hero__video" playsinline muted loop preload="none" aria-hidden="true"></video>
       <span class="hero__veil"></span>
     </div>
 
@@ -156,19 +161,73 @@
   </section>
 
   <!-- ══ GALLERY ═══════════════════════════════════════════════════════ -->
-  <!-- Placeholder slots. Each upgrades the instant a real file lands at
-       the named path. No stock photography, no generated "finished jobs" —
-       see images/README.md. -->
+  <!-- The client's own job photographs. Two of them show the company van,
+       same number and licence as the header — which is why these carry
+       weight that stock never could. Each keeps its native aspect ratio;
+       forcing a tall chimney shot into a 4:3 box would wreck it, and the
+       staggered heights suit the coursing idea anyway. -->
   <section class="sec sec--shots" id="shots">
     <div class="wrap">
       <p class="eyebrow">The work</p>
-      <h2 class="sec__h">Bergen County and around.</h2>
+      <h2 class="sec__h">Bergen County and&nbsp;around.</h2>
     </div>
     <div class="shots" role="list">
-      <figure class="shot" role="listitem" data-par="0.10"><div class="shot__f is-empty"><img src="images/job-01.jpg" alt="Chimney repair job by Grand NJ Construction" loading="lazy" width="800" height="600" onload="this.closest('.shot__f').classList.remove('is-empty')"></div><figcaption>Chimney</figcaption></figure>
-      <figure class="shot" role="listitem" data-par="0.20"><div class="shot__f is-empty"><img src="images/job-02.jpg" alt="Roof replacement by Grand NJ Construction" loading="lazy" width="800" height="600" onload="this.closest('.shot__f').classList.remove('is-empty')"></div><figcaption>Roofing</figcaption></figure>
-      <figure class="shot" role="listitem" data-par="0.14"><div class="shot__f is-empty"><img src="images/job-03.jpg" alt="Siding installation by Grand NJ Construction" loading="lazy" width="800" height="600" onload="this.closest('.shot__f').classList.remove('is-empty')"></div><figcaption>Siding</figcaption></figure>
-      <figure class="shot" role="listitem" data-par="0.24"><div class="shot__f is-empty"><img src="images/job-04.jpg" alt="Masonry steps rebuilt by Grand NJ Construction" loading="lazy" width="800" height="600" onload="this.closest('.shot__f').classList.remove('is-empty')"></div><figcaption>Masonry</figcaption></figure>
+      <figure class="shot" role="listitem" data-par="0.10">
+        <div class="shot__f is-empty" style="aspect-ratio:1284/1330">
+          <picture>
+            <source type="image/webp" sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                    srcset="images/job-01-480.webp 480w, images/job-01-800.webp 800w">
+            <img src="images/job-01-800.jpg" width="1284" height="1330" loading="lazy" decoding="async"
+                 sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                 srcset="images/job-01-480.jpg 480w, images/job-01-800.jpg 800w"
+                 alt="New galvanised chimney liner and cap set through fresh roof decking"
+                 onload="this.closest('.shot__f').classList.remove('is-empty')">
+          </picture>
+        </div>
+        <figcaption>Chimney cap and liner</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" data-par="0.20">
+        <div class="shot__f is-empty" style="aspect-ratio:1284/956">
+          <picture>
+            <source type="image/webp" sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                    srcset="images/job-02-480.webp 480w, images/job-02-800.webp 800w">
+            <img src="images/job-02-800.jpg" width="1284" height="956" loading="lazy" decoding="async"
+                 sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                 srcset="images/job-02-480.jpg 480w, images/job-02-800.jpg 800w"
+                 alt="Grand NJ Construction crew stripping and replacing the roof on a two-storey colonial"
+                 onload="this.closest('.shot__f').classList.remove('is-empty')">
+          </picture>
+        </div>
+        <figcaption>Full roof replacement</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" data-par="0.14">
+        <div class="shot__f is-empty" style="aspect-ratio:1284/1368">
+          <picture>
+            <source type="image/webp" sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                    srcset="images/job-03-480.webp 480w, images/job-03-800.webp 800w">
+            <img src="images/job-03-800.jpg" width="1284" height="1368" loading="lazy" decoding="async"
+                 sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                 srcset="images/job-03-480.jpg 480w, images/job-03-800.jpg 800w"
+                 alt="Roof stripped back to bare decking, the Grand NJ Construction van parked in the driveway below"
+                 onload="this.closest('.shot__f').classList.remove('is-empty')">
+          </picture>
+        </div>
+        <figcaption>Tear-off to the deck</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" data-par="0.24">
+        <div class="shot__f is-empty" style="aspect-ratio:1284/974">
+          <picture>
+            <source type="image/webp" sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                    srcset="images/job-04-480.webp 480w, images/job-04-800.webp 800w">
+            <img src="images/job-04-800.jpg" width="1284" height="974" loading="lazy" decoding="async"
+                 sizes="(min-width: 1024px) 300px, (min-width: 640px) 46vw, calc(100vw - 40px)"
+                 srcset="images/job-04-480.jpg 480w, images/job-04-800.jpg 800w"
+                 alt="Old concrete front steps being broken out ahead of a masonry rebuild"
+                 onload="this.closest('.shot__f').classList.remove('is-empty')">
+          </picture>
+        </div>
+        <figcaption>Front steps, mid-rebuild</figcaption>
+      </figure>
     </div>
   </section>
 
