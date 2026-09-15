@@ -439,6 +439,76 @@ a{ color:var(--clay-700); }
   }
 }
 
+/* ─── reviews marquee ──────────────────────────────────────────────────
+   Two copies of the list inside one track; the track slides exactly -50%,
+   so the second copy lands where the first began and the loop is seamless.
+   Pure CSS — no JS drives the motion, so it cannot stutter against scroll. */
+
+.sec--says{ background:var(--limewash); border-block:1px solid var(--rule); overflow:hidden; }
+.says__head{ margin-bottom:var(--s6); }
+
+.says__score{
+  display:flex; align-items:baseline; gap:var(--s3);
+  font:700 1.125rem/1 var(--f-cond); letter-spacing:.06em;
+  text-transform:uppercase; color:var(--zinc-600); margin:0;
+}
+.says__score b{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 110,"wght" 800;
+  font-size:clamp(2rem,5vw,2.75rem); line-height:1;
+  color:var(--slate-800); font-weight:400;
+}
+
+.marquee{
+  --gap:var(--s4);
+  position:relative;
+  display:flex; overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+.marquee__track{
+  display:flex; gap:var(--gap); flex:none;
+  padding-block:var(--s2);
+  animation:marquee var(--dur,48s) linear infinite;
+  will-change:transform;
+}
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track{ animation-play-state:paused; }
+
+@keyframes marquee{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(calc(-50% - (var(--gap) / 2))); }
+}
+
+.say{
+  flex:none; width:300px;
+  display:flex; flex-direction:column; gap:var(--s3);
+  background:var(--mortar);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:var(--s5);
+}
+@media (min-width:768px){ .say{ width:340px; } }
+
+.say__stars{ display:flex; gap:2px; color:#A8741A; }
+.say__stars svg{ width:15px; height:15px; fill:currentColor; }
+
+.say__text{
+  margin:0; flex:1;
+  font-size:.9375rem; line-height:1.55; color:var(--slate-800);
+}
+.say__who{
+  margin:0; padding-top:var(--s3);
+  border-top:1px solid var(--rule);
+  font:600 .75rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em; color:var(--zinc-600);
+}
+
+.vh{
+  position:absolute; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+}
+
 /* ─── close ─────────────────────────────────────────────────────────── */
 
 .sec--close{ background:var(--slate-900); color:var(--mortar); }
@@ -585,6 +655,9 @@ a{ color:var(--clay-700); }
   .js .hero__sticky{ position:relative!important; height:auto!important; }
   .stack__slot{ position:static!important; height:auto!important; min-height:0!important;
                 margin-bottom:var(--s6); }
+  /* a marquee is motion by definition — stop it and let people scroll it */
+  .marquee__track{ animation:none!important; }
+  .marquee{ overflow-x:auto!important; -webkit-mask-image:none!important; mask-image:none!important; }
   .stack__card{ height:auto!important; }
   .stack__lift{ transform:none!important; height:auto!important; }
   .hero__video{ display:none!important; }

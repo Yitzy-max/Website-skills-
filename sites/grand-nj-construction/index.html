@@ -227,6 +227,35 @@
     </div>
   </section>
 
+  <!-- ══ REVIEWS ══════════════════════════════════════════════════════ -->
+  <!-- Marquee ported from the 21st.dev testimonial card (designali-in/marquee
+       + LiquidCard). React and Tailwind there; plain CSS here, because the
+       page carries no framework.
+
+       Dropped from the original on purpose:
+       - the liquid-glass card. It runs an SVG turbulence filter through
+         backdrop-filter on every card, and the marquee paints the set twice.
+         Expensive, poor in Safari, and glassmorphism besides.
+       - avatar images. Real reviewers' profile photographs are not ours to
+         republish on a commercial page.
+       - #fff200 stars, which measure 1.03:1 on a light card — invisible.
+         Deep gold reads at 3.59:1 and the rating is also written out, so it
+         never depends on colour alone.
+
+       THE SECTION STAYS HIDDEN UNTIL REVIEWS[] HAS REAL ENTRIES IN IT.
+       Fill it from the Google listing — verbatim text, the name as Google
+       shows it, the star count. Nothing invented goes here. -->
+  <section class="sec sec--says" id="says" hidden>
+    <div class="wrap says__head">
+      <p class="eyebrow">What people say</p>
+      <h2 class="sec__h">Straight from&nbsp;Google.</h2>
+      <p class="says__score" data-score hidden></p>
+    </div>
+    <div class="marquee" data-marquee>
+      <div class="marquee__track" data-track></div>
+    </div>
+  </section>
+
   <!-- ══ PROCESS ═══════════════════════════════════════════════════════ -->
   <!-- Numbered because it genuinely is a sequence. Nowhere else on the
        page uses numbering. Every step is derived from "FREE ESTIMATE"

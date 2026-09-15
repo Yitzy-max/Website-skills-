@@ -1,4 +1,74 @@
 /* ═══════════════════════════════════════════════════════════════════════
+   REVIEWS — paste the real ones here and the section appears.
+
+   Every entry must come off the Google listing verbatim. Empty array means
+   the section stays hidden, which is the correct state until it holds real
+   reviews: a contractor's testimonials are the first thing a customer can
+   fact-check, and the easiest thing to get caught inventing.
+
+     text   the review, word for word
+     name   the reviewer as Google shows them
+     stars  1-5
+
+   SCORE is the headline figure — overall rating and how many reviews it is
+   drawn from. Leave count at 0 to hide it.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+var REVIEWS = [
+  // { text: "…", name: "…", stars: 5 },
+];
+
+var SCORE = { rating: null, count: 0 };
+
+(function () {
+  'use strict';
+  var sec = document.querySelector('.sec--says');
+  if (!sec || !REVIEWS.length) return;   // nothing real to show yet
+
+  var track = sec.querySelector('[data-track]');
+  var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5 6.1 20.6l1.2-6.5L2.5 9.5l6.6-.9z"/></svg>';
+
+  function card(r) {
+    var n = Math.max(1, Math.min(5, r.stars | 0));
+    var el = document.createElement('figure');
+    el.className = 'say';
+    var stars = document.createElement('div');
+    stars.className = 'say__stars';
+    stars.innerHTML = new Array(n + 1).join(STAR) +
+      '<span class="vh">' + n + ' out of 5 stars</span>';
+    var q = document.createElement('blockquote');
+    q.className = 'say__text';
+    q.textContent = '\u201C' + r.text + '\u201D';     // textContent, never innerHTML
+    var who = document.createElement('figcaption');
+    who.className = 'say__who';
+    who.textContent = r.name;
+    el.appendChild(stars); el.appendChild(q); el.appendChild(who);
+    return el;
+  }
+
+  // two passes of the same list; the track slides exactly -50% so the
+  // second pass arrives where the first started and the loop is seamless
+  for (var pass = 0; pass < 2; pass++) {
+    for (var i = 0; i < REVIEWS.length; i++) {
+      var c = card(REVIEWS[i]);
+      if (pass === 1) c.setAttribute('aria-hidden', 'true');   // duplicate
+      track.appendChild(c);
+    }
+  }
+
+  // hold a steady speed regardless of how many reviews there are
+  sec.querySelector('.marquee').style.setProperty('--dur', (REVIEWS.length * 6) + 's');
+
+  if (SCORE.count > 0 && SCORE.rating) {
+    var sc = sec.querySelector('[data-score]');
+    sc.innerHTML = '<b>' + SCORE.rating + '</b> on Google · ' + SCORE.count + ' reviews';
+    sc.hidden = false;
+  }
+
+  sec.hidden = false;
+})();
+
+/* ═══════════════════════════════════════════════════════════════════════
    GRAND NJ CONSTRUCTION — motion
 
    Rules this file obeys, in order of importance:
