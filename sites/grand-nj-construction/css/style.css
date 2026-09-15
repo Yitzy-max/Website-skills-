@@ -1,0 +1,436 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   GRAND NJ CONSTRUCTION — Weatherline
+   Tokens are locked in ../DESIGN.md. Change them there first.
+   Mobile-first. Motion budget is near zero below 900px by design.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* colour — trade materials: fired clay, wet slate, mortar, zinc, patina */
+  --slate-900:#14181C; --slate-800:#1C2229;
+  --zinc-600:#4E5B66;  --zinc-400:#8B98A3;
+  --mortar:#E4E2DC;    --limewash:#F2F1ED;
+  --rule:#C2BEB4;      --rule-dark:#2E363E;
+  --clay-600:#9E4A2C;  --clay-700:#843B21; --clay-300:#E08A5F;
+  --patina:#6E8F82;
+
+  /* space — 4px base */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:128px;
+
+  --gut:20px;
+  --sec-y:64px;
+  --maxw:1280px;
+
+  /* motion */
+  --d-fast:160ms; --d-base:260ms; --d-slow:420ms;
+  --e-out:cubic-bezier(.16,1,.3,1);
+
+  --f-disp:"Archivo","Arial Black",system-ui,sans-serif;
+  --f-body:"Barlow","Helvetica Neue",system-ui,sans-serif;
+  --f-cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+}
+
+@media (min-width:768px){ :root{ --gut:24px; } }
+@media (min-width:1024px){ :root{ --sec-y:128px; } }
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--mortar);
+  color:var(--slate-800);
+  font:400 1.0625rem/1.6 var(--f-body);
+  overflow-x:hidden;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+
+img{ max-width:100%; height:auto; display:block; }
+[hidden]{ display:none!important; }
+
+a{ color:var(--clay-700); }
+
+:focus-visible{
+  outline:3px solid var(--clay-600);
+  outline-offset:3px;
+}
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:99;
+  background:var(--slate-900); color:var(--mortar);
+  padding:var(--s3) var(--s5); font-family:var(--f-cond);
+  text-transform:uppercase; letter-spacing:.12em; text-decoration:none;
+}
+.skip:focus{ left:0; }
+
+.wrap{
+  width:100%; max-width:var(--maxw);
+  margin-inline:auto;
+  padding-inline:var(--gut);
+}
+
+.ico{ width:1.15em; height:1.15em; fill:currentColor; flex:none; }
+
+/* ─── type ──────────────────────────────────────────────────────────── */
+
+.eyebrow{
+  font:600 .8125rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em;
+  color:var(--zinc-600);
+  margin:0 0 var(--s4);
+}
+
+.sec__h,.close__h{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 112,"wght" 700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  line-height:1.0; letter-spacing:-.02em;
+  margin:0 0 var(--s5);
+  text-wrap:balance;
+}
+
+.sec__lede{
+  font-size:clamp(1.125rem,2.4vw,1.375rem);
+  line-height:1.45; color:var(--zinc-600);
+  max-width:56ch; margin:0 0 var(--s8);
+}
+
+/* ─── top bar ───────────────────────────────────────────────────────── */
+
+.bar{
+  position:relative; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:var(--s4);
+  padding:var(--s4) var(--gut);
+  padding-top:calc(var(--s4) + env(safe-area-inset-top,0px));
+  background:var(--slate-900); color:var(--mortar);
+}
+.bar__name{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 104,"wght" 700;
+  font-size:clamp(.8125rem,3.2vw,.9375rem); letter-spacing:-.01em;
+  text-transform:uppercase; white-space:nowrap;
+}
+.bar__call{
+  display:inline-flex; align-items:center; gap:var(--s2);
+  font:700 1rem/1 var(--f-cond); letter-spacing:.04em;
+  color:var(--clay-300); text-decoration:none;
+  min-height:44px; padding-inline:var(--s2); white-space:nowrap;
+}
+.bar__call:hover{ color:#fff; }
+
+/* ─── hero ──────────────────────────────────────────────────────────── */
+
+.hero{
+  position:relative;
+  background:var(--slate-900);
+  color:var(--mortar);
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero__media{ position:absolute; inset:0; z-index:0; }
+.hero__media picture{ display:contents; }
+
+/* Fallback ground so the hero is never a black void if the still is
+   missing: a drained-storm sky built from gradients alone, 0 bytes. */
+.hero__media::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(120% 80% at 70% 0%,#2C3742 0%,transparent 60%),
+    linear-gradient(180deg,#1E2630 0%,#14181C 70%);
+}
+.hero__still,.hero__video{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover;
+  object-position:62% center;
+  opacity:.92;
+}
+.hero__video{ opacity:0; transition:opacity var(--d-slow) var(--e-out); }
+.hero__video.is-on{ opacity:.92; }
+
+/* Legibility veil. Weighted, not flat — it buys contrast under the type and
+   then gets out of the way so the van and the lawn keep their colour. */
+.hero__veil{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(20,24,28,.62) 0%,rgba(20,24,28,.50) 38%,rgba(20,24,28,.86) 100%);
+}
+@media (min-width:900px){
+  .hero__veil{
+    background:
+      linear-gradient(180deg,rgba(20,24,28,.30) 0%,rgba(20,24,28,.12) 42%,rgba(20,24,28,.78) 100%),
+      linear-gradient(90deg,rgba(20,24,28,.90) 0%,rgba(20,24,28,.68) 38%,rgba(20,24,28,.18) 72%,rgba(20,24,28,.05) 100%);
+  }
+}
+
+/* The weatherline: a roof profile cut into the bottom edge of the hero.
+   Pure CSS, no JS, no image request. This is the signature element and it
+   reappears as a divider at every section boundary below. */
+.hero::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:52px; z-index:2;
+  background:var(--mortar);
+  clip-path:polygon(0 100%, 0 74%, 34% 8%, 68% 62%, 100% 38%, 100% 100%);
+}
+@media (min-width:768px){ .hero::after{ height:84px; } }
+
+.hero__body{
+  position:relative; z-index:3;
+  padding:var(--s8) var(--gut) calc(var(--s9) + 34px);
+  max-width:var(--maxw); margin-inline:auto;
+}
+@media (min-width:768px){
+  .hero__body{ padding-block:var(--s9) calc(var(--s10) + 52px); }
+}
+
+.hero .eyebrow{ color:var(--zinc-400); }
+
+.hero__h{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 118,"wght" 800;
+  font-size:clamp(2.5rem,9.2vw,6.25rem);
+  line-height:.94; letter-spacing:-.03em;
+  margin:0 0 var(--s5);
+  max-width:15ch;
+  text-wrap:balance;
+}
+
+.hero__sub{
+  font-size:clamp(1.125rem,2.4vw,1.5rem);
+  line-height:1.45; color:var(--mortar);
+  max-width:46ch; margin:0 0 var(--s6);
+}
+
+.hero__acts{ display:flex; flex-wrap:wrap; gap:var(--s3); margin-bottom:var(--s5); }
+
+.hero__note{
+  font:600 .8125rem/1.5 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.12em;
+  color:var(--zinc-400); margin:0;
+}
+
+/* ─── buttons ───────────────────────────────────────────────────────── */
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--s2);
+  min-height:52px; padding:var(--s3) var(--s6);
+  border-radius:4px; border:2px solid transparent;
+  font:700 1.0625rem/1 var(--f-cond); letter-spacing:.05em;
+  text-transform:uppercase; text-decoration:none; cursor:pointer;
+  transition:background var(--d-fast) var(--e-out),
+             color var(--d-fast) var(--e-out),
+             border-color var(--d-fast) var(--e-out),
+             transform var(--d-fast) var(--e-out);
+}
+.btn--go{ background:var(--clay-600); color:#fff; border-color:var(--clay-600); }
+.btn--go:hover,.btn--go:focus-visible{ background:var(--clay-700); border-color:var(--clay-700); }
+.btn--go:active{ transform:translateY(1px); }
+
+.btn--quiet{ background:transparent; color:var(--mortar); border-color:rgba(228,226,220,.4); }
+.btn--quiet:hover,.btn--quiet:focus-visible{ border-color:var(--mortar); background:rgba(228,226,220,.08); }
+
+.btn--big{ min-height:64px; font-size:1.375rem; padding-inline:var(--s7); }
+
+/* ─── sections + the recurring weatherline divider ──────────────────── */
+
+.sec{ position:relative; padding-block:var(--sec-y); }
+
+.sec + .sec::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:2px;
+  background:
+    linear-gradient(90deg,var(--rule) 0 100%) 0 0/100% 1px no-repeat;
+}
+
+.sec--trades{ background:var(--mortar); }
+
+.sec--how{
+  background:var(--limewash);
+  border-block:1px solid var(--rule);
+}
+
+.sec--shots{ background:var(--mortar); }
+
+/* ─── trades: running-bond coursing ─────────────────────────────────── */
+
+.course{ list-style:none; margin:0; padding:0; }
+
+.course__row{
+  display:flex; gap:var(--s4);
+  padding-block:var(--s6);
+  border-top:1px solid var(--rule);
+}
+.course__row:last-child{ border-bottom:1px solid var(--rule); }
+
+.course__n{
+  font:700 .875rem/1.4 var(--f-cond);
+  letter-spacing:.1em; color:var(--clay-700);
+  flex:none; width:2.5em; padding-top:.35em;
+}
+
+.course__t h3{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:clamp(1.375rem,3vw,1.75rem);
+  line-height:1.15; margin:0 0 var(--s3);
+}
+.course__t p{ margin:0; color:var(--zinc-600); max-width:62ch; }
+
+/* The offset only exists where there's room for it to mean something. */
+@media (min-width:900px){
+  .course__row{ gap:var(--s7); padding-block:var(--s7); align-items:baseline; }
+  .course__row:nth-child(even){ padding-left:calc(100% / 12); }
+  .course__n{ width:4em; font-size:1rem; }
+  .course__t{
+    flex:1;
+    display:grid;
+    grid-template-columns:minmax(12ch,4fr) 7fr;
+    gap:var(--s7);
+    align-items:baseline;
+  }
+  .course__t h3{ margin:0; }
+  .course__t p{ max-width:none; }
+}
+
+/* ─── process ───────────────────────────────────────────────────────── */
+
+.steps{
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:var(--s6);
+}
+@media (min-width:768px){
+  .steps{ grid-template-columns:repeat(2,1fr); gap:var(--s7) var(--s8); }
+}
+@media (min-width:1200px){
+  .steps{ grid-template-columns:repeat(4,1fr); gap:var(--s6); }
+}
+
+.steps__i{ border-top:2px solid var(--slate-800); padding-top:var(--s4); }
+
+.steps__n{
+  display:block;
+  font:700 1rem/1 var(--f-cond); letter-spacing:.1em;
+  color:var(--clay-700); margin-bottom:var(--s3);
+}
+.steps__i h3{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:1.25rem; line-height:1.2; margin:0 0 var(--s3);
+}
+.steps__i p{ margin:0; color:var(--zinc-600); }
+
+/* ─── gallery ───────────────────────────────────────────────────────── */
+
+.shots{
+  display:grid; gap:var(--s4);
+  padding-inline:var(--gut);
+  max-width:var(--maxw); margin-inline:auto;
+  margin-top:var(--s7);
+}
+@media (min-width:640px){ .shots{ grid-template-columns:repeat(2,1fr); gap:var(--s5); } }
+@media (min-width:1024px){ .shots{ grid-template-columns:repeat(4,1fr); } }
+
+.shot{ margin:0; }
+
+/* aspect-ratio box reserves space, so no layout shift when a real photo
+   lands — and the procedural placeholder never looks like a broken image */
+.shot__f{
+  position:relative; aspect-ratio:4/3; overflow:hidden;
+  background:
+    repeating-linear-gradient(135deg,rgba(78,91,102,.07) 0 10px,transparent 10px 20px),
+    linear-gradient(160deg,#D9D6CE 0%,#C9C5BB 100%);
+  border:1px solid var(--rule);
+}
+.shot__f img{ width:100%; height:100%; object-fit:cover; }
+.shot__f.is-empty img{ display:none; }
+.shot__f.is-empty::after{
+  content:"Photo to come";
+  position:absolute; inset:auto var(--s4) var(--s4) var(--s4);
+  font:600 .75rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em; color:var(--zinc-600);
+}
+
+.shot figcaption{
+  font:600 .8125rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em;
+  color:var(--zinc-600); padding-top:var(--s3);
+}
+
+/* ─── close ─────────────────────────────────────────────────────────── */
+
+.sec--close{ background:var(--slate-900); color:var(--mortar); }
+.sec--close .eyebrow{ color:var(--zinc-400); }
+
+.close__h{
+  font-variation-settings:"wdth" 115,"wght" 800;
+  font-size:clamp(2.25rem,8vw,5rem);
+  letter-spacing:-.03em; margin-bottom:var(--s4);
+}
+.close__sub{
+  font-size:clamp(1.125rem,2.4vw,1.375rem);
+  color:var(--zinc-400); max-width:40ch; margin:0 0 var(--s7);
+}
+
+.facts{
+  display:grid; gap:var(--s5);
+  margin:var(--s8) 0 0; padding-top:var(--s6);
+  border-top:1px solid var(--rule-dark);
+}
+@media (min-width:640px){ .facts{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1024px){ .facts{ grid-template-columns:repeat(4,1fr); } }
+
+.facts dt{
+  font:600 .75rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em;
+  color:var(--zinc-400); margin-bottom:var(--s2);
+}
+.facts dd{ margin:0; font-size:1.0625rem; color:var(--mortar); }
+
+/* ─── footer ────────────────────────────────────────────────────────── */
+
+.foot{ background:var(--slate-900); color:var(--zinc-400); border-top:1px solid var(--rule-dark); }
+.foot__in{ padding-block:var(--s7); }
+.foot__n{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 108,"wght" 700;
+  text-transform:uppercase; color:var(--mortar);
+  margin:0 0 var(--s3); font-size:1rem;
+}
+.foot__m{ margin:0 0 var(--s4); font-size:.9375rem; line-height:1.6; }
+.foot__c{ margin:0; font-size:.8125rem; }
+
+/* ─── mobile call dock ──────────────────────────────────────────────── */
+
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:50;
+  display:flex; align-items:center; justify-content:center; gap:var(--s2);
+  min-height:60px;
+  padding:var(--s3) var(--s4);
+  padding-bottom:calc(var(--s3) + env(safe-area-inset-bottom,0px));
+  background:var(--clay-600); color:#fff; text-decoration:none;
+  font:700 1.125rem/1 var(--f-cond); letter-spacing:.05em; text-transform:uppercase;
+  box-shadow:0 -2px 16px rgba(20,24,28,.28);
+}
+.dock:active{ background:var(--clay-700); }
+
+@media (min-width:900px){ .dock{ display:none; } }
+@media (max-width:899px){ body{ padding-bottom:76px; } }
+
+/* ─── scroll-linked reveal states ───────────────────────────────────── */
+/* Applied by JS only. Without JS these classes never appear and every
+   element renders in its final state — the page is fully readable. */
+
+.js [data-course],
+.js [data-step]{ opacity:0; transform:translateY(22px); }
+
+/* ─── reduced motion ────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+  .js [data-course],
+  .js [data-step]{ opacity:1!important; transform:none!important; }
+  .hero__video{ display:none; }
+}
