@@ -15,9 +15,33 @@
    ═══════════════════════════════════════════════════════════════════════ */
 
 var REVIEWS = [
-  // { text: "…", name: "…", stars: 5 },
+  { text: "Tony is a great guy and his crew did excellent work repairing some damaged sections of my gutters and re-flashing one of my windows. Highly recommend!!!",
+    name: "David Stearns", stars: 5 },
+
+  { text: "I hired Grand NJ construction to replace my chimney. They did a great job on it im so happy with the results. Thank you Tony from Grand NJ construction. Definitely will use you guys again on other projects",
+    name: "Lifetime Quality Construction", stars: 5 },
+
+  { text: "Tony and his team did a great job. They fixed pavers in the front of the house, cleaned gutters, install gutter guards, and water proofed basement from the front outside. Would definitely work with Tony and team again.",
+    name: "Jeet Patel", stars: 5 },
+
+  { text: "Tony and his team were the best! We had our front stairs and foundation redone. They came in at a fair price and came everyday until the job was finished! Highly recommend for any masonry work or more.",
+    name: "Kevin Ginty", stars: 5 },
+
+  { text: "Great experience from start to finish! I needed urgent front steps repair in North Bergen, and they came out the next day. They fixed cracks, repointed the bricks, and now the steps look brand new. Reliable, affordable, and professional masonry services!",
+    name: "Gonzalo Saloj", stars: 5 },
+
+  { text: "I had the great pleasure meeting Tony from Grand NJ construction. They transform the front of my house with my new steps. Definitely will recommend them to my family members and my neighbors.",
+    name: "William Delgado", stars: 5 },
+
+  { text: "What a great pleasure working with Tony from Grand NJ construction llc. They did an amazing job on my front steps and great value of price thank you so much",
+    name: "Benard Myrta", stars: 5 },
+
+  { text: "Beautiful work! Professional, courteous, and timely. Tony is amazing; thank you!",
+    name: "Yashika Watkins", stars: 5 }
 ];
 
+// Overall rating and total review count, both still NEEDED from the listing.
+// count: 0 keeps the headline figure hidden rather than guessing at it.
 var SCORE = { rating: null, count: 0 };
 
 (function () {

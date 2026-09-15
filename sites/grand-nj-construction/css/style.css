@@ -507,6 +507,9 @@ a{ color:var(--clay-700); }
 .vh{
   position:absolute; width:1px; height:1px; overflow:hidden;
   clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+  /* never rendered, but inheriting the gold star colour made contrast
+     checkers flag it — pin it to body ink so audits stay signal-only */
+  color:var(--slate-800);
 }
 
 /* ─── close ─────────────────────────────────────────────────────────── */
