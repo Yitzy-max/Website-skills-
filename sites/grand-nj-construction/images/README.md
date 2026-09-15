@@ -18,14 +18,22 @@ generator, so the video and the poster are the same image.
 | `job-02` | Full roof replacement, crew on a colonial | Full roof replacement | 1284×956 |
 | `job-03` | Roof stripped to deck, van in the driveway | Tear-off to the deck | 1284×1368 |
 | `job-04` | Front steps broken out for rebuild | Front steps, mid-rebuild | 1284×974 |
+| `job-05` | Freshly poured sidewalk and curb, taped off | Sidewalk and curb, curing | 1284×1654 |
 
 Each keeps its **native aspect ratio** — forcing the tall chimney shot into a
 4:3 box wrecked it, and the staggered heights suit the coursing idea anyway.
 The ratio is set inline per slot so the box is reserved before the image
 arrives and nothing shifts.
 
-**No siding or gutters photo yet.** Those two trades are described on the page
-but not shown. One of each would complete the set.
+**No siding or gutters photo yet.** Both trades are described on the page but
+not shown, and that is the honest state — the gallery does not need one image
+per trade. `job-05` was supplied as "siding" but is concrete flatwork; it is
+captioned for what it actually is and sits with the masonry work.
+
+Do NOT fill the gutter slot with a generated image. A synthetic photo of gutter
+work among real job photos reads as a job they did, which is fabricated proof,
+and the owner would know instantly that he never did it. Either get a real
+photo or show nothing.
 
 ## Sizing
 
