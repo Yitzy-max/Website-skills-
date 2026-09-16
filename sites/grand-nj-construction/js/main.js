@@ -314,58 +314,33 @@ var SCORE = { rating: null, count: 0 };
       });
     });
 
-    /* ── process: dashed string between the pinned cards ────────────
-       Drawn from the cards' real measured positions rather than guessed
-       offsets, so the string stays attached at any width. Redrawn on
-       resize and whenever fonts settle and the boxes move. */
-    var flow = document.querySelector('[data-flow]');
-    if (flow) {
-      var wires = flow.querySelector('[data-wires]');
-      var nodes = gsap.utils.toArray('[data-node]', flow);
-
-      function drawWires() {
-        if (!wires || nodes.length < 2) return;
-        var box = flow.getBoundingClientRect();
-        wires.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
-        var d = '';
-        for (var i = 0; i < nodes.length - 1; i++) {
-          var a = nodes[i].getBoundingClientRect();
-          var b = nodes[i + 1].getBoundingClientRect();
-          var ac = (a.left + a.right) / 2, bc = (b.left + b.right) / 2;
-
-          // Stacked (one column) vs zigzagged. Below 900px the cards sit
-          // full width on the same centre line, and the diagonal that reads
-          // well on desktop swings clean off the side of the screen — so the
-          // string simply drops between them instead.
-          if (Math.abs(ac - bc) < 24) {
-            var x = ac - box.left;
-            d += 'M' + x + ' ' + (a.bottom - box.top) + ' L' + x + ' ' + (b.top - box.top) + ' ';
-            continue;
-          }
-
-          // leave from the lower inside corner, arrive at the upper inside one
-          var goingRight = ac < bc;
-          var x1 = (goingRight ? a.right : a.left) - box.left;
-          var y1 = a.bottom - box.top - 12;
-          var x2 = (goingRight ? b.left : b.right) - box.left;
-          var y2 = b.top - box.top + 14;
-          var mx = (x1 + x2) / 2;
-          d += 'M' + x1 + ' ' + y1 + ' C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2 + ' ';
-        }
-        wires.innerHTML = '<path d="' + d + '"/>';
-      }
-
-      drawWires();
-      window.addEventListener('resize', drawWires);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWires);
-      window.ScrollTrigger.addEventListener('refresh', drawWires);
-    }
-
-    /* ── process cards reveal ───────────────────────────────────────── */
+    /* ── process cards pop in ───────────────────────────────────────
+       Still scroll-LINKED rather than a fire-once entrance: scrub drives it,
+       so it runs backwards when you scroll up. The pop comes from the scale
+       curve — 0.86 up through a 1.03 overshoot and back to 1 — rather than
+       from a canned easing on a timer. */
+    // The pop is applied to the ITEM, not to .paper. .paper already carries
+    // the component's rotate() plus its hover transform in CSS, and an inline
+    // transform from GSAP would replace both outright. Two elements, two
+    // transforms, they compose.
     gsap.utils.toArray('[data-step]').forEach(function (step) {
-      gsap.to(step, {
-        opacity: 1, y: 0, ease: 'none',
-        scrollTrigger: { trigger: step, start: 'top 94%', end: 'top 68%', scrub: true }
+      window.ScrollTrigger.create({
+        trigger: step,
+        start: 'top 92%',
+        end: 'top 58%',
+        scrub: true,
+        onUpdate: function (self) {
+          var t = self.progress;
+          // overshoot: peaks at 1.03 around 70% through, settles at 1
+          var scale = t < 0.7
+            ? 0.86 + (1.03 - 0.86) * (t / 0.7)
+            : 1.03 - 0.03 * ((t - 0.7) / 0.3);
+          gsap.set(step, {
+            opacity: Math.min(1, t * 2.2),
+            scale: scale,
+            y: (1 - t) * 18
+          });
+        }
       });
     });
 

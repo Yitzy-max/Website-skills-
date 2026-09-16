@@ -127,12 +127,16 @@ a{ color:var(--clay-700); }
   font-variation-settings:"wdth" 104,"wght" 700;
   font-size:clamp(.8125rem,3.2vw,.9375rem); letter-spacing:-.01em;
   text-transform:uppercase; white-space:nowrap;
+  /* the fallback face is wider than Barlow Condensed, so during font swap
+     this can briefly push the header past the viewport — let it truncate
+     instead of jogging the page sideways */
+  min-width:0; overflow:hidden; text-overflow:ellipsis;
 }
 .bar__call{
   display:inline-flex; align-items:center; gap:var(--s2);
   font:700 1rem/1 var(--f-cond); letter-spacing:.04em;
   color:var(--clay-300); text-decoration:none;
-  min-height:44px; padding-inline:var(--s2); white-space:nowrap;
+  min-height:44px; padding-inline:var(--s2); white-space:nowrap; flex:none;
 }
 .bar__call:hover{ color:#fff; }
 
@@ -320,100 +324,222 @@ a{ color:var(--clay-700); }
   .course__t p{ max-width:none; }
 }
 
-/* ─── process: cards pinned to a board ──────────────────────────────────
-   A dark board with faint horizontal rules, cards pinned to it in a zigzag,
-   dashed string running between them. Card colours are the page's own trade
-   materials, each checked against its own text:
-     clay-600  white 6.05   zinc-600 white 6.97
-     patina    slate 5.02   clay-700 white 7.99 */
+/* ─── trades: stacking cards ────────────────────────────────────────────
+   Sticky slots, one per card. Scale is applied by JS; without it the cards
+   simply stack and read normally, so the section degrades to a plain list of
+   five panels rather than collapsing. */
+
+.stack{
+  width:100%; max-width:var(--maxw);
+  margin-inline:auto; padding-inline:var(--gut);
+  margin-top:var(--s5);
+}
+
+.stack__slot{
+  position:sticky; top:0;
+  height:78svh; min-height:460px;
+}
+
+.stack__lift{
+  position:relative; height:100%;
+  transform-origin:top center;
+  will-change:transform;
+}
+
+.stack__card{
+  position:relative;
+  height:90%;
+  display:flex; flex-direction:column; gap:var(--s4);
+  background:var(--card);
+  color:var(--card-ink);
+  border:1px solid var(--rule-dark);
+  border-radius:6px;
+  padding:var(--s6);
+  overflow:hidden;
+}
+
+.stack__text{ display:flex; flex-direction:column; justify-content:center; flex:1; min-height:0; }
+
+.stack__n{
+  font:700 .8125rem/1 var(--f-cond);
+  letter-spacing:.16em; color:var(--signal);
+  margin:0 0 var(--s3);
+}
+.stack__card h3{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 110,"wght" 700;
+  font-size:clamp(1.75rem,5vw,3rem);
+  line-height:1.0; letter-spacing:-.02em;
+  color:var(--signal);
+  margin:0 0 var(--s4);
+}
+.stack__card p:not(.stack__n){
+  margin:0; max-width:46ch;
+  color:var(--card-ink);
+  font-size:clamp(.9375rem,2.2vw,1.125rem);
+  line-height:1.55;
+}
+
+.stack__shot{
+  position:relative; flex:none;
+  width:100%; aspect-ratio:4/3;
+  max-height:38%;
+  overflow:hidden; border-radius:4px;
+  background:
+    repeating-linear-gradient(135deg,rgba(228,226,220,.05) 0 10px,transparent 10px 20px),
+    linear-gradient(160deg,#2A323A 0%,#1F262D 100%);
+}
+.stack__shot picture{ display:contents; }
+.stack__shot img{
+  width:100%; height:100%; object-fit:cover;
+  opacity:1; transition:opacity var(--d-slow) var(--e-out);
+}
+.stack__shot.is-empty img{ opacity:0; }
+.stack__shot.is-empty::after{
+  content:"Photo to come";
+  position:absolute; inset:auto var(--s4) var(--s4) var(--s4);
+  font:600 .6875rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em; color:var(--zinc-400);
+}
+
+@media (min-width:900px){
+  .stack__card{
+    flex-direction:row; align-items:center;
+    gap:var(--s7); padding:var(--s7);
+    height:88%;
+  }
+  .stack__text{ flex:1 1 52%; }
+  .stack__shot{
+    flex:1 1 48%; width:auto; max-height:none;
+    align-self:stretch; aspect-ratio:auto;
+    border-radius:4px;
+  }
+}
+
+/* ─── process: how it works ─────────────────────────────────────────────
+   Port of the supplied React component. Paper card wrapping a tinted panel,
+   pin centred on top, the component's own absolute offsets and rotations on
+   desktop, its exact dashed curve with the same marching-ants loop.
+
+   Colours are the client's call — dark blue panel, orange type — checked
+   rather than assumed: orange #F0803C on navy #17263A is 5.72:1, title
+   13.52:1, body 9.40:1. */
+
+:root{
+  --navy:#17263A;
+  --navy-edge:#26405E;
+  --orange:#F0803C;
+  --paper:#232B33;
+}
 
 .sec--how{
   background:
     repeating-linear-gradient(180deg,
-      transparent 0 39px, rgba(228,226,220,.045) 39px 40px),
+      transparent 0 31px, rgba(228,226,220,.055) 31px 32px),
     var(--slate-900);
   color:var(--card-ink);
   border-block:1px solid var(--rule-dark);
+  overflow:hidden;
 }
 .sec--how .eyebrow{ color:var(--zinc-400); }
 .sec--how .sec__h{ color:var(--card-ink); }
 
 .flow{
   position:relative;
-  width:100%; max-width:var(--maxw);
+  width:100%; max-width:1000px;
   margin-inline:auto; padding-inline:var(--gut);
   margin-top:var(--s6);
 }
 
-/* connectors are drawn from measured positions — see js/main.js */
-.flow__wires{
-  position:absolute; inset:0; width:100%; height:100%;
-  pointer-events:none; z-index:0; overflow:visible;
-}
-.flow__wires path{
-  fill:none; stroke:var(--zinc-400); stroke-width:1.5;
-  stroke-dasharray:7 7; opacity:.55;
-}
+.flow__wires{ display:none; }
 
 .flow__list{
   position:relative; z-index:1;
   list-style:none; margin:0; padding:0;
-  display:flex; flex-direction:column; gap:var(--s6);
+  display:flex; flex-direction:column; gap:var(--s5);
 }
 
-.flow__board{
+/* the paper card */
+.paper{
   position:relative;
-  background:var(--card-2);
+  background:var(--paper);
   border:1px solid var(--rule-dark);
-  border-radius:12px;
-  padding:var(--s6) var(--s4) var(--s4);
-  max-width:420px;
+  border-radius:25px;
+  padding:8px;
+  box-shadow:0 10px 20px rgba(0,0,0,.34);
 }
-
 .pin{
-  position:absolute; top:10px; left:50%;
-  width:20px; height:20px;
-  transform:translateX(-50%) rotate(-32deg);
-  fill:var(--signal);
-  filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));
+  display:block; width:30px; height:30px;
+  margin:6px auto 14px;
+  color:var(--orange);
 }
 
-.pcard{
-  border-radius:8px;
-  padding:var(--s5);
-  box-shadow:0 10px 22px rgba(0,0,0,.35);
+/* the tinted panel inside it */
+.panel{
+  background:var(--navy);
+  border:1px solid var(--navy-edge);
+  border-radius:15px;
+  padding:15px;
 }
-.pcard__n{
+.panel__n{
+  display:block;
   font-family:var(--f-disp);
-  font-variation-settings:"wdth" 112,"wght" 800;
+  font-variation-settings:"wdth" 108,"wght" 800;
   font-size:2rem; line-height:1;
-  margin:0 0 var(--s3); opacity:.92;
+  color:var(--orange);
+  margin-bottom:14px;
 }
-.pcard h3{
+.panel h3{
   font-family:var(--f-disp);
   font-variation-settings:"wdth" 104,"wght" 700;
-  font-size:1.25rem; line-height:1.15;
-  margin:0 0 var(--s3);
+  font-size:1.25rem; line-height:1.05;
+  color:var(--card-ink);
+  margin:0 0 10px;
 }
-.pcard p:not(.pcard__n){
-  margin:0; font-size:.9375rem; line-height:1.55;
+.panel p{
+  margin:0;
+  font-size:.875rem; line-height:1.35;
+  letter-spacing:-.01em;
+  color:#C3CCD6;
 }
 
-.pcard--1{ background:var(--clay-600); color:#fff; }
-.pcard--2{ background:var(--zinc-600); color:#fff; }
-.pcard--3{ background:var(--patina);   color:var(--slate-900); }
-.pcard--4{ background:var(--clay-700); color:#fff; }
-
-/* zigzag only where there is room for it to mean anything */
+/* Desktop: the component's own absolute layout, offsets and rotations.
+   Scaled from its 1130px/5-card map down to the 900px/4-card one. */
 @media (min-width:900px){
-  .flow__list{ gap:var(--s7); }
-  .flow__item{ display:flex; }
-  .flow__item:nth-child(even){ justify-content:flex-end; }
-  .flow__board{ width:44%; max-width:none; }
-  .flow__item:nth-child(odd)  .flow__board{ transform:rotate(-1.1deg); }
-  .flow__item:nth-child(even) .flow__board{ transform:rotate(1.4deg); }
-  .pcard__n{ font-size:2.5rem; }
-  .pcard h3{ font-size:1.375rem; }
+  .flow{ height:816px; }
+  .flow__wires{
+    display:block;
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; z-index:0; overflow:visible;
+  }
+  .flow__wires path{
+    fill:none; stroke:var(--zinc-600); stroke-width:2;
+    stroke-dasharray:8 6; stroke-linecap:round;
+    animation:ants 3s linear infinite;
+  }
+
+  .flow__list{ display:block; height:100%; }
+  .flow__item{ position:absolute; width:280px; }
+  .flow__item--1{ top:0;     left:15%;  }
+  .flow__item--2{ top:120px; right:15%; }
+  .flow__item--3{ top:450px; left:15%;  }
+  .flow__item--4{ top:570px; right:10%; }
+
+  .flow__item--1 .paper,
+  .flow__item--3 .paper{ transform:rotate(8deg); }
+  .flow__item--2 .paper,
+  .flow__item--4 .paper{ transform:rotate(-8deg); }
+
+  .paper{ transition:transform var(--d-base) var(--e-out); }
+  .flow__item:hover{ z-index:30; }
+  .flow__item:hover .paper{ transform:rotate(0deg) scale(1.05); }
+}
+
+/* marching ants — 140 is a multiple of the 14px dash cycle, so it loops
+   without a visible jump */
+@keyframes ants{
+  from{ stroke-dashoffset:0; }
+  to{ stroke-dashoffset:-140; }
 }
 
 /* ─── reviews marquee ──────────────────────────────────────────────────
@@ -612,6 +738,9 @@ a{ color:var(--clay-700); }
   .js .hero__body [data-hero="2"]{ opacity:1; transform:none; }
 }
 
+/* the pop's resting state — JS drives it, this is only the origin */
+.js .flow__item{ transform-origin:center center; }
+
 /* ─── scroll-linked reveal states ───────────────────────────────────── */
 /* Applied by JS only. Without JS these classes never appear and every
    element renders in its final state — the page is fully readable. */
@@ -637,7 +766,8 @@ a{ color:var(--clay-700); }
                 margin-bottom:var(--s6); }
   /* a marquee is motion by definition — stop it and let people scroll it */
   .marquee__track{ animation:none!important; }
-  .flow__board{ transform:none!important; }
+  .paper{ transform:none!important; }
+  .flow__wires path{ animation:none!important; }
   .marquee{ overflow-x:auto!important; -webkit-mask-image:none!important; mask-image:none!important; }
   .stack__card{ height:auto!important; }
   .stack__lift{ transform:none!important; height:auto!important; }
