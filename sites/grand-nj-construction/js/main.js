@@ -93,75 +93,93 @@ var SCORE = { rating: null, count: 0 };
 })();
 
 /* ═══════════════════════════════════════════════════════════════════════
-   CONTACT FORM
+   FORMS — the contact form and the footer newsletter
 
-   The endpoint lives in the form's own action="" in index.html, and it is
-   EMPTY on purpose: there is no real inbox or form service on file for
-   Grand NJ yet, and a form that pretends to send is worse than no form — a
-   customer types out a leak, hits send, sees a tick, and nobody ever calls
-   them back.
+   Each form's endpoint lives in its own action="" in index.html, and both
+   are EMPTY on purpose: there is no inbox, form service or mailing list on
+   file for Grand NJ yet, and a form that pretends to send is worse than no
+   form — a customer types out a leak, hits send, sees a tick, and nobody
+   ever calls them back.
 
    While action is empty the button still works, but it says plainly that
    the form is not connected and points at the phone number, which is real.
 
    Fill action= in index.html with anything that accepts a POST of form
-   fields — Formspree, Netlify Forms, a Zapier catch hook — and this file
-   starts posting to it. Keeping it in the attribute rather than here means
-   the form also submits the ordinary way if JavaScript never loads.
+   fields — Formspree, Netlify Forms, a Zapier catch hook, a Mailchimp
+   embed URL — and this file starts posting to it. Keeping it in the
+   attribute rather than here means each form also submits the ordinary way
+   if JavaScript never loads.
    ═══════════════════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  var form = document.querySelector('[data-form]');
-  if (!form) return;
+  var TEL = '<a href="tel:+15512225512">551-222-5512</a>';
 
-  var note = form.querySelector('[data-form-note]');
-  var btn  = form.querySelector('button[type="submit"]');
-  var endpoint = (form.getAttribute('action') || '').trim();
+  function wire(form, note, copy) {
+    if (!form || !note) return;
 
-  function say(html) {
-    note.innerHTML = html;
-    note.hidden = false;
-    /* the notice sits below the button, which on a phone puts it under the
-       sticky call dock — scroll it up or nobody ever sees the answer */
-    note.scrollIntoView({ block: 'center', behavior: 'auto' });
-  }
+    var btn = form.querySelector('button[type="submit"]');
+    var endpoint = (form.getAttribute('action') || '').trim();
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    /* let the browser's own validation speak first — it is better at this
-       than anything hand-rolled and it is already translated */
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-
-    if (!endpoint) {
-      say('This form isn\'t hooked up to an inbox yet, so nothing was sent. ' +
-          'Call <a href="tel:+15512225512">551-222-5512</a> and we\'ll pick up.');
-      return;
+    function say(html) {
+      note.innerHTML = html;
+      note.hidden = false;
+      /* the notice sits below the button, which on a phone can put it under
+         the sticky call dock — scroll it up or nobody sees the answer */
+      note.scrollIntoView({ block: 'center', behavior: 'auto' });
     }
 
-    var label = btn.innerHTML;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: new FormData(form)
-    }).then(function (r) {
-      if (!r.ok) throw new Error(r.status);
-      form.reset();
-      say('Got it — we\'ll be in touch. If it\'s urgent, call ' +
-          '<a href="tel:+15512225512">551-222-5512</a>.');
-    }).catch(function () {
-      say('That didn\'t go through. Call <a href="tel:+15512225512">551-222-5512</a> ' +
-          'and we\'ll take it over the phone.');
-    }).then(function () {
-      btn.disabled = false;
-      btn.innerHTML = label;
+      /* let the browser's own validation speak first — it is better at this
+         than anything hand-rolled and it is already translated */
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+
+      if (!endpoint) { say(copy.off); return; }
+
+      var label = btn.innerHTML;
+      btn.disabled = true;
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        form.reset();
+        say(copy.ok);
+      }).catch(function () {
+        say(copy.bad);
+      }).then(function () {
+        btn.disabled = false;
+        btn.innerHTML = label;
+      });
     });
-  });
+  }
+
+  wire(
+    document.querySelector('[data-form]'),
+    document.querySelector('[data-form-note]'),
+    {
+      off: 'This form isn\'t hooked up to an inbox yet, so nothing was sent. ' +
+           'Call ' + TEL + ' and we\'ll pick up.',
+      ok:  'Got it — we\'ll be in touch. If it\'s urgent, call ' + TEL + '.',
+      bad: 'That didn\'t go through. Call ' + TEL + ' and we\'ll take it over the phone.'
+    }
+  );
+
+  wire(
+    document.querySelector('[data-news]'),
+    document.querySelector('[data-news-note]'),
+    {
+      off: 'The mailing list isn\'t set up yet, so this didn\'t go anywhere. ' +
+           'Call ' + TEL + ' if you need something now.',
+      ok:  'You\'re on the list. A few emails a year, nothing else.',
+      bad: 'That didn\'t go through — try again in a minute.'
+    }
+  );
 })();
 
 /* ═══════════════════════════════════════════════════════════════════════

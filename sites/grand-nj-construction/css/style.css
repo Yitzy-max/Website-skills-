@@ -264,6 +264,8 @@ a{ color:var(--clay-700); }
 
 .btn--big{ min-height:64px; font-size:1.375rem; padding-inline:var(--s7); }
 
+.btn[disabled],.news__go[disabled]{ opacity:.55; cursor:wait; }
+
 /* ─── sections + the recurring weatherline divider ──────────────────── */
 
 .sec{ position:relative; padding-block:var(--sec-y); }
@@ -439,6 +441,13 @@ a{ color:var(--clay-700); }
   --orange-mid:#D96520;
   --orange-tint:#FCEBE0;
   --orange-ring:rgba(190,84,20,.28);
+
+  /* footer, on the navy ground. Orange is 5.72:1 there so it works as real
+     text, not just an accent. Body copy sits lighter at 9.99:1 so the page
+     does not become a wall of orange. */
+  --foot-body:#C9D2DC;
+  --foot-line:#4A5C73;
+  --foot-rule:#2E4058;
   /* field borders are UI, so they need 3:1 against white, not 1.86 like
      --rule does. Warm grey so it still belongs to the mortar family. */
   --field-line:#8E887C;
@@ -797,18 +806,232 @@ a{ color:var(--clay-700); }
 }
 .facts dd{ margin:0; font-size:1.0625rem; color:var(--mortar); }
 
+/* ─── about ─────────────────────────────────────────────────────────── */
+
+.sec--about{ background:var(--mortar); border-block:1px solid var(--rule); }
+
+.about{ display:grid; gap:var(--s5); }
+@media (min-width:900px){
+  .about{ grid-template-columns:5fr 7fr; gap:var(--s9); align-items:start; }
+  .about__head .sec__h{ margin-bottom:0; }
+}
+
+.about__body p{ margin:0 0 var(--s4); font-size:1.0625rem; line-height:1.65; }
+.about__body p:last-child{ margin-bottom:0; }
+
+.about__cred{
+  padding-top:var(--s4);
+  border-top:1px solid var(--rule);
+  color:var(--zinc-600);
+}
+.about__cred strong{ color:var(--clay-700); font-variant-numeric:tabular-nums; }
+
 /* ─── footer ────────────────────────────────────────────────────────── */
 
-.foot{ background:var(--slate-900); color:var(--zinc-400); border-top:1px solid var(--rule-dark); }
-.foot__in{ padding-block:var(--s7); }
-.foot__n{
-  font-family:var(--f-disp);
-  font-variation-settings:"wdth" 108,"wght" 700;
-  text-transform:uppercase; color:var(--mortar);
-  margin:0 0 var(--s3); font-size:1rem;
+.foot{
+  background:var(--navy);
+  color:var(--foot-body);
+  border-top:1px solid var(--rule-dark);
 }
-.foot__m{ margin:0 0 var(--s4); font-size:.9375rem; line-height:1.6; }
-.foot__c{ margin:0; font-size:.8125rem; }
+.foot__in{ padding-block:var(--s7); }
+@media (min-width:1024px){ .foot__in{ padding-block:var(--s9); } }
+
+.foot__cols{
+  display:grid; gap:var(--s7);
+  padding-top:var(--s7);
+  border-top:1px solid var(--foot-rule);
+}
+@media (min-width:760px){
+  .foot__cols{ grid-template-columns:repeat(2,1fr); gap:var(--s7) var(--s8); }
+}
+@media (min-width:1024px){
+  .foot__cols{ grid-template-columns:1.7fr 1fr 1.5fr; gap:var(--s8); }
+}
+
+.foot__h{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 112,"wght" 800;
+  font-size:clamp(1.875rem,4.4vw,2.75rem);
+  line-height:1.0; letter-spacing:-.02em;
+  color:var(--orange);
+  margin:0 0 var(--s4);
+}
+.foot__h--sm{
+  font-variation-settings:"wdth" 108,"wght" 700;
+  font-size:1.125rem; text-transform:uppercase; letter-spacing:.06em;
+  margin-bottom:var(--s5);
+}
+
+.foot__p{
+  margin:0 0 var(--s5);
+  font-size:.9375rem; line-height:1.6;
+  max-width:36ch;
+}
+
+/* newsletter — the component's pill field with the send disc on the end */
+.news{
+  display:flex; align-items:center;
+  max-width:360px;
+  padding:4px 4px 4px var(--s4);
+  border:1px solid var(--foot-line);
+  border-radius:999px;
+  transition:border-color var(--d-fast) var(--e-out),
+             box-shadow var(--d-fast) var(--e-out);
+}
+.news:focus-within{
+  border-color:var(--orange);
+  box-shadow:0 0 0 3px rgba(240,128,60,.25);
+}
+.news__c{
+  flex:1; min-width:0;
+  height:44px; padding:0 var(--s2) 0 0;
+  border:0; outline:none; background:transparent;
+  font:400 1rem/1 var(--f-body);
+  color:var(--limewash);
+}
+.news__c::placeholder{ color:var(--foot-body); opacity:1; }
+
+.news__go{
+  flex:none;
+  width:44px; height:44px;
+  display:grid; place-items:center;
+  border:0; border-radius:50%;
+  background:var(--orange); color:var(--slate-900);
+  cursor:pointer;
+  transition:background var(--d-fast) var(--e-out);
+}
+.news__go svg{ width:19px; height:19px; margin:-1px 1px 0 0; }
+.news__go:hover,.news__go:focus-visible{ background:var(--orange-mid); }
+.news__go:active{ transform:translateY(1px); }
+
+.foot__note{
+  margin:var(--s4) 0 0; max-width:360px;
+  padding:var(--s3) var(--s4);
+  border-left:3px solid var(--orange);
+  background:rgba(240,128,60,.1);
+  color:var(--limewash);
+  font-size:.9375rem; line-height:1.5;
+}
+.foot__note a{ color:var(--orange); font-weight:600; }
+
+.foot__list{ list-style:none; margin:0; padding:0; }
+.foot__list li + li{ margin-top:var(--s3); }
+.foot__list a{
+  color:var(--orange); text-decoration:none;
+  font-size:1.0625rem;
+  border-bottom:1px solid transparent;
+}
+.foot__list a:hover,.foot__list a:focus-visible{
+  border-bottom-color:currentColor;
+}
+
+.foot__addr{
+  font-style:normal;
+  font-size:1.0625rem; line-height:1.9;
+  color:var(--foot-body);
+}
+.foot__addr a{
+  color:var(--orange); text-decoration:none;
+  font-weight:600; font-variant-numeric:tabular-nums;
+  border-bottom:1px solid transparent;
+}
+.foot__addr a:hover,.foot__addr a:focus-visible{ border-bottom-color:currentColor; }
+
+.foot__legal{
+  display:flex; flex-wrap:wrap; gap:var(--s4) var(--s6);
+  align-items:center; justify-content:space-between;
+  margin-top:var(--s7); padding-top:var(--s5);
+  border-top:1px solid var(--foot-rule);
+}
+.foot__c{ margin:0; font-size:.875rem; }
+
+.foot__legal-list{
+  display:flex; flex-wrap:wrap; gap:var(--s5);
+  list-style:none; margin:0; padding:0;
+}
+.foot__legal-list a{
+  color:var(--orange); text-decoration:none; font-size:.875rem;
+  border-bottom:1px solid transparent;
+}
+.foot__legal-list a:hover,.foot__legal-list a:focus-visible{ border-bottom-color:currentColor; }
+
+/* ─── legal pages ───────────────────────────────────────────────────────
+   privacy.html and terms.html share this sheet with the landing page so
+   they inherit the same type and colour rather than looking like something
+   a different company bolted on. No motion, no video, no dock. */
+
+.is-doc{ background:var(--limewash); padding-bottom:0; }
+.is-doc .bar{ position:static; }
+
+.bar__name--link{
+  color:inherit; text-decoration:none;
+  display:inline-flex; align-items:center;
+  min-height:44px;                    /* the bar is 24px of text; the tap
+                                         target has to be bigger than that */
+}
+
+.doc{ padding-block:var(--s8) var(--s9); }
+.doc__in{ max-width:70ch; }
+
+.doc__h{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 112,"wght" 700;
+  font-size:clamp(2rem,6vw,3.25rem);
+  line-height:1.0; letter-spacing:-.02em;
+  margin:0 0 var(--s3);
+}
+.doc__date{
+  margin:0 0 var(--s7);
+  font:600 .8125rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em;
+  color:var(--zinc-600);
+}
+.doc__lede{
+  font-size:1.1875rem; line-height:1.55;
+  padding:var(--s5);
+  border-left:3px solid var(--clay-600);
+  background:var(--mortar);
+  margin:0 0 var(--s7);
+}
+
+.doc h2{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 104,"wght" 700;
+  font-size:1.375rem; line-height:1.2;
+  margin:var(--s7) 0 var(--s3);
+}
+.doc p,.doc li{ line-height:1.7; }
+.doc p{ margin:0 0 var(--s4); }
+.doc ul{ margin:0 0 var(--s4); padding-left:1.25em; }
+.doc li + li{ margin-top:var(--s2); }
+
+/* the bracketed placeholders are meant to be impossible to miss and
+   impossible to mistake for finished copy */
+.doc em{
+  display:inline-block;
+  font-style:normal;
+  background:#FBE9C8;
+  border-bottom:2px solid #A8741A;
+  padding:2px 6px;
+  color:var(--slate-900);
+}
+
+.doc__mono{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.9em;
+  background:var(--mortar);
+  padding:1px 5px; border-radius:3px;
+}
+
+.doc__back{
+  margin:var(--s8) 0 0; padding-top:var(--s5);
+  border-top:1px solid var(--rule);
+}
+.doc__back a{ font-weight:600; text-decoration:none; }
+.doc__back a:hover{ text-decoration:underline; }
+
+.foot--slim .foot__in{ padding-block:var(--s6); }
+.foot--slim .foot__legal{ margin-top:0; padding-top:0; border-top:0; }
 
 /* ─── mobile call dock ──────────────────────────────────────────────── */
 

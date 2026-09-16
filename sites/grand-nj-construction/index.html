@@ -261,6 +261,32 @@
     </div>
   </section>
 
+  <!-- ══ ABOUT ═════════════════════════════════════════════════════════
+       Built ONLY from sourced facts. Everything here traces to the van
+       (name, town, licence, trades, free estimate, insured) or to the real
+       Google reviews in js/main.js (Tony by name, North Bergen, the kinds
+       of job people actually describe).
+
+       DELIBERATELY NOT SAID, because nobody has confirmed it: how many
+       years they have been going, whether they are family owned, whether
+       there is 24-hour emergency cover, crew size, jobs completed. Their
+       own Yelp/Angi copy claims the first three — the moment Tony confirms
+       them they belong in the paragraph below, and the section gets a lot
+       stronger for it. ══════════════════════════════════════════════════ -->
+  <section class="sec sec--about" id="about">
+    <div class="wrap about">
+      <div class="about__head">
+        <p class="eyebrow">Who you're calling</p>
+        <h2 class="sec__h">A small outfit out of&nbsp;Fairview.</h2>
+      </div>
+      <div class="about__body">
+        <p>When you call this number you get Tony. His name is on nearly every review on this page, because he's the one who comes out, gets on the roof, and gives you the number himself — not a salesman, and not a call center that passes your address to whoever's free.</p>
+        <p>The work runs across Bergen County and North Jersey, out of Fairview. Chimneys, roofs, siding, gutters and masonry — steps and stoops, repointing, gutter guards, flashing. Most of it starts with water getting somewhere it shouldn't.</p>
+        <p class="about__cred">Licensed in New Jersey, <strong>13VH12012200</strong>. Fully insured. The estimate is free and it stays free whether you go ahead or not.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ PROCESS — how it works ═══════════════════════════════════════ -->
   <!-- Ported from the supplied React component (motion/react). Structure is
        the original's: a paper card wrapping a tinted panel, pin centred on
@@ -413,11 +439,72 @@
 
 </main>
 
+<!-- ══ FOOTER ═══════════════════════════════════════════════════════════
+     Ported from the supplied footer: rule above, three columns, rule
+     below, legal row at the bottom. Navy ground and orange type, matching
+     How It Works. Orange on navy is 5.72:1, so it is safe as real text and
+     not just as an accent.
+
+     Dropped on request: the social row and the light/dark toggle.
+     Dropped as well: the Products link — there are no products, this is a
+     trade. Quick Links point at real sections that exist on this page.
+
+     The newsletter box has NO LIST BEHIND IT yet — same empty action="" as
+     the contact form, and the same honest notice instead of a fake tick. -->
 <footer class="foot">
   <div class="wrap foot__in">
-    <p class="foot__n">Grand NJ Construction LLC</p>
-    <p class="foot__m">Chimney · Roofing · Siding · Gutters · Masonry<br>Fairview, NJ 07022 · Fully insured · NJ Lic. 13VH12012200</p>
-    <p class="foot__c">&copy; <span id="yr">2026</span> Grand NJ Construction LLC</p>
+
+    <div class="foot__cols">
+
+      <div class="foot__col foot__col--wide">
+        <h2 class="foot__h">Stay<br>Connected</h2>
+        <p class="foot__p">Seasonal reminders — gutters before the leaves drop, chimney before you light it. A few emails a year, nothing else.</p>
+
+        <form class="news" method="post" action="" data-news>
+          <label class="vh" for="n-email">Email address</label>
+          <input class="news__c" id="n-email" name="email" type="email" autocomplete="email" placeholder="Enter your email" required>
+          <button class="news__go" type="submit">
+            <span class="vh">Sign up</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 11 13"/><path d="M21.5 2.5 14.8 21.5 11 13 2.5 9.2Z"/></svg>
+          </button>
+        </form>
+        <p class="foot__note" data-news-note role="status" hidden></p>
+      </div>
+
+      <nav class="foot__col" aria-label="Footer">
+        <h2 class="foot__h foot__h--sm">Quick Links</h2>
+        <ul class="foot__list">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#work">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="foot__col">
+        <h2 class="foot__h foot__h--sm">Contact Us</h2>
+        <address class="foot__addr">
+          Fairview, NJ 07022<br>
+          Serving Bergen County &amp; North&nbsp;Jersey<br>
+          <a href="tel:+15512225512">551-222-5512</a><br>
+          Free estimate · Fully insured<br>
+          NJ Lic. 13VH12012200
+          <!-- STILL MISSING: street address and an email address. Nothing
+               invented here — they go in the moment Tony supplies them. -->
+        </address>
+      </div>
+
+    </div>
+
+    <div class="foot__legal">
+      <p class="foot__c">&copy; <span id="yr">2026</span> Grand NJ Construction LLC. All rights reserved.</p>
+      <ul class="foot__legal-list">
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="privacy.html#cookies">Cookies</a></li>
+      </ul>
+    </div>
+
   </div>
 </footer>
 
