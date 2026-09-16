@@ -106,9 +106,41 @@
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
             Call 551-222-5512
           </a>
-          <a class="btn btn--quiet" href="#work">See what we handle</a>
+          <a class="hero__more" href="#work">See our work
+            <svg viewBox="0 0 32 8" aria-hidden="true"><path d="M0 4h29M25.5 1 29 4l-3.5 3"/></svg>
+          </a>
         </div>
         <p class="hero__note" data-hero="3">Free estimate · Fully insured · NJ Lic. 13VH12012200</p>
+
+        <!-- ══ NOT ONE OF THESE THREE NUMBERS IS CONFIRMED ══════════════
+             Isaac asked for placeholders so he has something to show the
+             client, and said he would get the real figures from Tony after.
+             They are wired to data-count, so correcting one is a one-word
+             edit in this file — nothing in CSS or JS hard-codes them.
+
+               10+  years in business .... GUESSED. Nothing anywhere states it.
+               100+ jobs completed ....... GUESSED. Eight reviews are on the
+                                           Google listing; the job count is not.
+               24   hour service ......... Their own Yelp/Angi copy claims
+                                           "24-hour emergency repair", but Tony
+                                           has never confirmed it to us.
+
+             A contractor's experience claim is the kind of thing a customer
+             checks. These must not go live as they stand. ════════════════ -->
+        <dl class="stats" data-hero="4">
+          <div class="stat">
+            <dt class="stat__n"><span data-count="10">10</span>+</dt>
+            <dd class="stat__l">Years in business</dd>
+          </div>
+          <div class="stat">
+            <dt class="stat__n"><span data-count="100">100</span>+</dt>
+            <dd class="stat__l">Jobs completed</dd>
+          </div>
+          <div class="stat">
+            <dt class="stat__n"><span data-count="24">24</span></dt>
+            <dd class="stat__l">Hour emergency service</dd>
+          </div>
+        </dl>
       </div>
 
       <span class="hero__edge" aria-hidden="true"></span>

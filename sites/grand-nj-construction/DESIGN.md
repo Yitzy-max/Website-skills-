@@ -48,7 +48,7 @@ aliases onto the new values, so nothing downstream had to be rewritten.
 
 **White on orange fails.** `#F4701E` under white text is 2.92:1 — below the
 floor at every size. Every orange fill on this site carries NAVY text instead,
-at 6.09:1: the primary button, the mobile call dock, the newsletter send disc.
+at 5.46:1: the primary button, the mobile call dock, the newsletter send disc.
 A bright construction orange looks like it wants white type and cannot have it.
 
 **Orange as type on white fails too.** `#F4701E` on white is 2.92:1. Orange
@@ -64,7 +64,7 @@ text on a white ground always uses `--orange-ink` (5.35:1), or `--orange-deep`
 | orange-ink on white | 5.35 |
 | orange-deep on white | 6.01 |
 | orange on navy | 5.46 |
-| navy on orange | 6.09 |
+| navy on orange | 5.46 |
 | white on navy | 15.97 |
 | on-navy on navy | 10.67 |
 | line-strong on white | 3.00 (the UI-control floor) |

@@ -373,7 +373,8 @@ var SCORE = { rating: null, count: 0 };
       var steps = [
         { sel: '[data-hero="1"]', a: 0.03, b: 0.15 },
         { sel: '[data-hero="2"]', a: 0.09, b: 0.23 },
-        { sel: '[data-hero="3"]', a: 0.17, b: 0.31 }
+        { sel: '[data-hero="3"]', a: 0.17, b: 0.31 },
+        { sel: '[data-hero="4"]', a: 0.24, b: 0.40 }
       ];
       steps.forEach(function (st) {
         var el = heroEl.querySelector(st.sel);
@@ -393,6 +394,45 @@ var SCORE = { rating: null, count: 0 };
             gsap.set(el, { opacity: t, y: 26 * (1 - t) });
           }
         });
+      });
+    }
+
+    /* ── the hero counters ──────────────────────────────────────────
+       Scroll-LINKED like everything else here, not a fire-once timer: the
+       number tracks scroll position, so it runs back down when you scroll
+       up, and it can never be mid-count on a screen nobody is looking at.
+
+       The finished figures are already in the HTML. This only overwrites
+       them while the hero is on screen, and puts them back at the end, so
+       a blocked script leaves the real numbers showing. */
+    var counters = gsap.utils.toArray('[data-count]');
+    if (counters.length && heroEl) {
+      var COUNT_A = 0.26, COUNT_B = 0.46;
+      var targets = counters.map(function (el) {
+        return parseInt(el.getAttribute('data-count'), 10) || 0;
+      });
+      // zero them now. Otherwise the finished figures sit on screen until
+      // the first scroll event fires onUpdate, and then snap back to 0 —
+      // the one frame that gives the whole effect away.
+      counters.forEach(function (el) { el.textContent = '0'; });
+
+      window.ScrollTrigger.create({
+        trigger: heroEl,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        onUpdate: function (self) {
+          var t = (self.progress - COUNT_A) / (COUNT_B - COUNT_A);
+          t = t < 0 ? 0 : t > 1 ? 1 : t;
+          // ease out, so it sprints then settles on the final figure
+          var e = 1 - Math.pow(1 - t, 3);
+          for (var i = 0; i < counters.length; i++) {
+            var v = Math.round(targets[i] * e);
+            if (counters[i].textContent !== String(v)) {
+              counters[i].textContent = v;
+            }
+          }
+        }
       });
     }
 

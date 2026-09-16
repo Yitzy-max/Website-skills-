@@ -12,7 +12,7 @@
 
        white  #FFFFFF
        navy   #14213D   on white 15.97:1
-       orange #F4701E   on navy  5.46:1 · ink on it 6.09:1
+       orange #F4701E   on navy  5.46:1 · navy on it 5.46:1
      ═══════════════════════════════════════════════════════════════════ */
 
   --white:#FFFFFF;
@@ -274,7 +274,25 @@ a{ color:var(--clay-700); }
   max-width:46ch; margin:0 0 var(--s6);
 }
 
-.hero__acts{ display:flex; flex-wrap:wrap; gap:var(--s3); margin-bottom:var(--s5); }
+.hero__acts{ display:flex; flex-wrap:wrap; align-items:center; gap:var(--s5); margin-bottom:var(--s5); }
+
+/* the reference's "View projects ——>": plain text, no box, arrow slides on
+   hover. Navy on the lightened hero, measured with the rest of the type. */
+.hero__more{
+  display:inline-flex; align-items:center; gap:var(--s3);
+  min-height:44px;
+  font:700 1.0625rem/1 var(--f-cond); letter-spacing:.05em;
+  text-transform:uppercase; text-decoration:none;
+  color:var(--navy);
+}
+.hero__more svg{
+  width:32px; height:8px; flex:none;
+  fill:none; stroke:currentColor; stroke-width:1.5;
+  stroke-linecap:round; stroke-linejoin:round;
+  transition:transform var(--d-base) var(--e-out);
+}
+.hero__more:hover svg,
+.hero__more:focus-visible svg{ transform:translateX(6px); }
 
 .hero__note{
   font:600 .8125rem/1.5 var(--f-cond);
@@ -282,12 +300,52 @@ a{ color:var(--clay-700); }
   color:var(--ink-mute); margin:0;
 }
 
+/* ── hero stat tiles ────────────────────────────────────────────────────
+   Solid orange, so contrast is against the fill and the footage underneath
+   never matters. Navy type at 5.46:1 — white would be 2.92 and fail, same
+   trap as every other orange fill on this site.
+
+   The numbers count up as the hero scrubs. They are written out in full in
+   the HTML, so with no JS they are simply the finished figures. */
+.stats{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:var(--s2);
+  margin:var(--s6) 0 0; padding:0;
+  max-width:560px;
+}
+@media (min-width:768px){ .stats{ gap:var(--s3); } }
+
+.stat{
+  background:var(--orange);
+  border-radius:12px;
+  padding:var(--s4) var(--s3);
+  text-align:center;
+}
+@media (min-width:768px){ .stat{ padding:var(--s5) var(--s4); } }
+
+.stat__n{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 108,"wght" 800;
+  font-size:clamp(1.75rem,5.2vw,2.75rem);
+  line-height:1; letter-spacing:-.02em;
+  color:var(--navy);
+  font-variant-numeric:tabular-nums;   /* so the width does not jitter while
+                                          the number is counting */
+}
+.stat__l{
+  margin:var(--s2) 0 0;
+  font:600 .75rem/1.25 var(--f-cond);   /* 12px floor, even on a 360 phone */
+  text-transform:uppercase; letter-spacing:.06em;
+  color:var(--navy);
+}
+@media (min-width:768px){ .stat__l{ font-size:.8125rem; letter-spacing:.09em; } }
+
 /* ─── buttons ───────────────────────────────────────────────────────── */
 
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:var(--s2);
   min-height:52px; padding:var(--s3) var(--s6);
-  border-radius:4px; border:2px solid transparent;
+  border-radius:999px; border:2px solid transparent;
   font:700 1.0625rem/1 var(--f-cond); letter-spacing:.05em;
   text-transform:uppercase; text-decoration:none; cursor:pointer;
   transition:background var(--d-fast) var(--e-out),
@@ -295,14 +353,12 @@ a{ color:var(--clay-700); }
              border-color var(--d-fast) var(--e-out),
              transform var(--d-fast) var(--e-out);
 }
-/* navy on orange is 6.09:1. White on it is 2.92 and fails at every size,
+/* navy on orange is 5.46:1. White on it is 2.92 and fails at every size,
    which is the trap with a bright construction orange. */
 .btn--go{ background:var(--orange); color:var(--navy); border-color:var(--orange); }
 .btn--go:hover,.btn--go:focus-visible{ background:var(--orange-mid); border-color:var(--orange-mid); }
 .btn--go:active{ transform:translateY(1px); }
 
-.btn--quiet{ background:transparent; color:var(--navy); border-color:rgba(20,33,61,.35); }
-.btn--quiet:hover,.btn--quiet:focus-visible{ border-color:var(--navy); background:rgba(20,33,61,.07); }
 
 .btn--big{ min-height:64px; font-size:1.375rem; padding-inline:var(--s7); }
 
@@ -1147,12 +1203,17 @@ a{ color:var(--clay-700); }
   /* Type lies over the letterboxed frame, so the veil still has to carry
      contrast — but it is weighted to the lower half where the copy sits,
      leaving the top of the shot brighter. */
+  /* Strengthened when the stat tiles went in: the text block got taller,
+     so type that used to sit on the white letterbox band now sits on the
+     footage. Measured against every frame of hero-mob.mp4 at 390x844 and
+     360x640 — at the old .55 floor the eyebrow fell to 3.63:1 and the
+     orange word to 2.94:1. These values clear every element at both sizes. */
   .hero__veil{
     background:linear-gradient(180deg,
-      rgba(255,255,255,.55) 0%,
-      rgba(255,255,255,.66) 26%,
-      rgba(255,255,255,.90) 52%,
-      rgba(255,255,255,.96) 100%);
+      rgba(255,255,255,.74) 0%,
+      rgba(255,255,255,.84) 24%,
+      rgba(255,255,255,.94) 50%,
+      rgba(255,255,255,.97) 100%);
   }
   .hero__body{ margin-top:auto; }
 }
@@ -1165,7 +1226,8 @@ a{ color:var(--clay-700); }
 
 .js .hero__body [data-hero="1"],
 .js .hero__body [data-hero="2"],
-.js .hero__body [data-hero="3"]{ opacity:0; transform:translateY(26px); }
+.js .hero__body [data-hero="3"],
+.js .hero__body [data-hero="4"]{ opacity:0; transform:translateY(26px); }
 
 @media (max-width:899px){
   .js .hero__body [data-hero="2"]{ opacity:1; transform:none; }
