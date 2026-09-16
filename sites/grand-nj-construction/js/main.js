@@ -93,6 +93,78 @@ var SCORE = { rating: null, count: 0 };
 })();
 
 /* ═══════════════════════════════════════════════════════════════════════
+   CONTACT FORM
+
+   The endpoint lives in the form's own action="" in index.html, and it is
+   EMPTY on purpose: there is no real inbox or form service on file for
+   Grand NJ yet, and a form that pretends to send is worse than no form — a
+   customer types out a leak, hits send, sees a tick, and nobody ever calls
+   them back.
+
+   While action is empty the button still works, but it says plainly that
+   the form is not connected and points at the phone number, which is real.
+
+   Fill action= in index.html with anything that accepts a POST of form
+   fields — Formspree, Netlify Forms, a Zapier catch hook — and this file
+   starts posting to it. Keeping it in the attribute rather than here means
+   the form also submits the ordinary way if JavaScript never loads.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  var form = document.querySelector('[data-form]');
+  if (!form) return;
+
+  var note = form.querySelector('[data-form-note]');
+  var btn  = form.querySelector('button[type="submit"]');
+  var endpoint = (form.getAttribute('action') || '').trim();
+
+  function say(html) {
+    note.innerHTML = html;
+    note.hidden = false;
+    /* the notice sits below the button, which on a phone puts it under the
+       sticky call dock — scroll it up or nobody ever sees the answer */
+    note.scrollIntoView({ block: 'center', behavior: 'auto' });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    /* let the browser's own validation speak first — it is better at this
+       than anything hand-rolled and it is already translated */
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    if (!endpoint) {
+      say('This form isn\'t hooked up to an inbox yet, so nothing was sent. ' +
+          'Call <a href="tel:+15512225512">551-222-5512</a> and we\'ll pick up.');
+      return;
+    }
+
+    var label = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      form.reset();
+      say('Got it — we\'ll be in touch. If it\'s urgent, call ' +
+          '<a href="tel:+15512225512">551-222-5512</a>.');
+    }).catch(function () {
+      say('That didn\'t go through. Call <a href="tel:+15512225512">551-222-5512</a> ' +
+          'and we\'ll take it over the phone.');
+    }).then(function () {
+      btn.disabled = false;
+      btn.innerHTML = label;
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════════════════
    GRAND NJ CONSTRUCTION — motion
 
    Rules this file obeys, in order of importance:

@@ -430,6 +430,18 @@ a{ color:var(--clay-700); }
   --navy-edge:#26405E;
   --orange:#F0803C;
   --paper:#232B33;
+
+  /* the same orange, stepped down for use as TYPE on white.
+     #F0803C on #fff is 2.67:1. #BE5414 is 4.70:1 and reads as the same
+     colour at a glance. #D96520 is the button hover (4.95:1 against ink). */
+  --orange-ink:#BE5414;
+  --orange-deep:#A8470C;
+  --orange-mid:#D96520;
+  --orange-tint:#FCEBE0;
+  --orange-ring:rgba(190,84,20,.28);
+  /* field borders are UI, so they need 3:1 against white, not 1.86 like
+     --rule does. Warm grey so it still belongs to the mortar family. */
+  --field-line:#8E887C;
 }
 
 .sec--how{
@@ -613,6 +625,146 @@ a{ color:var(--clay-700); }
   /* never rendered, but inheriting the gold star colour made contrast
      checkers flag it — pin it to body ink so audits stay signal-only */
   color:var(--slate-800);
+}
+
+/* ─── contact form ──────────────────────────────────────────────────────
+   White ground, orange accent carried over from How It Works.
+   #F0803C stays literal on the fills (button, ring, pill). Type steps down
+   to #BE5414 — same hue, 4.70:1 on white where #F0803C is 2.67:1. */
+
+.sec--form{ background:#fff; }
+
+.form{
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+}
+
+.form__tag{
+  margin:0;
+  font:600 .8125rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em;
+  color:var(--orange-deep);          /* 5.07:1 on the tint */
+  background:var(--orange-tint);
+  padding:var(--s2) var(--s4);
+  border-radius:999px;
+}
+
+.form__h{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 112,"wght" 700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  line-height:1.0; letter-spacing:-.02em;
+  color:var(--orange-ink);
+  margin:var(--s4) 0 var(--s3);
+  text-wrap:balance;
+}
+
+.form__sub{
+  margin:0 0 var(--s7);
+  max-width:46ch;
+  color:var(--zinc-600);
+  font-size:1rem;
+}
+.form__sub a{ color:var(--orange-ink); font-weight:600; }
+
+.form__body{
+  width:100%; max-width:440px;
+  text-align:left;
+}
+
+.form__l{
+  display:block;
+  font:600 .8125rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.12em;
+  color:var(--slate-800);
+  margin-bottom:var(--s2);
+}
+.form__l + .field,
+.form__l + .form__t{ margin-bottom:var(--s5); }
+
+.form__opt{
+  color:var(--zinc-600); font-weight:400;
+  letter-spacing:.08em; text-transform:none;
+}
+
+.field{
+  display:flex; align-items:center;
+  height:50px; padding-left:var(--s4);
+  border:1px solid var(--field-line);
+  border-radius:999px;
+  background:#fff;
+  overflow:hidden;
+  transition:border-color var(--d-fast) var(--e-out),
+             box-shadow var(--d-fast) var(--e-out);
+}
+.field__i{
+  width:20px; height:20px; flex:none;
+  fill:var(--zinc-600);
+}
+.field__c{
+  height:100%; width:100%;
+  padding:0 var(--s4) 0 var(--s3);
+  border:0; outline:none; background:transparent;
+  font:400 1rem/1 var(--f-body);
+  color:var(--slate-800);
+  min-width:0;
+}
+
+.form__t{
+  display:block; width:100%;
+  padding:var(--s3) var(--s4);
+  border:1px solid var(--field-line);
+  border-radius:10px;
+  background:#fff;
+  resize:vertical;
+  font:400 1rem/1.55 var(--f-body);
+  color:var(--slate-800);
+  outline:none;
+  transition:border-color var(--d-fast) var(--e-out),
+             box-shadow var(--d-fast) var(--e-out);
+}
+
+.field__c::placeholder,
+.form__t::placeholder{ color:var(--zinc-600); opacity:1; }
+
+/* one focus treatment for both shapes, and it is never removed */
+.field:focus-within,
+.form__t:focus-visible,
+.form__t:focus{
+  border-color:var(--orange-ink);
+  box-shadow:0 0 0 3px var(--orange-ring);
+}
+
+.btn--orange{
+  background:var(--orange);
+  border-color:var(--orange);
+  color:var(--slate-900);          /* 6.68:1 — white on orange is 2.67 */
+}
+.btn--orange:hover,
+.btn--orange:focus-visible{
+  background:var(--orange-mid);
+  border-color:var(--orange-mid);
+}
+.btn--orange:active{ transform:translateY(1px); }
+
+.form__go{
+  width:100%;
+  border-radius:999px;
+  margin-top:var(--s2);
+}
+
+.form__note{
+  margin:var(--s4) 0 var(--s2);
+  padding:var(--s3) var(--s4);
+  border-left:3px solid var(--orange);
+  background:var(--orange-tint);
+  color:var(--slate-800);
+  font-size:.9375rem; line-height:1.5;
+}
+.form__note a{ color:var(--orange-ink); font-weight:600; }
+
+@media (min-width:640px){
+  .field{ height:52px; }
 }
 
 /* ─── close ─────────────────────────────────────────────────────────── */
