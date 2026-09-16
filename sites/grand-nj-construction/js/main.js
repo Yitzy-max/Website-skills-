@@ -451,8 +451,9 @@ var SCORE = { rating: null, count: 0 };
       var SCALE_STEP = 0.03;
 
       lifts.forEach(function (lift, i) {
-        // the original offsets each card by 5% + 3i% so the stack fans
-        lift.style.top = (5 + i * 3) + '%';
+        // the fan offset itself lives in CSS so it can differ per
+        // breakpoint; all this has to say is which card this is
+        lift.style.setProperty('--i', i);
       });
 
       window.ScrollTrigger.create({

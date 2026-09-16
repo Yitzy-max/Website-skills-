@@ -339,11 +339,19 @@ a{ color:var(--clay-700); }
 
 .stack__slot{
   position:sticky; top:0;
-  height:78svh; min-height:460px;
+  /* desktop only — phones override this to content height below. 78svh left
+     the text column swimming in empty card, and every card that is taller
+     than it needs to be is scroll the visitor pays for five times. */
+  height:60svh; min-height:420px;
 }
 
 .stack__lift{
   position:relative; height:100%;
+  /* the fan: each card sits a little lower than the one under it so you see
+     the edge of the stack. JS sets --i to the card index. In px, not %,
+     because the slot is content-height on phones and a percentage offset
+     against an auto-height box resolves to nothing. */
+  top:calc(20px + var(--i,0) * 12px);
   transform-origin:top center;
   will-change:transform;
 }
@@ -404,7 +412,24 @@ a{ color:var(--clay-700); }
   text-transform:uppercase; letter-spacing:.14em; color:var(--zinc-400);
 }
 
+/* Phones: the card is as tall as what's in it, and no taller.
+   It used to be 90% of a 78svh slot, with .stack__text stretching to fill
+   the remainder and centring itself in it — which opened a dead band above
+   the number and another between the paragraph and the photo, on every one
+   of the five cards. Content-height kills both and takes the section's
+   scroll distance down with it. */
+@media (max-width:899px){
+  .stack__slot{ height:auto; min-height:0; }
+  .stack__lift{ height:auto; }
+  .stack__card{ height:auto; padding:var(--s5); }
+  .stack__text{ flex:none; justify-content:flex-start; }
+  /* the 4:3 slot is fine on a phone; on a wide tablet it would be 500px of
+     photograph and put the dead height straight back */
+  .stack__shot{ max-height:340px; }
+}
+
 @media (min-width:900px){
+  .stack__lift{ top:calc(34px + var(--i,0) * 20px); }
   .stack__card{
     flex-direction:row; align-items:center;
     gap:var(--s7); padding:var(--s7);
@@ -770,7 +795,9 @@ a{ color:var(--clay-700); }
   color:var(--slate-800);
   font-size:.9375rem; line-height:1.5;
 }
-.form__note a{ color:var(--orange-ink); font-weight:600; }
+.form__note a{ color:var(--orange-deep); font-weight:600; }  /* 5.07:1 on the
+   tint; --orange-ink is 4.05 there, and this notice is exactly the text a
+   visitor with no JS depends on */
 
 @media (min-width:640px){
   .field{ height:52px; }
@@ -878,7 +905,10 @@ a{ color:var(--clay-700); }
   margin:var(--s4) 0 0; max-width:360px;
   padding:var(--s3) var(--s4);
   border-left:3px solid var(--orange);
-  background:rgba(240,128,60,.1);
+  /* the flat composite of rgba(240,128,60,.1) over the navy. Stated as a
+     solid so what the stylesheet says and what the screen shows are the
+     same number: limewash on it is 11.8:1, the orange link 5.0:1. */
+  background:#2D2F3A;
   color:var(--limewash);
   font-size:.9375rem; line-height:1.5;
 }
