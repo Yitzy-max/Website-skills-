@@ -314,7 +314,54 @@ var SCORE = { rating: null, count: 0 };
       });
     });
 
-    /* ── process steps ──────────────────────────────────────────────── */
+    /* ── process: dashed string between the pinned cards ────────────
+       Drawn from the cards' real measured positions rather than guessed
+       offsets, so the string stays attached at any width. Redrawn on
+       resize and whenever fonts settle and the boxes move. */
+    var flow = document.querySelector('[data-flow]');
+    if (flow) {
+      var wires = flow.querySelector('[data-wires]');
+      var nodes = gsap.utils.toArray('[data-node]', flow);
+
+      function drawWires() {
+        if (!wires || nodes.length < 2) return;
+        var box = flow.getBoundingClientRect();
+        wires.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
+        var d = '';
+        for (var i = 0; i < nodes.length - 1; i++) {
+          var a = nodes[i].getBoundingClientRect();
+          var b = nodes[i + 1].getBoundingClientRect();
+          var ac = (a.left + a.right) / 2, bc = (b.left + b.right) / 2;
+
+          // Stacked (one column) vs zigzagged. Below 900px the cards sit
+          // full width on the same centre line, and the diagonal that reads
+          // well on desktop swings clean off the side of the screen — so the
+          // string simply drops between them instead.
+          if (Math.abs(ac - bc) < 24) {
+            var x = ac - box.left;
+            d += 'M' + x + ' ' + (a.bottom - box.top) + ' L' + x + ' ' + (b.top - box.top) + ' ';
+            continue;
+          }
+
+          // leave from the lower inside corner, arrive at the upper inside one
+          var goingRight = ac < bc;
+          var x1 = (goingRight ? a.right : a.left) - box.left;
+          var y1 = a.bottom - box.top - 12;
+          var x2 = (goingRight ? b.left : b.right) - box.left;
+          var y2 = b.top - box.top + 14;
+          var mx = (x1 + x2) / 2;
+          d += 'M' + x1 + ' ' + y1 + ' C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2 + ' ';
+        }
+        wires.innerHTML = '<path d="' + d + '"/>';
+      }
+
+      drawWires();
+      window.addEventListener('resize', drawWires);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWires);
+      window.ScrollTrigger.addEventListener('refresh', drawWires);
+    }
+
+    /* ── process cards reveal ───────────────────────────────────────── */
     gsap.utils.toArray('[data-step]').forEach(function (step) {
       gsap.to(step, {
         opacity: 1, y: 0, ease: 'none',
