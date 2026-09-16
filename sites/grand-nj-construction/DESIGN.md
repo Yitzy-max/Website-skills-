@@ -17,25 +17,77 @@ Source: `skills/ui-ux-pro-max` palette #51 (Construction/Architecture) and #84
 
 ---
 
-## 1. Color roles
+## 1. Color roles — SUPERSEDED 16 Sep 2026
 
-Materials, not "construction orange." Fired clay, wet slate, mortar, zinc flashing,
-aged copper.
+The original palette was a materials one: fired clay, wet slate, mortar, zinc,
+aged copper. The client asked for a three-colour scheme instead, taken from a
+reference site he supplied — **white, a dark blue, and a construction orange**
+— with every page background white.
+
+That is now the system. The old token names still exist in `style.css` as
+aliases onto the new values, so nothing downstream had to be rewritten.
 
 | Token | Hex | Role |
 |---|---|---|
-| `--c-slate-900` | `#14181C` | Deepest ground: hero base, footer |
-| `--c-slate-800` | `#1C2229` | Ink — all primary text on light |
-| `--c-zinc-600`  | `#4E5B66` | Secondary text, meta, hairline on light |
-| `--c-zinc-400`  | `#8B98A3` | Captions and secondary text on dark only |
-| `--c-mortar`    | `#E4E2DC` | Page ground |
-| `--c-limewash`  | `#F2F1ED` | Raised surfaces, cards, form fields |
-| `--c-rule`      | `#C2BEB4` | Hairlines and borders on light |
-| `--c-rule-dark` | `#2E363E` | Hairlines and borders on dark |
-| `--c-clay-600`  | `#9E4A2C` | Primary action / signal |
-| `--c-clay-700`  | `#843B21` | Action hover + pressed; clay-colored TEXT on light |
-| `--c-clay-300`  | `#E08A5F` | Clay on dark grounds only |
-| `--c-patina`    | `#6E8F82` | Aged-copper mark: "done" states, structural marks |
+| `--white` | `#FFFFFF` | Every page and section background. No greys. |
+| `--navy` | `#14213D` | Body ink on white, and every dark surface |
+| `--navy-700` | `#1D2E52` | A panel raised off the navy |
+| `--navy-line` | `#2C3E63` | Borders and rules on navy |
+| `--orange` | `#F4701E` | The accent — on navy, and as a fill |
+| `--orange-mid` | `#D95F12` | Hover on a fill |
+| `--orange-ink` | `#B44A06` | The same orange as TYPE on white |
+| `--orange-deep` | `#A84405` | Orange over photography, and on the tint |
+| `--orange-tint` | `#FDEDE2` | Pill and notice grounds |
+| `--ink-mute` | `#54637A` | Secondary text on white |
+| `--line` | `#D7DDE6` | Decorative hairline |
+| `--line-strong` | `#8A96A8` | Form control borders |
+| `--on-navy` | `#C9D4E4` | Body copy on navy |
+| `--on-navy-mute` | `#8FA0BA` | Captions on navy |
+
+### The two traps in this palette
+
+**White on orange fails.** `#F4701E` under white text is 2.92:1 — below the
+floor at every size. Every orange fill on this site carries NAVY text instead,
+at 6.09:1: the primary button, the mobile call dock, the newsletter send disc.
+A bright construction orange looks like it wants white type and cannot have it.
+
+**Orange as type on white fails too.** `#F4701E` on white is 2.92:1. Orange
+text on a white ground always uses `--orange-ink` (5.35:1), or `--orange-deep`
+(6.01:1) where it sits over photography.
+
+### Measured pairs
+
+| Pair | Ratio |
+|---|---|
+| navy on white | 15.97 |
+| ink-mute on white | 6.10 |
+| orange-ink on white | 5.35 |
+| orange-deep on white | 6.01 |
+| orange on navy | 5.46 |
+| navy on orange | 6.09 |
+| white on navy | 15.97 |
+| on-navy on navy | 10.67 |
+| line-strong on white | 3.00 (the UI-control floor) |
+
+### The hero
+
+The footage is a white van on a bright street, so the old treatment — darken
+the frame, set white type on it — had nothing to grip. It is inverted: a white
+scrim LIGHTENS the shot and the type is navy, with one word in orange.
+
+Those scrim values are not eyeballed. Every frame of `hero-desk.mp4` was
+composited through the exact gradient pair in software and the darkest pixel
+under each run of glyphs was measured. Worst case across all frames:
+
+| Element | Ink | Ratio | Floor |
+|---|---|---|---|
+| h1 | navy | 10.55 | 3 |
+| "outside" | orange-deep | 4.76 | 3 |
+| sub | navy | 12.69 | 4.5 |
+| eyebrow | orange-deep | 5.61 | 4.5 |
+| note | ink-mute | 5.67 | 4.5 |
+
+Re-measure with `scratchpad/herocheck.py` if the footage or the gradient changes.
 
 ### Contrast rules (measured, not assumed)
 

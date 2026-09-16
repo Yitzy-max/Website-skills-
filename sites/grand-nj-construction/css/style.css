@@ -5,20 +5,50 @@
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root{
-  /* colour — trade materials: fired clay, wet slate, mortar, zinc, patina */
-  --slate-900:#14181C; --slate-800:#1C2229;
-  --zinc-600:#4E5B66;  --zinc-400:#8B98A3;
-  --mortar:#E4E2DC;    --limewash:#F2F1ED;
-  --rule:#C2BEB4;      --rule-dark:#2E363E;
-  --clay-600:#9E4A2C;  --clay-700:#843B21; --clay-300:#E08A5F;
-  --patina:#6E8F82;
+  /* ══ THREE COLOURS ════════════════════════════════════════════════════
+     White, a dark blue, and a construction orange. Everything below is one
+     of those three or a tint of one, and every pair that carries text was
+     measured before it was used.
 
-  /* stacking cards — yellow on a dark card, not on a light one.
-     Safety yellow on light grey measures 1.01:1, which is invisible;
-     on slate it is 11.2:1 and reads like real site signage. */
-  --card:#1C2229;  --card-2:#232B33;
-  --card-ink:#F2F1ED;
-  --signal:#FFD400;
+       white  #FFFFFF
+       navy   #14213D   on white 15.97:1
+       orange #F4701E   on navy  5.46:1 · ink on it 6.09:1
+     ═══════════════════════════════════════════════════════════════════ */
+
+  --white:#FFFFFF;
+
+  --navy:#14213D;        /* body ink on white, and every dark surface */
+  --navy-700:#1D2E52;    /* a panel raised off the navy */
+  --navy-line:#2C3E63;   /* borders and rules on navy */
+
+  --orange:#F4701E;      /* the accent, on navy and as a fill */
+  --orange-mid:#D95F12;  /* hover on a fill */
+  --orange-ink:#B44A06;  /* the same orange as TYPE on white, 5.35:1.
+                            #F4701E on white is 2.92 and fails at any size */
+  --orange-deep:#A84405; /* on the orange tint, 6.01:1 on white */
+  --orange-tint:#FDEDE2; /* pill and notice grounds */
+  --orange-ring:rgba(180,74,6,.28);
+
+  --ink-mute:#54637A;    /* secondary text on white, 6.10:1 */
+  --line:#D7DDE6;        /* decorative hairline */
+  --line-strong:#8A96A8; /* form control borders — 3.00:1, which is the
+                            minimum a UI control needs and --line is 1.37 */
+
+  --on-navy:#C9D4E4;     /* body copy on navy, 10.67:1 */
+  --on-navy-mute:#8FA0BA;/* 6.01:1 */
+
+  /* ── names the rest of this sheet still calls things by ────────────── */
+  --slate-900:var(--navy);   --slate-800:var(--navy);
+  --zinc-600:var(--ink-mute);--zinc-400:var(--on-navy-mute);
+  --mortar:var(--white);     --limewash:var(--white);
+  --rule:var(--line);        --rule-dark:var(--navy-line);
+  --clay-600:var(--orange);  --clay-700:var(--orange-ink);
+  --clay-300:var(--orange);
+  --card:var(--navy);        --card-2:var(--navy-700);
+  --card-ink:#E8EDF5;        --signal:var(--orange);
+  --navy-edge:var(--navy-line); --paper:var(--navy-700);
+  --foot-body:var(--on-navy);--foot-line:#4A5C7E; --foot-rule:var(--navy-line);
+  --field-line:var(--line-strong);
 
   /* space — 4px base */
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
@@ -144,8 +174,8 @@ a{ color:var(--clay-700); }
 
 .hero{
   position:relative;
-  background:var(--slate-900);
-  color:var(--mortar);
+  background:var(--white);
+  color:var(--navy);
   isolation:isolate;
 }
 
@@ -170,8 +200,8 @@ a{ color:var(--clay-700); }
 .hero__media::before{
   content:""; position:absolute; inset:0;
   background:
-    radial-gradient(120% 80% at 70% 0%,#2C3742 0%,transparent 60%),
-    linear-gradient(180deg,#1E2630 0%,#14181C 70%);
+    radial-gradient(120% 80% at 70% 0%,#FFFFFF 0%,transparent 60%),
+    linear-gradient(180deg,#EDF1F6 0%,#DCE3EC 70%);
 }
 .hero__still,.hero__video{
   position:absolute; inset:0;
@@ -186,13 +216,18 @@ a{ color:var(--clay-700); }
    then gets out of the way so the van and the lawn keep their colour. */
 .hero__veil{
   position:absolute; inset:0;
-  background:linear-gradient(180deg,rgba(20,24,28,.80) 0%,rgba(20,24,28,.72) 40%,rgba(20,24,28,.90) 100%);
+  background:linear-gradient(180deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.80) 40%,rgba(255,255,255,.92) 100%);
 }
 @media (min-width:900px){
+  /* Values are not eyeballed. Every frame of hero-desk.mp4 was composited
+     through this exact gradient pair in software and the darkest pixel
+     under each run of glyphs measured. Worst case with these numbers:
+     h1 10.55:1, "outside" 4.76:1, sub 12.69:1, eyebrow 4.99:1, note 5.67:1
+     — against floors of 3 and 4.5. */
   .hero__veil{
     background:
-      linear-gradient(180deg,rgba(20,24,28,.40) 0%,rgba(20,24,28,.28) 45%,rgba(20,24,28,.80) 100%),
-      linear-gradient(90deg,rgba(20,24,28,.93) 0%,rgba(20,24,28,.86) 34%,rgba(20,24,28,.64) 60%,rgba(20,24,28,.24) 82%,rgba(20,24,28,.06) 100%);
+      linear-gradient(180deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.34) 45%,rgba(255,255,255,.62) 100%),
+      linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.92) 38%,rgba(255,255,255,.70) 60%,rgba(255,255,255,.24) 82%,rgba(255,255,255,.04) 100%);
   }
 }
 
@@ -216,7 +251,7 @@ a{ color:var(--clay-700); }
   .hero__body{ padding-block:var(--s7) calc(var(--s6) + 84px); }
 }
 
-.hero .eyebrow{ color:var(--zinc-400); }
+.hero .eyebrow{ color:var(--orange-deep); }
 
 .hero__h{
   font-family:var(--f-disp);
@@ -226,11 +261,16 @@ a{ color:var(--clay-700); }
   margin:0 0 var(--s5);
   max-width:15ch;
   text-wrap:balance;
+  color:var(--navy);
 }
+/* the one word that carries the whole offer, in the accent. --orange-deep
+   rather than --orange-ink: it sits over moving footage, where the
+   measured worst case is 4.76:1 instead of 4.26:1. */
+.hero__h em{ font-style:normal; color:var(--orange-deep); }
 
 .hero__sub{
   font-size:clamp(1.125rem,2.4vw,1.5rem);
-  line-height:1.45; color:var(--mortar);
+  line-height:1.45; color:var(--navy);
   max-width:46ch; margin:0 0 var(--s6);
 }
 
@@ -239,7 +279,7 @@ a{ color:var(--clay-700); }
 .hero__note{
   font:600 .8125rem/1.5 var(--f-cond);
   text-transform:uppercase; letter-spacing:.12em;
-  color:#BAC4CC; margin:0;
+  color:var(--ink-mute); margin:0;
 }
 
 /* ─── buttons ───────────────────────────────────────────────────────── */
@@ -255,12 +295,14 @@ a{ color:var(--clay-700); }
              border-color var(--d-fast) var(--e-out),
              transform var(--d-fast) var(--e-out);
 }
-.btn--go{ background:var(--clay-600); color:#fff; border-color:var(--clay-600); }
-.btn--go:hover,.btn--go:focus-visible{ background:var(--clay-700); border-color:var(--clay-700); }
+/* navy on orange is 6.09:1. White on it is 2.92 and fails at every size,
+   which is the trap with a bright construction orange. */
+.btn--go{ background:var(--orange); color:var(--navy); border-color:var(--orange); }
+.btn--go:hover,.btn--go:focus-visible{ background:var(--orange-mid); border-color:var(--orange-mid); }
 .btn--go:active{ transform:translateY(1px); }
 
-.btn--quiet{ background:transparent; color:var(--mortar); border-color:rgba(228,226,220,.4); }
-.btn--quiet:hover,.btn--quiet:focus-visible{ border-color:var(--mortar); background:rgba(228,226,220,.08); }
+.btn--quiet{ background:transparent; color:var(--navy); border-color:rgba(20,33,61,.35); }
+.btn--quiet:hover,.btn--quiet:focus-visible{ border-color:var(--navy); background:rgba(20,33,61,.07); }
 
 .btn--big{ min-height:64px; font-size:1.375rem; padding-inline:var(--s7); }
 
@@ -276,14 +318,9 @@ a{ color:var(--clay-700); }
     linear-gradient(90deg,var(--rule) 0 100%) 0 0/100% 1px no-repeat;
 }
 
-.sec--trades{ background:var(--mortar); }
+.sec--trades{ background:var(--white); }
 
-.sec--how{
-  background:var(--limewash);
-  border-block:1px solid var(--rule);
-}
-
-.sec--shots{ background:var(--mortar); }
+.sec--shots{ background:var(--white); }
 
 /* ─── trades: running-bond coursing ─────────────────────────────────── */
 
@@ -396,8 +433,8 @@ a{ color:var(--clay-700); }
   max-height:38%;
   overflow:hidden; border-radius:4px;
   background:
-    repeating-linear-gradient(135deg,rgba(228,226,220,.05) 0 10px,transparent 10px 20px),
-    linear-gradient(160deg,#2A323A 0%,#1F262D 100%);
+    repeating-linear-gradient(135deg,rgba(232,237,245,.05) 0 10px,transparent 10px 20px),
+    linear-gradient(160deg,#22355C 0%,#16233F 100%);
 }
 .stack__shot picture{ display:contents; }
 .stack__shot img{
@@ -452,43 +489,21 @@ a{ color:var(--clay-700); }
    rather than assumed: orange #F0803C on navy #17263A is 5.72:1, title
    13.52:1, body 9.40:1. */
 
-:root{
-  --navy:#17263A;
-  --navy-edge:#26405E;
-  --orange:#F0803C;
-  --paper:#232B33;
 
-  /* the same orange, stepped down for use as TYPE on white.
-     #F0803C on #fff is 2.67:1. #BE5414 is 4.70:1 and reads as the same
-     colour at a glance. #D96520 is the button hover (4.95:1 against ink). */
-  --orange-ink:#BE5414;
-  --orange-deep:#A8470C;
-  --orange-mid:#D96520;
-  --orange-tint:#FCEBE0;
-  --orange-ring:rgba(190,84,20,.28);
-
-  /* footer, on the navy ground. Orange is 5.72:1 there so it works as real
-     text, not just an accent. Body copy sits lighter at 9.99:1 so the page
-     does not become a wall of orange. */
-  --foot-body:#C9D2DC;
-  --foot-line:#4A5C73;
-  --foot-rule:#2E4058;
-  /* field borders are UI, so they need 3:1 against white, not 1.86 like
-     --rule does. Warm grey so it still belongs to the mortar family. */
-  --field-line:#8E887C;
-}
-
+/* White ground like every other section. The navy is carried by the cards
+   sitting on it, not by the section itself, and the ruled lines are the
+   same pale hairline used elsewhere. */
 .sec--how{
   background:
     repeating-linear-gradient(180deg,
-      transparent 0 31px, rgba(228,226,220,.055) 31px 32px),
-    var(--slate-900);
-  color:var(--card-ink);
-  border-block:1px solid var(--rule-dark);
+      transparent 0 31px, rgba(20,33,61,.05) 31px 32px),
+    var(--white);
+  color:var(--navy);
+  border-block:1px solid var(--line);
   overflow:hidden;
 }
-.sec--how .eyebrow{ color:var(--zinc-400); }
-.sec--how .sec__h{ color:var(--card-ink); }
+.sec--how .eyebrow{ color:var(--ink-mute); }
+.sec--how .sec__h{ color:var(--navy); }
 
 .flow{
   position:relative;
@@ -508,11 +523,11 @@ a{ color:var(--clay-700); }
 /* the paper card */
 .paper{
   position:relative;
-  background:var(--paper);
-  border:1px solid var(--rule-dark);
+  background:var(--navy);
+  border:1px solid var(--navy-line);
   border-radius:25px;
   padding:8px;
-  box-shadow:0 10px 20px rgba(0,0,0,.34);
+  box-shadow:0 12px 28px rgba(20,33,61,.22);
 }
 .pin{
   display:block; width:30px; height:30px;
@@ -522,8 +537,8 @@ a{ color:var(--clay-700); }
 
 /* the tinted panel inside it */
 .panel{
-  background:var(--navy);
-  border:1px solid var(--navy-edge);
+  background:var(--navy-700);
+  border:1px solid var(--navy-line);
   border-radius:15px;
   padding:15px;
 }
@@ -546,7 +561,7 @@ a{ color:var(--clay-700); }
   margin:0;
   font-size:.875rem; line-height:1.35;
   letter-spacing:-.01em;
-  color:#C3CCD6;
+  color:var(--on-navy);
 }
 
 /* Desktop: the component's own absolute layout, offsets and rotations.
@@ -559,7 +574,7 @@ a{ color:var(--clay-700); }
     pointer-events:none; z-index:0; overflow:visible;
   }
   .flow__wires path{
-    fill:none; stroke:var(--zinc-600); stroke-width:2;
+    fill:none; stroke:var(--line-strong); stroke-width:2;
     stroke-dasharray:8 6; stroke-linecap:round;
     animation:ants 3s linear infinite;
   }
@@ -632,14 +647,15 @@ a{ color:var(--clay-700); }
 .say{
   flex:none; width:300px;
   display:flex; flex-direction:column; gap:var(--s3);
-  background:var(--mortar);
-  border:1px solid var(--rule);
+  background:var(--white);
+  border:1px solid var(--line);
   border-radius:6px;
   padding:var(--s5);
+  box-shadow:0 2px 10px rgba(20,33,61,.05);
 }
 @media (min-width:768px){ .say{ width:340px; } }
 
-.say__stars{ display:flex; gap:2px; color:#A8741A; }
+.say__stars{ display:flex; gap:2px; color:var(--orange-ink); }
 .say__stars svg{ width:15px; height:15px; fill:currentColor; }
 
 .say__text{
@@ -877,7 +893,7 @@ a{ color:var(--clay-700); }
 }
 .news:focus-within{
   border-color:var(--orange);
-  box-shadow:0 0 0 3px rgba(240,128,60,.25);
+  box-shadow:0 0 0 3px var(--orange-ring);
 }
 .news__c{
   flex:1; min-width:0;
@@ -905,10 +921,9 @@ a{ color:var(--clay-700); }
   margin:var(--s4) 0 0; max-width:360px;
   padding:var(--s3) var(--s4);
   border-left:3px solid var(--orange);
-  /* the flat composite of rgba(240,128,60,.1) over the navy. Stated as a
-     solid so what the stylesheet says and what the screen shows are the
-     same number: limewash on it is 11.8:1, the orange link 5.0:1. */
-  background:#2D2F3A;
+  /* the flat composite of a 10% orange wash over the navy, stated as a
+     solid so the stylesheet and the screen agree */
+  background:#2C2E42;
   color:var(--limewash);
   font-size:.9375rem; line-height:1.5;
 }
@@ -960,7 +975,7 @@ a{ color:var(--clay-700); }
    they inherit the same type and colour rather than looking like something
    a different company bolted on. No motion, no video, no dock. */
 
-.is-doc{ background:var(--limewash); padding-bottom:0; }
+.is-doc{ background:var(--white); padding-bottom:0; }
 .is-doc .bar{ position:static; }
 
 .bar__name--link{
@@ -989,8 +1004,8 @@ a{ color:var(--clay-700); }
 .doc__lede{
   font-size:1.1875rem; line-height:1.55;
   padding:var(--s5);
-  border-left:3px solid var(--clay-600);
-  background:var(--mortar);
+  border-left:3px solid var(--orange);
+  background:var(--orange-tint);
   margin:0 0 var(--s7);
 }
 
@@ -1010,8 +1025,8 @@ a{ color:var(--clay-700); }
 .doc em{
   display:inline-block;
   font-style:normal;
-  background:#FBE9C8;
-  border-bottom:2px solid #A8741A;
+  background:var(--orange-tint);
+  border-bottom:2px solid var(--orange-ink);
   padding:2px 6px;
   color:var(--slate-900);
 }
@@ -1019,7 +1034,7 @@ a{ color:var(--clay-700); }
 .doc__mono{
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
   font-size:.9em;
-  background:var(--mortar);
+  background:#EEF2F7;
   padding:1px 5px; border-radius:3px;
 }
 
@@ -1041,11 +1056,11 @@ a{ color:var(--clay-700); }
   min-height:60px;
   padding:var(--s3) var(--s4);
   padding-bottom:calc(var(--s3) + env(safe-area-inset-bottom,0px));
-  background:var(--clay-600); color:#fff; text-decoration:none;
+  background:var(--orange); color:var(--navy); text-decoration:none;
   font:700 1.125rem/1 var(--f-cond); letter-spacing:.05em; text-transform:uppercase;
-  box-shadow:0 -2px 16px rgba(20,24,28,.28);
+  box-shadow:0 -2px 16px rgba(20,33,61,.24);
 }
-.dock:active{ background:var(--clay-700); }
+.dock:active{ background:var(--orange-mid); }
 
 @media (min-width:900px){ .dock{ display:none; } }
 @media (max-width:899px){ body{ padding-bottom:76px; } }
@@ -1091,10 +1106,10 @@ a{ color:var(--clay-700); }
      leaving the top of the shot brighter. */
   .hero__veil{
     background:linear-gradient(180deg,
-      rgba(20,24,28,.34) 0%,
-      rgba(20,24,28,.42) 26%,
-      rgba(20,24,28,.80) 52%,
-      rgba(20,24,28,.94) 100%);
+      rgba(255,255,255,.55) 0%,
+      rgba(255,255,255,.66) 26%,
+      rgba(255,255,255,.90) 52%,
+      rgba(255,255,255,.96) 100%);
   }
   .hero__body{ margin-top:auto; }
 }
