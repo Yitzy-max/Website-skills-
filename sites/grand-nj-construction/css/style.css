@@ -819,25 +819,68 @@ a{ color:var(--clay-700); }
   .field{ height:52px; }
 }
 
-/* ─── about ─────────────────────────────────────────────────────────── */
+/* ─── about: centred type over a looping strip of the work ──────────────
+   After the 21st.dev hero the client sent. Same two ideas: the copy is
+   centred and short, and a band of photographs runs under it forever.
+   White ground, navy type, orange pill — the photographs are the colour. */
 
-.sec--about{ background:var(--mortar); border-block:1px solid var(--rule); }
+/* the strip carries the bottom of this section, so it does not need the
+   full section padding under it as well */
+.sec--about{
+  background:var(--white); border-block:1px solid var(--line);
+  overflow:hidden; padding-bottom:var(--s6);
+}
 
-.about{ display:grid; gap:var(--s5); }
+.about{ text-align:center; display:flex; flex-direction:column; align-items:center; }
+
+.about__tag{
+  margin:0 0 var(--s5);
+  font:600 .75rem/1 var(--f-cond);
+  text-transform:uppercase; letter-spacing:.14em;
+  color:var(--orange-deep);           /* 5.07:1 on the tint */
+  background:var(--orange-tint);
+  padding:var(--s2) var(--s4);
+  border-radius:999px;
+}
+
+.about__h{
+  font-family:var(--f-disp);
+  font-variation-settings:"wdth" 112,"wght" 700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  line-height:1.0; letter-spacing:-.02em;
+  color:var(--navy);
+  margin:0 0 var(--s4);
+  text-wrap:balance;
+}
+
+.about__p{
+  margin:0;
+  max-width:54ch;
+  font-size:clamp(1rem,2vw,1.1875rem);
+  line-height:1.55;
+  color:var(--ink-mute);
+  text-wrap:pretty;
+}
+
+/* the strip */
+.marquee--work{ margin-top:var(--s6); --gap:var(--s3); }
+/* the reference strip travels left to right, which is the opposite of the
+   reviews one — same keyframe, run backwards */
+.marquee--work .marquee__track{ animation-direction:reverse; }
+
+.work{
+  flex:none; margin:0;
+  width:168px; aspect-ratio:3/4;
+  border-radius:10px; overflow:hidden;
+  background:#EEF2F7;
+  box-shadow:0 2px 12px rgba(20,33,61,.10);
+}
+.work img{ width:100%; height:100%; object-fit:cover; }
+
 @media (min-width:900px){
-  .about{ grid-template-columns:5fr 7fr; gap:var(--s9); align-items:start; }
-  .about__head .sec__h{ margin-bottom:0; }
+  .marquee--work{ --gap:var(--s4); }
+  .work{ width:240px; }
 }
-
-.about__body p{ margin:0 0 var(--s4); font-size:1.0625rem; line-height:1.65; }
-.about__body p:last-child{ margin-bottom:0; }
-
-.about__cred{
-  padding-top:var(--s4);
-  border-top:1px solid var(--rule);
-  color:var(--zinc-600);
-}
-.about__cred strong{ color:var(--clay-700); font-variant-numeric:tabular-nums; }
 
 /* ─── footer ────────────────────────────────────────────────────────── */
 

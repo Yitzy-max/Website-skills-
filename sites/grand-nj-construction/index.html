@@ -262,27 +262,130 @@
   </section>
 
   <!-- ══ ABOUT ═════════════════════════════════════════════════════════
-       Built ONLY from sourced facts. Everything here traces to the van
-       (name, town, licence, trades, free estimate, insured) or to the real
-       Google reviews in js/main.js (Tony by name, North Bergen, the kinds
-       of job people actually describe).
+       Built after the 21st.dev hero the client sent: a centred block of type
+       with a photo strip running under it on an endless loop.
 
-       DELIBERATELY NOT SAID, because nobody has confirmed it: how many
-       years they have been going, whether they are family owned, whether
-       there is 24-hour emergency cover, crew size, jobs completed. Their
-       own Yelp/Angi copy claims the first three — the moment Tony confirms
-       them they belong in the paragraph below, and the section gets a lot
-       stronger for it. ══════════════════════════════════════════════════ -->
+       Two things are ours rather than the component's. The strip carries
+       Grand NJ's OWN five job photographs, not stock — the whole point of it
+       is "here is the work". And the loop is pure CSS on a duplicated track,
+       so it never stutters against the scroll and costs no JavaScript.
+
+       The copy traces to sourced facts only: the licence and town come off
+       the van, Tony comes off the real Google reviews below. Still not said,
+       because nobody has confirmed it: years in business, family owned,
+       24-hour cover. ═══════════════════════════════════════════════════ -->
   <section class="sec sec--about" id="about">
     <div class="wrap about">
-      <div class="about__head">
-        <p class="eyebrow">Who you're calling</p>
-        <h2 class="sec__h">A small outfit out of&nbsp;Fairview.</h2>
-      </div>
-      <div class="about__body">
-        <p>When you call this number you get Tony. His name is on nearly every review on this page, because he's the one who comes out, gets on the roof, and gives you the number himself — not a salesman, and not a call center that passes your address to whoever's free.</p>
-        <p>The work runs across Bergen County and North Jersey, out of Fairview. Chimneys, roofs, siding, gutters and masonry — steps and stoops, repointing, gutter guards, flashing. Most of it starts with water getting somewhere it shouldn't.</p>
-        <p class="about__cred">Licensed in New Jersey, <strong>13VH12012200</strong>. Fully insured. The estimate is free and it stays free whether you go ahead or not.</p>
+      <p class="about__tag">Licensed &amp; insured &nbsp;·&nbsp; NJ Lic. 13VH12012200</p>
+      <h2 class="about__h">A small outfit out of&nbsp;Fairview.</h2>
+      <p class="about__p">When you call, you get Tony. His name is on nearly every review on this page — he's the one who comes out, gets on the roof, and gives you the number himself.</p>
+    </div>
+
+    <!-- Two identical copies of the strip. The track slides exactly -50%, so
+         the second copy lands where the first began and the seam is invisible.
+         The duplicate is aria-hidden so it is not read out twice. -->
+    <div class="marquee marquee--work" style="--dur:60s">
+      <div class="marquee__track">
+          <figure class="work">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-01-480.webp 480w, images/job-01-800.webp 800w">
+              <img src="images/job-01-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-01-480.jpg 480w, images/job-01-800.jpg 800w"
+                   alt="Galvanised chimney liner and cap set through fresh roof decking">
+            </picture>
+          </figure>
+          <figure class="work">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-03-480.webp 480w, images/job-03-800.webp 800w">
+              <img src="images/job-03-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-03-480.jpg 480w, images/job-03-800.jpg 800w"
+                   alt="Shingles stripped back to bare decking with the crew's van in the driveway">
+            </picture>
+          </figure>
+          <figure class="work">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-02-480.webp 480w, images/job-02-800.webp 800w">
+              <img src="images/job-02-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-02-480.jpg 480w, images/job-02-800.jpg 800w"
+                   alt="Crew replacing the roof on a two-storey colonial">
+            </picture>
+          </figure>
+          <figure class="work">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-05-480.webp 480w, images/job-05-800.webp 800w">
+              <img src="images/job-05-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-05-480.jpg 480w, images/job-05-800.jpg 800w"
+                   alt="Freshly poured concrete sidewalk, still taped off">
+            </picture>
+          </figure>
+          <figure class="work">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-04-480.webp 480w, images/job-04-800.webp 800w">
+              <img src="images/job-04-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-04-480.jpg 480w, images/job-04-800.jpg 800w"
+                   alt="Old concrete front steps broken out ahead of a masonry rebuild">
+            </picture>
+          </figure>
+          <figure class="work" aria-hidden="true">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-01-480.webp 480w, images/job-01-800.webp 800w">
+              <img src="images/job-01-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-01-480.jpg 480w, images/job-01-800.jpg 800w"
+                   alt="">
+            </picture>
+          </figure>
+          <figure class="work" aria-hidden="true">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-03-480.webp 480w, images/job-03-800.webp 800w">
+              <img src="images/job-03-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-03-480.jpg 480w, images/job-03-800.jpg 800w"
+                   alt="">
+            </picture>
+          </figure>
+          <figure class="work" aria-hidden="true">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-02-480.webp 480w, images/job-02-800.webp 800w">
+              <img src="images/job-02-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-02-480.jpg 480w, images/job-02-800.jpg 800w"
+                   alt="">
+            </picture>
+          </figure>
+          <figure class="work" aria-hidden="true">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-05-480.webp 480w, images/job-05-800.webp 800w">
+              <img src="images/job-05-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-05-480.jpg 480w, images/job-05-800.jpg 800w"
+                   alt="">
+            </picture>
+          </figure>
+          <figure class="work" aria-hidden="true">
+            <picture>
+              <source type="image/webp" sizes="(min-width:900px) 240px, 168px"
+                      srcset="images/job-04-480.webp 480w, images/job-04-800.webp 800w">
+              <img src="images/job-04-480.jpg" width="800" height="600" loading="lazy" decoding="async"
+                   sizes="(min-width:900px) 240px, 168px"
+                   srcset="images/job-04-480.jpg 480w, images/job-04-800.jpg 800w"
+                   alt="">
+            </picture>
+          </figure>
       </div>
     </div>
   </section>
