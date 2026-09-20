@@ -1,5 +1,12 @@
 {
   "devDependencies": {
-    "shadcn": "^4.19.1"
+    "shadcn": "^4.19.1",
+    "ffmpeg-static": "^5.2.0",
+    "playwright": "^1.56.0"
+  },
+  "name": "website-skills",
+  "private": true,
+  "scripts": {
+    "render:walkthrough": "node tools/render-walkthrough.js"
   }
 }
