@@ -217,60 +217,6 @@ var SCORE = { rating: null, count: 0 };
   // just with a smaller video and less text movement.
   if (reduced || thrifty) return;   // static page, and that's fine
 
-  /* ── hero video ──────────────────────────────────────────────────────
-     Never plays on its own. Scroll sets currentTime; see the ScrollTrigger
-     below. A missing file or a decode failure just leaves the poster. */
-  var vid = document.querySelector('.hero__video');
-  var still = document.querySelector('.hero__still');
-  var vidReady = false;
-
-  if (vid) {
-    vid.addEventListener('error', function () { vid.remove(); vid = null; }, { once: true });
-    vid.addEventListener('loadeddata', function () {
-      vidReady = true;
-      vid.classList.add('is-on');
-      // Priming: iOS will not decode or seek a video that has never been
-      // told to play. play() then immediate pause() unlocks seeking without
-      // the video ever actually running.
-      var pr = vid.play();
-      if (pr && pr.then) pr.then(function () { vid.pause(); }).catch(function () {});
-      else { try { vid.pause(); } catch (e) {} }
-      try { vid.currentTime = 0; } catch (e) {}
-    }, { once: true });
-
-    // Deferred: the poster is already on screen and carries the hero, so the
-    // video must not compete with first paint. On a phone this keeps the
-    // initial view around 190 KB instead of 930 KB.
-    var started = false;
-    function startVideo() {
-      if (started || !vid) return;
-      started = true;
-      vid.preload = 'auto';
-      vid.src = big ? 'videos/hero-desk.mp4' : 'videos/hero-mob.mp4';
-      vid.load();
-    }
-    if (document.readyState === 'complete') setTimeout(startVideo, 120);
-    else window.addEventListener('load', function () { setTimeout(startVideo, 120); }, { once: true });
-    // whichever comes first — a visitor who scrolls immediately gets it now
-    window.addEventListener('scroll', startVideo, { once: true, passive: true });
-  }
-
-  /* Seeking is throttled through rAF. Writing currentTime on every scroll
-     event floods the decoder and the picture stalls; one seek per frame,
-     only when the target actually moved, stays smooth. */
-  var wantTime = 0, haveTime = -1;
-  function pumpSeek() {
-    if (vid && vidReady && Math.abs(wantTime - haveTime) > 0.008) {
-      haveTime = wantTime;
-      try {
-        if (vid.fastSeek) vid.fastSeek(wantTime);
-        else vid.currentTime = wantTime;
-      } catch (e) {}
-    }
-    requestAnimationFrame(pumpSeek);
-  }
-  requestAnimationFrame(pumpSeek);
-
   /* ── magnetic primary button ─────────────────────────────────────────
      Pointer-precision devices only. Transform-only, so it never triggers
      layout. */
@@ -343,27 +289,14 @@ var SCORE = { rating: null, count: 0 };
       gsap.ticker.lagSmoothing(0);
     });
 
-    /* ── THE SIGNATURE: the visitor drives the van ───────────────────
-       Scroll position maps straight onto video.currentTime. The van moves
-       exactly as fast as they scroll and reverses when they scroll back.
-       Text slides in against it, staggered across the same scroll. */
+    /* ── the hero, staged against the scroll ─────────────────────────
+       The van video this replaces was scrubbed frame by frame. The plate is
+       static, so the scroll now drives the TYPE instead: each block arrives
+       on its own slice of the hero's scroll, and rewinds on the way back
+       up. Same idea, one HTTP request instead of two megabytes. */
     var heroEl = document.querySelector('.hero');
 
     if (heroEl) {
-      window.ScrollTrigger.create({
-        trigger: heroEl,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true,
-        onUpdate: function (self) {
-          if (!vid || !vidReady) return;
-          var d = vid.duration;
-          if (!d || !isFinite(d)) return;
-          // last frame held slightly short of the end: seeking exactly to
-          // duration can bounce back to 0 in some browsers
-          wantTime = Math.min(self.progress * d, d - 0.05);
-        }
-      });
 
       // Text staging. Step 0 (eyebrow + headline) is never animated — it is
       // the LCP text. Steps 1-3 slide in over the first two thirds.

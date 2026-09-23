@@ -55,7 +55,15 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="bar">
-  <span class="bar__name">Grand NJ Construction</span>
+  <span class="bar__brand">
+    <!-- The roof mark lifted off the client's supplied artwork and keyed to
+         transparency. The WORDMARK is deliberately NOT the supplied one: that
+         artwork reads "GRANT NEW JERSEY CONSTRUCTION" and the business is
+         GRAND NJ CONSTRUCTION LLC, per the licence and the van. Set as live
+         text so it is correct, crisp at any size, and readable to search. -->
+    <img class="bar__mark" src="images/mark.png" alt="" width="174" height="52" decoding="async">
+    <span class="bar__name">Grand NJ Construction</span>
+  </span>
   <a class="bar__call" href="tel:+15512225512">
     <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
     551-222-5512
@@ -64,36 +72,39 @@
 
 <main id="main">
 
-  <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
-  <!-- Scroll-DRIVEN, not autoplaying. The section is tall; the inner panel
-       sticks to the viewport and scroll position sets video.currentTime
-       directly, so the van moves exactly as fast as the visitor scrolls and
-       runs backwards when they scroll up.
+  <!-- ══ HERO ══════════════════════════════════════════════════════════
+       The client's supplied artwork, with two things taken out of the file
+       itself rather than hidden with CSS:
 
-       Without JS the tall height and the sticky are never applied (both hang
-       off a .js class added only once GSAP has loaded), the video never gets
-       a source, and the poster + all text render as an ordinary hero. -->
+         · the service-tile band across the bottom (its top edge was y=644)
+         · every pixel of baked-in type — all of it ended by x=615, so the
+           plate is cropped from there
+
+       Nothing is painted over. A dark panel baked into the image would be
+       cropped away at some viewport widths and survive at others, so the
+       scrim that carries the type is CSS, where it scales with the frame
+       and can be measured.
+
+       Two crops, because a 1.65:1 plate letterboxes badly on a phone: the
+       desktop plate keeps the full house, the mobile one is framed upright
+       on the gable, porch and door.
+
+       Static now — the scroll-scrubbed van video it replaces is still in
+       videos/ if it is ever wanted back. -->
   <section class="hero" id="hero">
     <div class="hero__sticky">
       <div class="hero__media" aria-hidden="true">
-        <!-- Two posters, because the two breakpoints play two different
-             videos. Each poster is frame 0 of the clip that breakpoint
-             actually loads, so nothing jumps when the video takes over. -->
         <picture>
           <source media="(min-width: 900px)" type="image/webp" sizes="100vw"
-                  srcset="images/hero-desk-960.webp 960w, images/hero-desk-1344.webp 1344w, images/hero-desk-1920.webp 1920w">
+                  srcset="images/house-desk-640.webp 640w, images/house-desk-840.webp 840w, images/house-desk-1057.webp 1057w">
           <source media="(min-width: 900px)" sizes="100vw"
-                  srcset="images/hero-desk-960.jpg 960w, images/hero-desk-1344.jpg 1344w, images/hero-desk-1920.jpg 1920w">
+                  srcset="images/house-desk-640.jpg 640w, images/house-desk-840.jpg 840w, images/house-desk-1057.jpg 1057w">
           <source type="image/webp" sizes="100vw"
-                  srcset="images/hero-poster-640.webp 640w, images/hero-poster-960.webp 960w, images/hero-poster-1344.webp 1344w">
-          <img class="hero__still" src="images/hero-poster-960.jpg" alt="" width="1344" height="735"
+                  srcset="images/house-mob-420.webp 420w, images/house-mob-560.webp 560w, images/house-mob-740.webp 740w">
+          <img class="hero__still" src="images/house-mob-560.jpg" alt="" width="740" height="642"
                fetchpriority="high" sizes="100vw"
-               srcset="images/hero-poster-640.jpg 640w, images/hero-poster-960.jpg 960w, images/hero-poster-1344.jpg 1344w"
-               onerror="this.style.display='none'">
+               srcset="images/house-mob-420.jpg 420w, images/house-mob-560.jpg 560w, images/house-mob-740.jpg 740w">
         </picture>
-        <!-- src is set by JS per breakpoint. No poster attribute: the <img>
-             above already is the poster and a poster would re-download it. -->
-        <video class="hero__video" playsinline muted preload="none" aria-hidden="true"></video>
         <span class="hero__veil"></span>
       </div>
 

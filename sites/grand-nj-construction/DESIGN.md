@@ -71,23 +71,40 @@ text on a white ground always uses `--orange-ink` (5.35:1), or `--orange-deep`
 
 ### The hero
 
-The footage is a white van on a bright street, so the old treatment — darken
-the frame, set white type on it — had nothing to grip. It is inverted: a white
-scrim LIGHTENS the shot and the type is navy, with one word in orange.
+Now the client's supplied artwork — a house at dusk — not the van footage.
+Two things were taken out of the FILE rather than hidden with CSS: the
+service-tile band across the bottom, and every pixel of baked-in type. The
+dark panel that carries the copy is rebuilt in CSS, because a panel baked
+into the image gets cropped away at some viewport widths and survives at
+others.
 
-Those scrim values are not eyeballed. Every frame of `hero-desk.mp4` was
-composited through the exact gradient pair in software and the darkest pixel
-under each run of glyphs was measured. Worst case across all frames:
+The artwork is dark, so the type is light — the inverse of the white-scrim
+treatment the white van needed. Worst case, measured by compositing the
+plate through the exact scrim gradients in software and taking the
+BRIGHTEST pixel under each run of glyphs (light ink, so bright is worst):
 
-| Element | Ink | Ratio | Floor |
-|---|---|---|---|
-| h1 | navy | 10.55 | 3 |
-| "outside" | orange-deep | 4.76 | 3 |
-| sub | navy | 12.69 | 4.5 |
-| eyebrow | orange-deep | 5.61 | 4.5 |
-| note | ink-mute | 5.67 | 4.5 |
+| Element | Ink | 1440 | 1920 | 390 | 360 | Floor |
+|---|---|---|---|---|---|---|
+| h1 | white | 8.56 | 9.06 | 12.71 | 9.55 | 3 |
+| "outside" | orange | 3.79 | 3.85 | 4.48 | 3.43 | 3 |
+| sub | on-navy | 7.92 | 7.30 | 8.96 | 7.69 | 4.5 |
+| "see our work" | white | 15.00 | 15.42 | 13.72 | 13.38 | 4.5 |
+| note | on-navy-mute | 5.57 | 5.55 | 5.18 | 5.15 | 4.5 |
 
-Re-measure with `scratchpad/herocheck.py` if the footage or the gradient changes.
+The eyebrow is the one element that changes colour by breakpoint: orange on
+desktop (5.15:1), white on mobile. Over the mobile crop the same orange
+bottoms out at 3.16:1, and at 12px there is no large-text exemption to fall
+back on. White is 9.3:1 in the same spot.
+
+Re-measure with `scratchpad/plate.py` if the artwork or the scrim changes.
+
+### The logo
+
+The mark is lifted from the supplied artwork and keyed to transparency. The
+WORDMARK in that artwork is not used: it reads **"GRANT NEW JERSEY
+CONSTRUCTION"** and the business is **Grand NJ Construction LLC**, per the
+licence and the van. The name is set as live text instead — correct,
+crisp at any size, and readable to search engines.
 
 ### Contrast rules (measured, not assumed)
 
