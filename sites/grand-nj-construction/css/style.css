@@ -27,6 +27,11 @@
                             #F4701E on white is 2.92 and fails at any size */
   --orange-deep:#A84405; /* on the orange tint, 6.01:1 on white */
   --orange-tint:#FDEDE2; /* pill and notice grounds */
+  --orange-lift:#FF8A3D; /* the accent brightened for TYPE over photography.
+                            Every point of contrast the ink gains is a point
+                            of scrim the picture does not have to pay. */
+  --on-photo:#EEF3FA;    /* body copy over photography */
+  --on-photo-mute:#D3DCE9;
   --orange-ring:rgba(180,74,6,.28);
 
   --ink-mute:#54637A;    /* secondary text on white, 6.10:1 */
@@ -153,7 +158,8 @@ a{ color:var(--clay-700); }
   background:var(--slate-900); color:var(--mortar);
 }
 .bar__brand{ display:inline-flex; align-items:center; gap:var(--s3); min-width:0; }
-.bar__mark{ width:52px; height:auto; flex:none; }
+.bar__mark{ width:40px; height:auto; flex:none; }
+@media (min-width:600px){ .bar__mark{ width:52px; } }
 @media (min-width:768px){ .bar__mark{ width:64px; } }
 
 .bar__name{
@@ -173,6 +179,10 @@ a{ color:var(--clay-700); }
   min-height:44px; padding-inline:var(--s2); white-space:nowrap; flex:none;
 }
 .bar__call:hover{ color:#fff; }
+@media (max-width:599px){
+  .bar__num{ display:none; }
+  .bar__call{ min-width:44px; justify-content:center; }  /* icon alone still needs a 44px target */
+}
 
 /* ─── hero ──────────────────────────────────────────────────────────── */
 
@@ -190,13 +200,17 @@ a{ color:var(--clay-700); }
    than three empty screens of nothing. */
 .hero__sticky{ position:relative; overflow:hidden; }
 
-.js .hero{ height:240vh; }
+/* The track was 240/280vh when scroll was scrubbing video frames and the
+   length WAS the effect. The plate is static, so the scroll only has to
+   stage the type — roughly one flick, then you are into the next
+   section. Scrub distance is height minus the 100vh sticky panel. */
+.js .hero{ height:170vh; }
 .js .hero__sticky{
   position:sticky; top:0;
   height:100vh; min-height:560px;
   display:flex; flex-direction:column; justify-content:center;
 }
-@media (min-width:900px){ .js .hero{ height:280vh; } }
+@media (min-width:900px){ .js .hero{ height:180vh; } }
 
 .hero__media{ position:absolute; inset:0; z-index:0; overflow:hidden; }
 .hero__media picture{ display:contents; }
@@ -225,11 +239,17 @@ a{ color:var(--clay-700); }
 @media (min-width:900px){
   /* The navy panel from the client's artwork, rebuilt in CSS so it scales
      with the frame instead of being cropped away at some widths and not
-     others. Values measured against the plate, not eyeballed. */
+     others.
+
+     Pulled well back from where it started — the vertical wash is down from
+     .34/.22/.58 to .22/.12/.46 and the horizontal midpoint from .72 to .60,
+     so a lot more of the house reads through. That was only affordable
+     because the ink got brighter first; at the old ink these numbers put
+     four elements under the floor. */
   .hero__veil{
     background:
-      linear-gradient(180deg,rgba(20,33,61,.34) 0%,rgba(20,33,61,.22) 45%,rgba(20,33,61,.58) 100%),
-      linear-gradient(90deg,rgba(20,33,61,.97) 0%,rgba(20,33,61,.94) 38%,rgba(20,33,61,.72) 58%,rgba(20,33,61,.26) 80%,rgba(20,33,61,.04) 100%);
+      linear-gradient(180deg,rgba(20,33,61,.22) 0%,rgba(20,33,61,.12) 45%,rgba(20,33,61,.46) 100%),
+      linear-gradient(90deg,rgba(20,33,61,.94) 0%,rgba(20,33,61,.87) 35%,rgba(20,33,61,.60) 53%,rgba(20,33,61,.18) 75%,rgba(20,33,61,.02) 100%);
   }
 }
 
@@ -253,24 +273,24 @@ a{ color:var(--clay-700); }
   .hero__body{ padding-block:var(--s7) calc(var(--s6) + 84px); }
 }
 
-.hero .eyebrow{ color:var(--orange); }
+.hero .eyebrow{ color:var(--orange-lift); }
 
 .hero__h{
   font-family:var(--f-disp);
   font-variation-settings:"wdth" 118,"wght" 800;
-  font-size:clamp(2.5rem,9.2vw,6.25rem);
-  line-height:.94; letter-spacing:-.03em;
+  font-size:clamp(2.25rem,7vw,5rem);
+  line-height:.96; letter-spacing:-.03em;
   margin:0 0 var(--s5);
   max-width:15ch;
   text-wrap:balance;
   color:var(--white);
 }
 /* the one word that carries the whole offer, in the accent */
-.hero__h em{ font-style:normal; color:var(--orange); }
+.hero__h em{ font-style:normal; color:var(--orange-lift); }
 
 .hero__sub{
   font-size:clamp(1.125rem,2.4vw,1.5rem);
-  line-height:1.45; color:var(--on-navy);
+  line-height:1.45; color:var(--on-photo);
   max-width:46ch; margin:0 0 var(--s6);
 }
 
@@ -297,7 +317,7 @@ a{ color:var(--clay-700); }
 .hero__note{
   font:600 .8125rem/1.5 var(--f-cond);
   text-transform:uppercase; letter-spacing:.12em;
-  color:var(--on-navy-mute); margin:0;
+  color:var(--on-photo-mute); margin:0;
 }
 
 /* ── hero stat tiles ────────────────────────────────────────────────────
@@ -1170,10 +1190,13 @@ a{ color:var(--clay-700); }
    plate is cut at 1.15:1 specifically so that is no longer true: it COVERS
    the phone, full bleed, no bands, framed on the gable, porch and door. */
 @media (max-width:899px){
-  .js .hero__sticky{ justify-content:center; height:100vh; min-height:520px; }
+  /* flex-start, not centre: centred left a screen's worth of sky above the
+     copy and the picture read as empty. The block now sits near the top and
+     the house fills what is under it. */
+  .js .hero__sticky{ justify-content:flex-start; height:100vh; min-height:520px; }
 
   .hero__still{
-    object-fit:cover; object-position:center 38%;
+    object-fit:cover; object-position:center center;
     opacity:1;
   }
 
@@ -1197,24 +1220,22 @@ a{ color:var(--clay-700); }
      contrast — but it is weighted to the lower half where the copy sits,
      leaving the top of the shot brighter. */
   /* Measured against the mobile plate at 414x896, 390x844, 375x667 and
-     360x640. The plate's top third is bright sky and the copy block reaches
-     into it on a short phone, so the scrim has to start heavy. .78 is the
-     lightest top that clears every element at every one of those sizes —
-     ten points lighter than what an orange eyebrow would have forced. */
+     360x640. The plate's top third is bright sky and the copy reaches into
+     it on a short phone. .66 is the lightest top that still clears every
+     element at every one of those sizes — twelve points off where it was,
+     bought by the brighter ink. */
   .hero__veil{
     background:linear-gradient(180deg,
-      rgba(20,33,61,.78) 0%,
-      rgba(20,33,61,.86) 22%,
-      rgba(20,33,61,.93) 50%,
-      rgba(20,33,61,.96) 100%);
+      rgba(20,33,61,.70) 0%,
+      rgba(20,33,61,.80) 22%,
+      rgba(20,33,61,.88) 50%,
+      rgba(20,33,61,.94) 100%);
   }
 
-  /* The eyebrow is orange on desktop, where it measures 5.15:1 against the
-     plate. Over the mobile crop the same orange bottoms out at 3.16:1 — it
-     is 12px type, so there is no large-text exemption to fall back on.
-     White is 8.9:1 in the same spot. */
+  /* The eyebrow stays orange on desktop and goes white here. Over the
+     mobile crop no orange clears 4.5:1 at any scrim worth having — it is
+     12px type, so there is no large-text exemption. White is 7.5:1. */
   .hero .eyebrow{ color:var(--white); }
-  .hero__body{ margin-top:auto; }
 }
 
 /* ─── hero text staging ─────────────────────────────────────────────────

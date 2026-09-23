@@ -71,32 +71,51 @@ text on a white ground always uses `--orange-ink` (5.35:1), or `--orange-deep`
 
 ### The hero
 
-Now the client's supplied artwork — a house at dusk — not the van footage.
-Two things were taken out of the FILE rather than hidden with CSS: the
-service-tile band across the bottom, and every pixel of baked-in type. The
-dark panel that carries the copy is rebuilt in CSS, because a panel baked
-into the image gets cropped away at some viewport widths and survives at
-others.
+The client's supplied artwork — a house at dusk. Two things were taken out of
+the FILE rather than hidden with CSS: the service-tile band across the bottom
+and every pixel of baked-in type. The dark panel that carries the copy is
+rebuilt in CSS, because a panel baked into the image gets cropped away at some
+viewport widths and survives at others.
 
-The artwork is dark, so the type is light — the inverse of the white-scrim
-treatment the white van needed. Worst case, measured by compositing the
-plate through the exact scrim gradients in software and taking the
-BRIGHTEST pixel under each run of glyphs (light ink, so bright is worst):
+**Ink brightness is what buys picture.** Every point of contrast the type
+gains is a point of scrim the photograph does not have to pay for. Over the
+artwork the hero uses `--orange-lift`, `--on-photo` and `--on-photo-mute`
+rather than the flat accent and the on-navy greys; that alone let the vertical
+wash drop from .34/.22/.58 to .22/.12/.46 and the horizontal midpoint from
+.72 to .60. At the old ink those numbers put four elements under the floor.
 
-| Element | Ink | 1440 | 1920 | 390 | 360 | Floor |
-|---|---|---|---|---|---|---|
-| h1 | white | 8.56 | 9.06 | 12.71 | 9.55 | 3 |
-| "outside" | orange | 3.79 | 3.85 | 4.48 | 3.43 | 3 |
-| sub | on-navy | 7.92 | 7.30 | 8.96 | 7.69 | 4.5 |
-| "see our work" | white | 15.00 | 15.42 | 13.72 | 13.38 | 4.5 |
-| note | on-navy-mute | 5.57 | 5.55 | 5.18 | 5.15 | 4.5 |
+Worst case, measured by compositing the plate through the exact scrim
+gradients and taking the BRIGHTEST pixel under each run of glyphs — light ink,
+so bright is the worst case:
 
-The eyebrow is the one element that changes colour by breakpoint: orange on
-desktop (5.15:1), white on mobile. Over the mobile crop the same orange
-bottoms out at 3.16:1, and at 12px there is no large-text exemption to fall
-back on. White is 9.3:1 in the same spot.
+| Element | Ink | 1920 | 1440 | 414 | 390 | 375 | 360 | Floor |
+|---|---|---|---|---|---|---|---|---|
+| h1 | white | 7.17 | 7.50 | 7.82 | 7.81 | 7.81 | 7.83 | 3 |
+| "outside" | orange-lift | 3.51 | 4.31 | 3.35 | 3.35 | 3.48 | 3.62 | 3 |
+| sub | on-photo | 6.37 | 6.86 | 7.69 | 7.73 | 8.39 | 8.52 | 4.5 |
+| eyebrow | see below | 5.69 | 5.78 | 8.04 | 8.04 | 7.82 | 7.83 | 4.5 |
+| "see our work" | white | 12.43 | 14.16 | 9.53 | 9.91 | 14.10 | 14.11 | 4.5 |
+| note | on-photo-mute | 9.18 | 9.09 | 7.58 | 7.53 | 8.63 | 9.44 | 4.5 |
 
-Re-measure with `scratchpad/plate.py` if the artwork or the scrim changes.
+The eyebrow is the one element that changes colour by breakpoint: orange-lift
+on desktop, white on mobile. Over the mobile crop NO orange clears 4.5:1 at
+any scrim worth having, and at 12px there is no large-text exemption.
+
+"outside" is the binding constraint everywhere. It is large text, so its floor
+is 3 — if it ever needs to be smaller than 24px, the scrim has to come back up.
+
+**The mobile plate is cut separately**, and starts 150px below the top of the
+artwork. The first cut opened on empty sky, which read as a blank screen with
+the copy stranded underneath it; starting at the roofline means a phone opens
+on the house.
+
+**The track is 180vh desktop / 170vh mobile**, down from 280/240. It was that
+long when scroll was scrubbing video frames and the length WAS the effect.
+Everything has landed within about 360px of scroll — one flick.
+
+Re-measure with `scratchpad/plate.py` if the artwork, the type sizes or the
+scrim change. Moving the copy moves which pixels sit under it, so a layout
+change is a contrast change.
 
 ### The logo
 

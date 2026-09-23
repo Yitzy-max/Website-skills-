@@ -303,11 +303,14 @@ var SCORE = { rating: null, count: 0 };
       // Kept early on purpose: a landing page that shows no call button for
       // half the hero is trading conversions for an effect. The slide-in is
       // still visible, it just resolves in the first third.
+      // Tightened with the track. The hero used to be 280vh because scroll
+      // was scrubbing video; now it is 180vh and every block has landed by
+      // 40% of it — a flick and a half, not a journey.
       var steps = [
-        { sel: '[data-hero="1"]', a: 0.03, b: 0.15 },
-        { sel: '[data-hero="2"]', a: 0.09, b: 0.23 },
-        { sel: '[data-hero="3"]', a: 0.17, b: 0.31 },
-        { sel: '[data-hero="4"]', a: 0.24, b: 0.40 }
+        { sel: '[data-hero="1"]', a: 0.02, b: 0.12 },
+        { sel: '[data-hero="2"]', a: 0.07, b: 0.18 },
+        { sel: '[data-hero="3"]', a: 0.13, b: 0.24 },
+        { sel: '[data-hero="4"]', a: 0.18, b: 0.32 }
       ];
       steps.forEach(function (st) {
         var el = heroEl.querySelector(st.sel);
@@ -340,7 +343,7 @@ var SCORE = { rating: null, count: 0 };
        a blocked script leaves the real numbers showing. */
     var counters = gsap.utils.toArray('[data-count]');
     if (counters.length && heroEl) {
-      var COUNT_A = 0.26, COUNT_B = 0.46;
+      var COUNT_A = 0.20, COUNT_B = 0.36;
       var targets = counters.map(function (el) {
         return parseInt(el.getAttribute('data-count'), 10) || 0;
       });
