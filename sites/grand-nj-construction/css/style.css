@@ -1219,17 +1219,24 @@ a{ color:var(--clay-700); }
   /* Type lies over the letterboxed frame, so the veil still has to carry
      contrast — but it is weighted to the lower half where the copy sits,
      leaving the top of the shot brighter. */
-  /* Measured against the mobile plate at 414x896, 390x844, 375x667 and
-     360x640. The plate's top third is bright sky and the copy reaches into
-     it on a short phone. .66 is the lightest top that still clears every
-     element at every one of those sizes — twelve points off where it was,
-     bought by the brighter ink. */
+  /* SHAPED TO THE PICTURE, not a flat ramp. The portrait plate is dark at
+     the top (deep sky) and dark at the bottom (lawn in shadow), with a
+     bright band of lit cloud and lit windows through the middle — which is
+     exactly where the copy sits. So the scrim is light at both ends and
+     heavy only across that band. A flat ramp strong enough for the middle
+     would have buried the sky and the lawn for nothing.
+
+     Measured at 414x896, 390x844, 375x667 and 360x640; every element clears
+     with at least 22% to spare, "outside" being the tightest at 3.67. */
   .hero__veil{
     background:linear-gradient(180deg,
-      rgba(20,33,61,.70) 0%,
-      rgba(20,33,61,.80) 22%,
-      rgba(20,33,61,.88) 50%,
-      rgba(20,33,61,.94) 100%);
+      rgba(20,33,61,.28) 0%,
+      rgba(20,33,61,.60) 12%,
+      rgba(20,33,61,.84) 30%,
+      rgba(20,33,61,.86) 50%,
+      rgba(20,33,61,.78) 70%,
+      rgba(20,33,61,.40) 88%,
+      rgba(20,33,61,.24) 100%);
   }
 
   /* The eyebrow stays orange on desktop and goes white here. Over the

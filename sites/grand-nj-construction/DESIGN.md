@@ -90,12 +90,12 @@ so bright is the worst case:
 
 | Element | Ink | 1920 | 1440 | 414 | 390 | 375 | 360 | Floor |
 |---|---|---|---|---|---|---|---|---|
-| h1 | white | 7.17 | 7.50 | 7.82 | 7.81 | 7.81 | 7.83 | 3 |
-| "outside" | orange-lift | 3.51 | 4.31 | 3.35 | 3.35 | 3.48 | 3.62 | 3 |
-| sub | on-photo | 6.37 | 6.86 | 7.69 | 7.73 | 8.39 | 8.52 | 4.5 |
-| eyebrow | see below | 5.69 | 5.78 | 8.04 | 8.04 | 7.82 | 7.83 | 4.5 |
-| "see our work" | white | 12.43 | 14.16 | 9.53 | 9.91 | 14.10 | 14.11 | 4.5 |
-| note | on-photo-mute | 9.18 | 9.09 | 7.58 | 7.53 | 8.63 | 9.44 | 4.5 |
+| h1 | white | 7.17 | 7.50 | 8.28 | 8.14 | 7.74 | 8.08 | 3 |
+| "outside" | orange-lift | 3.51 | 4.31 | 3.92 | 3.91 | 3.71 | 3.67 | 3 |
+| sub | on-photo | 6.37 | 6.86 | 7.72 | 7.82 | 8.34 | 8.85 | 4.5 |
+| eyebrow | see below | 5.69 | 5.78 | 8.74 | 8.75 | 9.04 | 8.45 | 4.5 |
+| "see our work" | white | 12.43 | 14.16 | 10.91 | 11.15 | 12.11 | 10.54 | 4.5 |
+| note | on-photo-mute | 9.18 | 9.09 | 8.16 | 8.21 | 7.18 | 7.22 | 4.5 |
 
 The eyebrow is the one element that changes colour by breakpoint: orange-lift
 on desktop, white on mobile. Over the mobile crop NO orange clears 4.5:1 at
@@ -104,10 +104,19 @@ any scrim worth having, and at 12px there is no large-text exemption.
 "outside" is the binding constraint everywhere. It is large text, so its floor
 is 3 — if it ever needs to be smaller than 24px, the scrim has to come back up.
 
-**The mobile plate is cut separately**, and starts 150px below the top of the
-artwork. The first cut opened on empty sky, which read as a blank screen with
-the copy stranded underneath it; starting at the roofline means a phone opens
-on the house.
+**The mobile plate is a separate portrait photograph**, 720x1280, not a crop
+of the desktop artwork. At 0.562 against a phone's ~0.46 it covers with about
+18% trimmed off the sides and the full height kept.
+
+Its scrim is SHAPED, not a flat ramp: the plate is dark at the top (deep sky)
+and dark at the bottom (lawn in shadow), with a bright band of lit cloud and
+lit windows through the middle — exactly where the copy sits. So the scrim is
+light at both ends and heavy only across that band. A flat ramp strong enough
+for the middle would have buried the sky and the lawn for nothing.
+
+The orange eyebrow was tried again on this plate and still fails (3.6–3.9:1
+against a 4.5 floor). Twelve-pixel orange over sky does not work at any scrim
+worth having; white stays on mobile.
 
 **The track is 180vh desktop / 170vh mobile**, down from 280/240. It was that
 long when scroll was scrubbing video frames and the length WAS the effect.
