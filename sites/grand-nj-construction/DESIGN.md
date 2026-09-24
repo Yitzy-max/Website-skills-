@@ -118,9 +118,26 @@ The orange eyebrow was tried again on this plate and still fails (3.6–3.9:1
 against a 4.5 floor). Twelve-pixel orange over sky does not work at any scrim
 worth having; white stays on mobile.
 
-**The track is 180vh desktop / 170vh mobile**, down from 280/240. It was that
-long when scroll was scrubbing video frames and the length WAS the effect.
-Everything has landed within about 360px of scroll — one flick.
+**The track is 180vh on desktop**, down from 280. It was that long when
+scroll was scrubbing video frames and the length WAS the effect.
+
+**On phones the hero is not pinned at all and is only as tall as its
+content** — about 0.77 of a screen, down from 1.7. A 100vh panel holding
+590px of copy left 250px of lawn under the stat tiles that no amount of
+moving the copy around could fix. The picture is absolutely positioned to
+the panel, so shrinking the panel crops the plate rather than leaving a gap.
+Because the panel is now shorter than the viewport, the ScrollTrigger end
+is `bottom top` on phones rather than `bottom bottom`, which would finish
+before it started.
+
+Two consequences worth remembering:
+
+- The scrim stops are fractions of the PANEL, not the viewport. Changing the
+  panel height moves every stop against a different part of the picture, so
+  it is a contrast change.
+- Anything staged is now a visible hole at first paint rather than space
+  inside a roomy panel. The offer and the call button are therefore never
+  staged on phones; only the licence line and the tiles animate in.
 
 Re-measure with `scratchpad/plate.py` if the artwork, the type sizes or the
 scrim change. Moving the copy moves which pixels sit under it, so a layout

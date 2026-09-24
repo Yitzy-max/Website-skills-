@@ -312,17 +312,24 @@ var SCORE = { rating: null, count: 0 };
         { sel: '[data-hero="3"]', a: 0.13, b: 0.24 },
         { sel: '[data-hero="4"]', a: 0.18, b: 0.32 }
       ];
+      // On phones the hero is no longer pinned and is only as tall as its
+      // content, so 'bottom bottom' would end before 'top top' begins.
+      // 'bottom top' spans the hero's own height instead.
+      var heroEnd = big ? 'bottom bottom' : 'bottom top';
+
       steps.forEach(function (st) {
         var el = heroEl.querySelector(st.sel);
         if (!el) return;
         // buttons stay put on small screens — the call must never be hidden
-        if (st.sel === '[data-hero="2"]' && !big) return;
+        // phones: the offer and the call button are never staged — see the
+        // matching CSS. A hero that paints half-empty is not an effect.
+        if (!big && (st.sel === '[data-hero="1"]' || st.sel === '[data-hero="2"]')) return;
         // ScrollTrigger alone, no tween: a tween would fight the gsap.set
         // below and the element would flicker between two owners.
         window.ScrollTrigger.create({
           trigger: heroEl,
           start: 'top top',
-          end: 'bottom bottom',
+          end: heroEnd,
           scrub: true,
           onUpdate: function (self) {
             var t = (self.progress - st.a) / (st.b - st.a);
@@ -355,7 +362,7 @@ var SCORE = { rating: null, count: 0 };
       window.ScrollTrigger.create({
         trigger: heroEl,
         start: 'top top',
-        end: 'bottom bottom',
+        end: big ? 'bottom bottom' : 'bottom top',
         scrub: true,
         onUpdate: function (self) {
           var t = (self.progress - COUNT_A) / (COUNT_B - COUNT_A);

@@ -1190,10 +1190,22 @@ a{ color:var(--clay-700); }
    plate is cut at 1.15:1 specifically so that is no longer true: it COVERS
    the phone, full bleed, no bands, framed on the gable, porch and door. */
 @media (max-width:899px){
-  /* flex-start, not centre: centred left a screen's worth of sky above the
-     copy and the picture read as empty. The block now sits near the top and
-     the house fills what is under it. */
-  .js .hero__sticky{ justify-content:flex-start; height:100vh; min-height:520px; }
+  /* CONTENT HEIGHT, NOT 100vh, and not pinned.
+
+     The copy needs about 590px. Locking the panel to the viewport left 250px
+     of lawn under the stat tiles with nothing on it, and no amount of moving
+     the copy around fixes a panel that is simply taller than what is in it.
+
+     The picture is absolutely positioned to this panel, so shrinking the
+     panel crops the plate rather than leaving a gap — the house fills the
+     frame and the spare lawn is what gets cut. Dropping the pin also means
+     the hero is over in one screen instead of nearly two. */
+  .js .hero{ height:auto; }
+  .js .hero__sticky{
+    position:static;
+    justify-content:flex-start;
+    height:auto; min-height:0;
+  }
 
   .hero__still{
     object-fit:cover; object-position:center center;
@@ -1214,7 +1226,7 @@ a{ color:var(--clay-700); }
   .hero__acts{ gap:var(--s2); margin-bottom:var(--s4); }
   .hero__acts .btn{ min-height:48px; font-size:.9375rem; padding-inline:var(--s5); }
   .hero__note{ font-size:.75rem; letter-spacing:.1em; }   /* 12px floor */
-  .hero__body{ padding-block:var(--s6) calc(var(--s6) + 52px); }
+  .hero__body{ padding-block:var(--s6) calc(var(--s7) + 52px); }
 
   /* Type lies over the letterboxed frame, so the veil still has to carry
      contrast — but it is weighted to the lower half where the copy sits,
@@ -1226,17 +1238,24 @@ a{ color:var(--clay-700); }
      heavy only across that band. A flat ramp strong enough for the middle
      would have buried the sky and the lawn for nothing.
 
-     Measured at 414x896, 390x844, 375x667 and 360x640; every element clears
-     with at least 22% to spare, "outside" being the tightest at 3.67. */
+     Re-tuned when the panel stopped being 100vh: these stops are fractions
+     of the PANEL, so shrinking it to content height moved every one of them
+     against a different part of the picture.
+
+     Checked at 428x926, 414x896, 390x844, 375x667 and 360x640 by sampling
+     EVERY pixel under "outside" against the full-size plate, not a grid
+     against a downscale — at the previous values that came back 3.12 on the
+     largest phone, four percent over the floor, which is not a pass worth
+     shipping. These read 3.33 to 3.79. */
   .hero__veil{
     background:linear-gradient(180deg,
-      rgba(20,33,61,.28) 0%,
-      rgba(20,33,61,.60) 12%,
-      rgba(20,33,61,.84) 30%,
-      rgba(20,33,61,.86) 50%,
-      rgba(20,33,61,.78) 70%,
-      rgba(20,33,61,.40) 88%,
-      rgba(20,33,61,.24) 100%);
+      rgba(20,33,61,.34) 0%,
+      rgba(20,33,61,.66) 14%,
+      rgba(20,33,61,.86) 34%,
+      rgba(20,33,61,.86) 56%,
+      rgba(20,33,61,.72) 76%,
+      rgba(20,33,61,.36) 92%,
+      rgba(20,33,61,.26) 100%);
   }
 
   /* The eyebrow stays orange on desktop and goes white here. Over the
@@ -1257,6 +1276,11 @@ a{ color:var(--clay-700); }
 .js .hero__body [data-hero="4"]{ opacity:0; transform:translateY(26px); }
 
 @media (max-width:899px){
+  /* On a phone the hero is now only as tall as its content, so anything
+     staged is a visible hole at first paint rather than space inside a
+     roomy panel. The offer and the call button are there on load; only the
+     licence line and the stat tiles animate in. */
+  .js .hero__body [data-hero="1"],
   .js .hero__body [data-hero="2"]{ opacity:1; transform:none; }
 }
 
