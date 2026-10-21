@@ -6,7 +6,37 @@ below), plus two MCP servers for pulling in ready-made UI components — so ever
 Claude Code session opened in this repo automatically has UI/UX pattern databases,
 design-critique commands, and component registries available while coding.
 
-## The site
+## The sites
+
+Each client gets its own folder and its own visual world — nothing is shared
+between them, because two demos that look related undercut the pitch of both.
+Durable product truth for the repo lives in [`PRODUCT.md`](PRODUCT.md); per-page
+strategy lives in `.impeccable/surfaces/`.
+
+### [`tapas/`](tapas) — Tapas, Toms River NJ
+
+A glatt-kosher small-plates restaurant on Route 9 (KCL supervision, BYOB, 4.8★).
+Dark, cinematic, scroll-driven single page.
+
+- Static HTML/CSS/JS, no build step. Open `tapas/index.html` directly.
+- **Palette**: warm sand and burnt sienna (`#E9E0D1` / `#9A3B10`). The only dark
+  objects are the plate cards, so the food is the subject and the room is light.
+  **Type**: Bodoni Moda over Archivo, held well below poster scale.
+- **Sections**: hero, spotlight (statement, three plates, full menu behind a
+  disclosure button), reviews, closing.
+- **Motion**: a hero plate sequence that dissolves into the page ground, a slow
+  scroll push-in, and a closing table that fills one setting at a time. GSAP
+  ScrollTrigger + Lenis, both **vendored** in `tapas/js/vendor/` — no CDN, so it
+  works off a USB stick. Fonts self-hosted in `tapas/fonts/` for the same reason.
+- **3D coverflow carousel** ported from React/shadcn to vanilla JS with identical
+  geometry, autoplay, keyboard, swipe and dot behavior.
+- Verified in Chromium at 1440×900 and 390×844: zero contrast failures, no text
+  under 11px, no horizontal overflow, and working reduced-motion and no-JS paths.
+- **Photography pending** — see [`tapas/images/README.md`](tapas/images/README.md)
+  for the exact filenames. Every slot has a designed stand-in and upgrades the
+  moment a file is dropped in.
+
+### Il Giardinello Di Bacoli — repo root
 
 A static, image-forward landing page for **[Il Giardinello Di Bacoli](https://www.ilgiardinello.com/)**,
 a family-run Neapolitan ristorante in Toms River, NJ — built as the first real page
