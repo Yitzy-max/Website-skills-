@@ -36,10 +36,11 @@ hairline row — kosher certification and the road — and the call button stage
 it as the visitor scrolls. Scroll also drives a slow push-in on the photo: scrubbed,
 never animated, so at rest the picture is still.
 
-MOBILE: a square crop shown whole in a square band under the header rather than
-cover-cropped, because the subject is how much is on the board and a phone-shaped crop
-keeps a strip through the middle of it; the rest of the screen is the same frame thrown
-out of focus. Every text block centres on its own axis below 720px — hero copy,
+MOBILE: the same shape as desktop — the picture fills the screen and the copy sits on
+top of it, no band and no panel underneath. The square crop is used because it carries
+the most vertical information to survive a 9:19.5 frame, pulled slightly above centre
+so the rim that gets cut is mostly empty wood. Every text block centres on its own
+axis below 720px — hero copy,
 spotlight statement and aside, plate cards, menu rows, reviews, footer. A left rag
 needs width to read as a spine; at 390px it just reads as fallen over.
 

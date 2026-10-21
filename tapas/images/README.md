@@ -13,10 +13,11 @@ the board and throw away the dishes around the edge — which is the whole
 subject. `<picture>` picks between them on `(max-width: 900px)`, in markup, so
 the right one is chosen before any JavaScript runs.
 
-On a phone the square frame is shown **whole**, in a square band under the
-header, rather than cropped to fill. Whatever the band doesn't cover is the
-same photo thrown far out of focus behind it, so the sharp square reads as a
-frame set into a field instead of a picture sitting in a hole.
+On a phone the picture fills the screen and the copy sits on top of it, the
+same shape as desktop. The square file is the one used there because it
+carries the most vertical information to survive a 9:19.5 frame; it is
+cover-cropped at `object-position: center 44%`, slightly above centre, so the
+rim that gets cut is mostly empty wood rather than dishes.
 
 Scroll drives a slow push-in (scale 1 → 1.09) and stages the copy in over it.
 It is scrubbed, not animated: at rest the picture is perfectly still and only
@@ -24,9 +25,10 @@ moves while the visitor does.
 
 ### Replacing them
 
-Any aspect ratio works for the desktop file — it's cover-cropped. Keep the
-phone file square, or the band and the copy below it stop lining up (the CSS
-positions the copy at `11% + 100vw`, which is where a square ends).
+Both files are cover-cropped, so any aspect ratio works — but the phone one
+should be squarer than the desktop one, or a tall screen will crop it to a
+sliver. Check the bottom third of whatever you put in: that is where the copy
+sits, and a bright highlight there costs contrast.
 
 ```
 ffmpeg -i WIDE.png   -vf "scale=1536:-2:flags=lanczos" -q:v 6 hero.jpg

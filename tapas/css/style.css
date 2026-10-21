@@ -261,28 +261,22 @@ button { font: inherit; color: inherit; }
                           rgba(20,14,9,0) 76%);
 }
 
-/* A phone screen is 9:19.5 and the board is square. Cropping it to fill blows
-   the dishes up and slices the sides off, and the whole point of the shot is
-   how much is on the board. On phones the frame is shown whole instead:
-   smaller dishes, entire composition, nothing cut. */
+/* On a phone the picture fills the screen exactly as it does on desktop and
+   the copy sits on top of it - no band, no panel underneath. A square crop in
+   a 9:19.5 frame does lose the left and right of the board, so the crop is
+   pulled slightly above centre: the rim that gets cut is mostly empty wood,
+   and the densest part of the board stays in the strip that survives. */
 @media (max-width: 900px) {
-  /* The phone crop is square, so the band is square: the whole board is on
-     screen with nothing sliced off the sides. 1:1 is 100vw tall, which is
-     what the copy below is positioned against. */
-  .hero-media { inset: 11% 0 auto 0; height: auto; aspect-ratio: 1 / 1; overflow: clip; }
-  .plate::before { background: none; }        /* nothing behind the band */
-  .hero-media::after { background: none; }
+  .plate img { object-position: center 44%; }
 
-  /* Whatever the letterbox does not cover is not flat black: it is the same
-     frame, thrown far out of focus and pulled right down. The sharp 16:9 band
-     then reads as a frame set into a field, instead of a photo sitting in a
-     hole - and when the hero scrolls away there is no dead panel behind it. */
-  .hero::before {
-    content: "";
-    position: absolute; inset: 0; z-index: 0;
-    background: url("../images/hero-mobile.jpg") center / cover no-repeat;
-    filter: blur(38px) saturate(0.62) brightness(0.36);
-    transform: scale(1.18);
+  /* The copy column is taller here than on desktop - three headline lines and
+     two stacked buttons - so the scrim has to reach further up the frame. */
+  .hero-media::after {
+    background:
+      linear-gradient(180deg, rgba(20,14,9,0.44) 0%, rgba(20,14,9,0) 22%),
+      linear-gradient(0deg, rgba(20,14,9,0.86) 0%, rgba(20,14,9,0.74) 24%,
+                            rgba(20,14,9,0.48) 44%, rgba(20,14,9,0.16) 66%,
+                            rgba(20,14,9,0) 84%);
   }
 }
 
@@ -324,20 +318,6 @@ button { font: inherit; color: inherit; }
 .hero-cta .btn-ghost:hover {
   background: rgba(242, 235, 223, 0.14);
   border-color: var(--sand-2); color: var(--sand-2);
-}
-
-/* On a phone the copy takes the whole band under the photo and centres in it,
-   rather than sitting on the floor of the screen with dead space in between.
-   11% is where the photo starts; 100vw is how tall a square is at full width. */
-@media (max-width: 900px) {
-  .hero-inner {
-    position: absolute;
-    left: 0; right: 0;
-    top: calc(11% + 100vw);
-    bottom: 0;
-    align-content: center;
-    padding: clamp(1rem, 3vh, 2rem) var(--gutter);
-  }
 }
 
 .scroll-cue {
