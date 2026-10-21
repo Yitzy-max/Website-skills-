@@ -338,11 +338,19 @@ function loadScript(src) {
     const tl = gsap.timeline({
       scrollTrigger: { trigger: wrap, start: "top top", end: "bottom bottom", scrub: 0.6 },
     });
+    // Once each line is in it stays in. There is no exit tween: the copy rides
+    // up and off with the picture when the pin releases, the way anything else
+    // on the page leaves. Fading it out early read as the hero losing its
+    // words while you were still looking at the hero.
+    //
+    // The hold at 0.99 is load-bearing, not decoration. ScrollTrigger scrubs
+    // timeline *progress*, so these positions are fractions of the timeline's
+    // own length -- not of the scroll. Without something out at the end the
+    // timeline would be 0.53 long, and 0.40 would land at 75% of the scroll
+    // instead of 40%: the phone number would arrive as the hero was leaving.
     tl.fromTo(stages[0], { opacity: 0, y: 18 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.13 }, 0.15)
       .fromTo(stages[1], { opacity: 0, y: 18 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.13 }, 0.40)
-      // Clear the copy just before the pin releases, so it never rides up
-      // into the header on its way out.
-      .to(stages, { opacity: 0, y: -14, ease: "power1.in", duration: 0.09 }, 0.91);
+      .to(stages, { opacity: 1, duration: 0.01 }, 0.99);
 
     if (cue) {
       gsap.to(cue, {

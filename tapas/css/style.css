@@ -141,9 +141,12 @@ button { font: inherit; color: inherit; }
 .site-header::before {
   content: "";
   position: absolute; inset: 0 0 -36px 0; z-index: -1;
+  /* Heavier than it needs to be for its own text. The hero copy now rides up
+     and passes underneath on its way out, and a thin scrim let the headline
+     read through and collide with the wordmark for that moment. */
   background: linear-gradient(180deg,
-    rgba(20,14,9,0.78) 0%, rgba(20,14,9,0.66) 46%,
-    rgba(20,14,9,0.30) 76%, rgba(20,14,9,0) 100%);
+    rgba(20,14,9,0.93) 0%, rgba(20,14,9,0.88) 42%,
+    rgba(20,14,9,0.54) 74%, rgba(20,14,9,0) 100%);
   transition: opacity 400ms var(--ease-out);
 }
 /* Over the footage the wordmark is light; once the page scrolls onto sand the
