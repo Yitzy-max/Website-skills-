@@ -49,62 +49,25 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 /* -------------------------------------------------------------------------
    HERO
 
-   The video never plays on its own — scroll position is its transport. That
-   is the point: at rest you are looking at a single held frame, so the food
-   sits still instead of simmering the way generated video does on a loop.
+   One photograph, full bleed. Scroll drives a slow push-in on it and stages
+   the copy in over it, so the first screen still answers to the visitor
+   instead of running on its own clock.
 
-   The scrub is set up in the motion block below, once GSAP is available.
-   Here we only decide whether to use the film at all, and get it buffered.
+   The motion is set up in the motion block below, once GSAP is available.
+   Here we only wait for the photo to actually be on screen: the copy starts
+   hidden, and hiding it before there is anything behind it would leave a
+   visitor looking at an empty panel.
    ------------------------------------------------------------------------- */
-
-/* Phones on cell data should not be handed a multi-megabyte video. */
-function videoBudget() {
-  const c = navigator.connection || {};
-  if (c.saveData === true) return "none";
-  if (/(^|-)2g$/.test(c.effectiveType || "")) return "none";
-  return window.matchMedia("(max-width: 900px)").matches ? "mobile" : "full";
-}
-
-/* Resolves once the video can be seeked, or gives up. */
-function primeHeroFilm(video) {
-  const budget = videoBudget();
-  if (budget === "none") return Promise.resolve(false);
-
-  video.src = budget === "mobile" ? video.dataset.srcMobile : video.dataset.src;
-  video.load();
-
-  // Safari will not decode or seek until the element has been played once,
-  // so start it and immediately stop: scroll owns the timeline from here.
-  const kick = video.play();
-  if (kick && kick.then) kick.then(() => video.pause()).catch(() => {});
-
+const heroPhotoReady = (() => {
+  const img = document.getElementById("heroPhoto");
+  if (!img) return Promise.resolve(false);
+  if (img.complete) return Promise.resolve(img.naturalWidth > 0);
   return new Promise((resolve) => {
-    let settled = false;
-    const done = (ok) => { if (!settled) { settled = true; resolve(ok); } };
-
-    // Scrubbing is seeking, and seeking needs the host to answer HTTP Range
-    // requests. Some don't. Prove a seek actually lands before betting the
-    // whole hero on it, or the page sits frozen on an empty table.
-    const proveSeekable = () => {
-      video.pause();
-      const target = Math.min(1, (video.duration || 2) / 2);
-      if (!isFinite(target) || target <= 0) return done(false);
-      const ok = () => done(Math.abs(video.currentTime - target) < 0.5);
-      video.addEventListener("seeked", ok, { once: true });
-      setTimeout(ok, 3000);
-      try { video.currentTime = target; } catch { done(false); }
-    };
-
-    if (video.readyState >= 2) proveSeekable();
-    else video.addEventListener("loadeddata", proveSeekable, { once: true });
-    video.addEventListener("error", () => done(false), { once: true });
-    setTimeout(() => done(false), 8000);
+    img.addEventListener("load", () => resolve(true), { once: true });
+    img.addEventListener("error", () => resolve(false), { once: true });
+    // A slow connection must not hold the copy hidden indefinitely.
+    setTimeout(() => resolve(img.naturalWidth > 0), 4000);
   });
-}
-const heroFilmReady = (() => {
-  const v = document.getElementById("heroVideo");
-  if (!v || REDUCED.matches) return Promise.resolve(false);
-  return primeHeroFilm(v);
 })();
 
 /* -------------------------------------------------------------------------
@@ -350,44 +313,28 @@ function loadScript(src) {
     gsap.ticker.lagSmoothing(0);
   }
 
-  /* ---- The hero: scroll is the video transport ---- */
+  /* ---- The hero: scroll drives the push-in and brings the copy in ---- */
   const wrap = document.getElementById("heroScroll");
-  const video = document.getElementById("heroVideo");
+  const photo = document.querySelector(".plate-film");
   const stages = [...document.querySelectorAll(".hero-stage")];
   const cue = document.getElementById("scrollCue");
 
-  const filmOk = await heroFilmReady;
+  const photoOk = await heroPhotoReady;
 
-  if (wrap && video && filmOk && video.duration) {
+  if (wrap && photo && photoOk) {
     wrap.classList.add("is-scrub");
-    video.pause();
 
-    const dur = video.duration;
-    let wanted = 0;
+    // A slow push-in the visitor drives. It is scrubbed, not animated: at
+    // rest the picture is perfectly still, and it only moves while they do.
+    gsap.fromTo(photo,
+      { scale: 1 },
+      {
+        scale: 1.09, ease: "none",
+        scrollTrigger: { trigger: wrap, start: "top top", end: "bottom bottom", scrub: true },
+      });
 
-    // Seek on a frame tick rather than on every scroll event: piling seeks
-    // onto a decoder is what makes scrubbed video stutter. The gate is the
-    // element's own `seeking` flag, which the browser clears itself — a
-    // hand-rolled one stays stuck if a `seeked` event never arrives.
-    const pump = () => {
-      if (video.seeking) return;
-      if (Math.abs(video.currentTime - wanted) < 0.03) return;
-      video.currentTime = wanted;
-    };
-
-    ScrollTrigger.create({
-      trigger: wrap,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true,
-      onUpdate: (self) => {
-        wanted = Math.min(dur - 0.03, Math.max(0, self.progress * dur));
-      },
-    });
-    gsap.ticker.add(pump);
-
-    // The copy arrives with the plates: the headline once the first plate has
-    // landed, then everything a visitor needs to act on once the second does.
+    // The copy arrives over it: the headline first, then everything a visitor
+    // needs to act on.
     const tl = gsap.timeline({
       scrollTrigger: { trigger: wrap, start: "top top", end: "bottom bottom", scrub: 0.6 },
     });

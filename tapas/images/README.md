@@ -1,67 +1,53 @@
-# Photos for the Tapas site
+# Photos
 
-You sent five shots. I could see them, but this build container has no upload
-folder, so I couldn't write the actual files into the repo — the page is wired
-to the exact filenames below instead. **Save each photo with the matching name,
-drop it in this folder, refresh. No code changes.**
+## Hero — installed, live on the page
 
-## The five you sent → filenames
-
-| Your photo | Save it as | Notes |
+| File | Size | Used for |
 |---|---|---|
-| Brisket nachos on the pale ceramic plate, gray backdrop | `hero-1-brisket-nachos.jpg` | Best of the two nacho shots. This one leads. |
-| Honey buffalo poppers, black plate, slaw cup | `hero-2-honey-buffalo-poppers.jpg` | Strongest shot of the set. |
-| Brisket tacos in the metal rack on the wood board | `hero-3-brisket-tacos.jpg` | |
-| Tapas burgers with fries, white rectangular plate | `hero-4-tapas-burgers.jpg` | |
-| Brisket nachos on the dark teal plate (hand holding it) | `hero-5-nachos-guacamole.jpg` | **See below — I'd leave this one out.** |
+| `hero.jpg` | 1536x1024 (3:2), 401 KB | Screens wider than 900px |
+| `hero-mobile.jpg` | 1200x1200 (1:1), 294 KB | Phones |
 
-### About that fifth photo
+**Two crops, not one image scaled.** The wide frame cover-cropped into a
+9:19.5 phone screen would keep a narrow vertical strip through the middle of
+the board and throw away the dishes around the edge — which is the whole
+subject. `<picture>` picks between them on `(max-width: 900px)`, in markup, so
+the right one is chosen before any JavaScript runs.
 
-You asked that every picture look like a nice plate. Four of the five already
-do — they're clean studio shots. The dark-teal nacho photo isn't in the same
-class: there's a hand holding the plate, a Coke can and a salt shaker in frame,
-and it's lit with a hard direct flash. Next to the other four it reads as a
-phone snapshot, and it's a second shot of a dish already covered by photo one.
+On a phone the square frame is shown **whole**, in a square band under the
+header, rather than cropped to fill. Whatever the band doesn't cover is the
+same photo thrown far out of focus behind it, so the sharp square reads as a
+frame set into a field instead of a picture sitting in a hole.
 
-**My recommendation: don't use it.** The hero is built to handle that — if
-`hero-5-nachos-guacamole.jpg` isn't there, the sequence just becomes four
-plates and the indicator dots adjust. Nothing looks broken or empty.
+Scroll drives a slow push-in (scale 1 → 1.09) and stages the copy in over it.
+It is scrubbed, not animated: at rest the picture is perfectly still and only
+moves while the visitor does.
 
-If you do want to keep it, crop it tight to the plate so the hand, the can and
-the shaker are all outside the frame.
+### Replacing them
 
-## Sizing
+Any aspect ratio works for the desktop file — it's cover-cropped. Keep the
+phone file square, or the band and the copy below it stop lining up (the CSS
+positions the copy at `11% + 100vw`, which is where a square ends).
 
-- Landscape or square, at least **2000px** on the long side, JPG quality ~80,
-  ideally under ~500KB each. These are full-screen backgrounds, so soft or
-  small files show badly on a laptop.
-- The page applies its own grade (slightly darkened, warmed, contrast lifted)
-  so the pale studio backgrounds fold into the dark design instead of punching
-  a white hole in it. Don't pre-darken them — send them as they are.
+```
+ffmpeg -i WIDE.png   -vf "scale=1536:-2:flags=lanczos" -q:v 6 hero.jpg
+ffmpeg -i SQUARE.png -vf "scale=1200:-2:flags=lanczos" -q:v 6 hero-mobile.jpg
+```
 
-## Optional, not sent yet
+`-q:v 6` was chosen by comparing crops against `-q:v 3`: no visible difference
+at full-bleed size, 40% fewer bytes. Don't go past 8 — the board has a lot of
+fine texture (sesame seeds, herb flecks, grill char) and it blocks up fast.
 
-These slots have designed stand-ins right now, so the page is complete without
-them. They upgrade the same way if you get the photos later.
+## Plate cards — still empty
 
-| Filename | Shot |
+The three cards in "In the spotlight" are wired to these filenames. Drop the
+files in and refresh; there are no code changes.
+
+| Save it as | Dish |
 |---|---|
-| `room.jpg` | The dining room. Portrait/tall crop (frame is 4:5). |
-| `plate-short-rib-cigars.jpg` | Short rib cigars |
-| `plate-tapas-flatbread.jpg` | Tapas flatbread |
-| `plate-brisket-nachos.jpg` | Brisket nachos |
-| `plate-steak-skewer.jpg` | Grilled steak skewer |
-| `plate-mango-habanero-poppers.jpg` | Mango habanero poppers |
+| `plate-short-rib-cigars.jpg` | Short Rib Cigars |
+| `plate-brisket-nachos.jpg` | BBQ Brisket Nachos |
+| `plate-mango-habanero-poppers.jpg` | Mango Habanero Poppers |
 
-The five `plate-*` files feed the rotating 3D carousel. Portrait crop (about
-2:3) frames best there. Until they exist, each card shows a lit ground with the
-dish's initial cut into it — deliberate-looking, not a gray box.
-
-## Before this goes live
-
-Two things to confirm with the owner, because I pulled them from public
-listings rather than from him:
-
-1. The menu descriptions and dish names.
-2. The two review quotes in the "What people say" section — verify them against
-   the live Google listing, or swap in ones he'd rather show.
+Portrait crops work best — the cards are roughly 2:3. Until the files exist
+each card falls back to the dish's initial over a warm dark ground, which
+looks deliberate rather than broken, but real photos land much harder.

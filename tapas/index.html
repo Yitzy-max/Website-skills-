@@ -13,8 +13,8 @@
 
 <!-- Bodoni Moda for display, Archivo for everything else. Both self-hosted:
      no third-party request, and the page renders the same offline. -->
-<link rel="preload" href="videos/hero-poster-mobile.jpg" as="image" media="(max-width: 900px)" />
-<link rel="preload" href="videos/hero-poster.jpg" as="image" media="(min-width: 901px)" />
+<link rel="preload" href="images/hero-mobile.jpg" as="image" media="(max-width: 900px)" />
+<link rel="preload" href="images/hero.jpg" as="image" media="(min-width: 901px)" />
 <link rel="preload" href="fonts/bodonimoda-f4316098.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/archivo-20ba07dc.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="css/fonts.css" />
@@ -42,13 +42,15 @@
   <div class="hero-scroll" id="heroScroll">
     <section class="hero" id="hero" aria-label="Tapas — introduction">
       <div class="hero-media" id="heroMedia">
-        <!-- The poster (full table) is painted by CSS underneath. With no JS,
-             data saver on, or reduced motion, that full table IS the hero. -->
+        <!-- Two crops of the same table, not one image scaled: the wide frame
+             would lose its outer dishes on a phone. <picture> picks per screen
+             with no JS, so the hero is there before anything else runs. -->
         <div class="plate plate-film is-active" data-plate="film">
-          <video id="heroVideo" muted playsinline preload="auto"
-                 data-src="videos/hero.mp4"
-                 data-src-mobile="videos/hero-mobile.mp4"
-                 aria-hidden="true"></video>
+          <picture>
+            <source media="(max-width: 900px)" srcset="images/hero-mobile.jpg" />
+            <img id="heroPhoto" src="images/hero.jpg" decoding="async"
+                 alt="A wooden board covered edge to edge with small plates: brisket nachos, sliders, tacos, grilled skewers, flatbread, chicken poppers, sliced steak, guacamole and dips." />
+          </picture>
         </div>
         <div class="hero-grain" aria-hidden="true"></div>
       </div>
@@ -65,8 +67,6 @@
         <div class="hero-stage" data-stage="2">
           <ul class="hero-facts">
             <li><span class="kosher">Glatt Kosher · KCL</span></li>
-            <li><span>BYOB</span></li>
-            <li><span>Small plates</span></li>
             <li><span>Route 9, Toms River</span></li>
           </ul>
 

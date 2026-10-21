@@ -28,17 +28,20 @@ cards, so the food reads as the subject and the room reads as light.
 STORY: This is a real kosher kitchen doing small plates seriously — see the food,
 learn it's KCL and BYOB, call.
 
-FIRST VIEWPORT: The film is the whole first screen. No sand touches it — the landing
-page is footage, edge to edge, and the ground only arrives at the spotlight statement.
-The headline sits lower-left over the footage, three lines, last line italic in the
-accent, on a scrim anchored to the bottom of the frame. A hairline row of
-certification facts and the call button stage in under it as the second plate lands.
+FIRST VIEWPORT: One photograph of the whole board is the whole first screen. No sand
+touches it — the landing page is the picture, edge to edge, and the ground only
+arrives at the spotlight statement. The headline sits lower-left over it, three lines,
+last line italic in the accent, on a scrim anchored to the bottom of the frame. One
+hairline row — kosher certification and the road — and the call button stage in under
+it as the visitor scrolls. Scroll also drives a slow push-in on the photo: scrubbed,
+never animated, so at rest the picture is still.
 
-MOBILE: the frame is shown whole in a 16:9 band under the header rather than
-cover-cropped, because the dishes enter from the sides; the rest of the screen is the
-same frame thrown out of focus. Every text block centres on its own axis below 720px
-— hero copy, spotlight statement and aside, plate cards, menu rows, reviews, footer.
-A left rag needs width to read as a spine; at 390px it just reads as fallen over.
+MOBILE: a square crop shown whole in a square band under the header rather than
+cover-cropped, because the subject is how much is on the board and a phone-shaped crop
+keeps a strip through the middle of it; the rest of the screen is the same frame thrown
+out of focus. Every text block centres on its own axis below 720px — hero copy,
+spotlight statement and aside, plate cards, menu rows, reviews, footer. A left rag
+needs width to read as a spine; at 390px it just reads as fallen over.
 
 FORM: Cinematic plate sequence. Brief-pinned direction (user specified dark,
 cinematic, minimalist-luxury, large type, and supplied the coverflow component), so

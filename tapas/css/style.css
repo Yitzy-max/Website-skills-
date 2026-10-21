@@ -196,20 +196,22 @@ button { font: inherit; color: inherit; }
 .btn svg { width: 13px; height: 13px; flex: none; }
 
 /* ==========================================================================
-   HERO — the video is the whole first screen, and scroll drives it.
-   Default (no JS / reduced motion) is a normal one-screen hero showing the
-   full table with all the text already there. The scrub is added on top.
+   HERO — one photograph is the whole first screen, and scroll drives it.
+   Default (no JS / reduced motion) is a normal one-screen hero with all the
+   text already there. The push-in and the staged copy are added on top.
    ========================================================================== */
 .hero-scroll { position: relative; }
-.hero-scroll.is-scrub { height: 350vh; }
-@media (max-width: 900px) { .hero-scroll.is-scrub { height: 300vh; } }
+/* Shorter than the film version was: a still has less to reveal, so a long
+   pin would just be scrolling past a picture that is already fully seen. */
+.hero-scroll.is-scrub { height: 220vh; }
+@media (max-width: 900px) { .hero-scroll.is-scrub { height: 200vh; } }
 
 .hero {
   position: relative;
   height: 100svh;
   min-height: 520px;
   overflow: clip;
-  background: var(--char);   /* the film's own ground, never beige */
+  background: var(--char);   /* the photo's own ground, never beige */
   display: flex;
   align-items: flex-end;
 }
@@ -239,22 +241,13 @@ button { font: inherit; color: inherit; }
   background:
     radial-gradient(115% 90% at 50% 34%, #3A2A1C 0%, #241A12 46%, #14100B 82%);
 }
-.plate img, .plate video {
+.plate picture { display: contents; }
+.plate img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center 42%;
+  object-fit: cover; object-position: center center;
 }
 
-/* The film plate paints the finished table, so the frame is never empty. */
-.plate-film::before {
-  background-image: url("../videos/hero-poster.jpg");
-  background-size: cover;
-  background-position: center 42%;
-}
-@media (max-width: 900px) {
-  .plate-film::before { background-image: url("../videos/hero-poster-mobile.jpg"); }
-}
-
-/* No beige bleeding into the footage. The hero is the video, full stop.
+/* No beige bleeding into the photograph. The hero is the picture, full stop.
    The copy sits on top of it, so it gets its own shadow-side scrim: a dark
    wash anchored to the bottom-left corner where the text actually is,
    leaving the rest of the frame untouched. */
@@ -268,33 +261,26 @@ button { font: inherit; color: inherit; }
                           rgba(20,14,9,0) 76%);
 }
 
-/* A phone screen is 9:19.5 and the film is 16:9. Cropping it to fill blows the
-   plates up and slices the sides off - and the plates enter from the sides, so
-   a crop loses the whole point of the shot. On phones the frame is shown whole
-   instead: smaller plates, entire composition, nothing cut. */
+/* A phone screen is 9:19.5 and the board is square. Cropping it to fill blows
+   the dishes up and slices the sides off, and the whole point of the shot is
+   how much is on the board. On phones the frame is shown whole instead:
+   smaller dishes, entire composition, nothing cut. */
 @media (max-width: 900px) {
-  /* Size the box to the film's own ratio so there is no letterbox dead space
-     to explain away - the frame simply sits in the screen at its true shape.
-     16:9 is 56.25vw tall, which is what the copy below is positioned against. */
-  .hero-media { inset: 14% 0 auto 0; height: auto; aspect-ratio: 16 / 9; }
-  .plate video, .plate img { object-fit: contain; object-position: center; }
-  .plate::before { background: none; }        /* nothing behind a letterbox */
-  .plate-film::before {                       /* except the poster, which is
-                                                 the same 16:9 as the box */
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+  /* The phone crop is square, so the band is square: the whole board is on
+     screen with nothing sliced off the sides. 1:1 is 100vw tall, which is
+     what the copy below is positioned against. */
+  .hero-media { inset: 11% 0 auto 0; height: auto; aspect-ratio: 1 / 1; overflow: clip; }
+  .plate::before { background: none; }        /* nothing behind the band */
   .hero-media::after { background: none; }
 
   /* Whatever the letterbox does not cover is not flat black: it is the same
      frame, thrown far out of focus and pulled right down. The sharp 16:9 band
-     then reads as a frame set into a field, instead of a video sitting in a
+     then reads as a frame set into a field, instead of a photo sitting in a
      hole - and when the hero scrolls away there is no dead panel behind it. */
   .hero::before {
     content: "";
     position: absolute; inset: 0; z-index: 0;
-    background: url("../videos/hero-poster-mobile.jpg") center / cover no-repeat;
+    background: url("../images/hero-mobile.jpg") center / cover no-repeat;
     filter: blur(38px) saturate(0.62) brightness(0.36);
     transform: scale(1.18);
   }
@@ -340,14 +326,14 @@ button { font: inherit; color: inherit; }
   border-color: var(--sand-2); color: var(--sand-2);
 }
 
-/* On a phone the copy takes the whole band under the film and centres in it,
-   rather than sitting on the floor of the screen with dead black in between.
-   14% is where the film starts; 56.25vw is how tall 16:9 is at full width. */
+/* On a phone the copy takes the whole band under the photo and centres in it,
+   rather than sitting on the floor of the screen with dead space in between.
+   11% is where the photo starts; 100vw is how tall a square is at full width. */
 @media (max-width: 900px) {
   .hero-inner {
     position: absolute;
     left: 0; right: 0;
-    top: calc(14% + 56.25vw);
+    top: calc(11% + 100vw);
     bottom: 0;
     align-content: center;
     padding: clamp(1rem, 3vh, 2rem) var(--gutter);
@@ -719,7 +705,9 @@ button { font: inherit; color: inherit; }
   .header-hours { display: none; }
   .site-header .btn { padding: 0.8rem 1.05rem; font-size: 0.72rem; letter-spacing: 0.09em; }
   .wordmark { font-size: 1.1rem; letter-spacing: 0.2em; }
-  .hero-facts { gap: 0.45rem 1.1rem; }
+  /* Both facts have to sit on one line inside a 350px measure, and tracking
+     is the cheapest width to give back without shrinking the type. */
+  .hero-facts { gap: 0.45rem 1rem; letter-spacing: 0.11em; }
   .hero-facts li:not(:last-child)::after { display: none; }
   .hero-title { font-size: clamp(1.85rem, 8.5vw, 2.6rem); }
 }
